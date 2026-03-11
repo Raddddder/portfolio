@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Selected Works</title>
+<title>H · Design Archive</title>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,10 +85,17 @@ img { display: block; max-width: 100%; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+}
+.site-nav-wrap.scrolled {
   background: rgba(250,250,248,0.85);
   backdrop-filter: blur(24px) saturate(120%);
   -webkit-backdrop-filter: blur(24px) saturate(120%);
-  border-bottom: 1px solid var(--line);
+  border-bottom-color: var(--line);
 }
 .site-nav {
   width: var(--content-w);
@@ -113,15 +120,19 @@ img { display: block; max-width: 100%; }
   font-size: 1.15rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: var(--ink-100);
+  color: rgba(255,255,255,0.9);
+  transition: color 0.4s;
 }
+.site-nav-wrap.scrolled .nav-brand-mark { color: var(--ink-100); }
 .nav-brand-sub {
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--ink-40);
+  color: rgba(255,255,255,0.4);
   font-weight: 400;
+  transition: color 0.4s;
 }
+.site-nav-wrap.scrolled .nav-brand-sub { color: var(--ink-40); }
 .nav-links {
   display: flex;
   gap: 32px;
@@ -130,11 +141,12 @@ img { display: block; max-width: 100%; }
   font-size: 0.7rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-40);
+  color: rgba(255,255,255,0.45);
   font-weight: 400;
   transition: color 0.3s;
   position: relative;
 }
+.site-nav-wrap.scrolled .nav-links a { color: var(--ink-40); }
 .nav-links a::after {
   content: "";
   position: absolute;
@@ -147,6 +159,10 @@ img { display: block; max-width: 100%; }
 }
 .nav-links a:hover,
 .nav-links a.active {
+  color: rgba(255,255,255,0.9);
+}
+.site-nav-wrap.scrolled .nav-links a:hover,
+.site-nav-wrap.scrolled .nav-links a.active {
   color: var(--ink-100);
 }
 .nav-links a:hover::after,
@@ -154,163 +170,114 @@ img { display: block; max-width: 100%; }
   width: 100%;
 }
 
-/* ═══ HERO — 原研哉式"白的容器"，大量留白 ═══ */
+/* ═══ HERO — 全屏光影主图 + 文字叠层 ═══ */
 .hero {
+  position: relative;
   min-height: 100svh;
   display: flex;
-  align-items: center;
-  padding: 52px 0 0;
+  align-items: flex-end;
+  overflow: hidden;
 }
-.hero-inner {
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(26,26,24,0.82) 0%,
+    rgba(26,26,24,0.45) 35%,
+    rgba(26,26,24,0.12) 65%,
+    rgba(26,26,24,0.05) 100%
+  );
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
   width: var(--content-w);
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
+  padding: 0 0 80px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 60px;
 }
 .hero-text {
-  padding: 60px 0;
+  max-width: 640px;
 }
 .hero-kicker {
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--ink-40);
+  color: rgba(255,255,255,0.45);
   font-weight: 400;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 .hero-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(3.8rem, 8vw, 6.4rem);
+  font-size: clamp(3.2rem, 7vw, 5.6rem);
   font-weight: 300;
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  color: var(--ink-100);
-  margin-bottom: 32px;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: rgba(255,255,255,0.92);
+  margin-bottom: 24px;
 }
 .hero-title em {
   font-style: italic;
   font-weight: 300;
-  color: var(--ink-60);
+  color: var(--hinoki-light);
 }
 .hero-desc {
-  max-width: 440px;
-  font-size: 0.95rem;
+  max-width: 420px;
+  font-size: 0.9rem;
   line-height: 1.9;
-  color: var(--ink-60);
+  color: rgba(255,255,255,0.5);
   font-weight: 300;
 }
 .hero-line {
   width: 48px;
   height: 1px;
-  background: var(--concrete-4);
-  margin: 28px 0;
+  background: rgba(255,255,255,0.15);
+  margin: 24px 0;
 }
 .hero-stats {
   display: flex;
-  gap: 40px;
+  gap: 36px;
 }
 .hero-stat-num {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 400;
   letter-spacing: -0.02em;
-  color: var(--ink-100);
+  color: rgba(255,255,255,0.8);
   line-height: 1;
 }
 .hero-stat-label {
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-40);
+  color: rgba(255,255,255,0.35);
   margin-top: 6px;
 }
-
-/* Hero 右侧 — 清水混凝土质感展示框 */
-.hero-visual {
-  position: relative;
-}
-.hero-frame {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-m);
-}
-.hero-frame-bar {
-  height: 32px;
-  background: var(--concrete-1);
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  padding: 0 14px;
-  gap: 6px;
-}
-.hero-frame-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--concrete-3);
-}
-.hero-frame-body {
-  padding: 20px;
-  display: grid;
-  gap: 12px;
-}
-.hero-preview-card {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 16px;
-  padding: 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  transition: box-shadow 0.3s, transform 0.3s;
-  text-decoration: none;
-  color: inherit;
-}
-.hero-preview-card:hover {
-  box-shadow: var(--shadow-s);
-  transform: translateY(-2px);
-}
-.hero-preview-thumb {
-  aspect-ratio: 1;
-  border-radius: 4px;
-  overflow: hidden;
-  background: var(--concrete-2);
-}
-.hero-preview-thumb img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-.hero-preview-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 0;
-}
-.hero-preview-tag {
+.hero-scroll-hint {
   font-size: 0.58rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ink-40);
-}
-.hero-preview-name {
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: var(--ink-100);
-  margin-top: 5px;
-  line-height: 1.3;
-}
-.hero-preview-desc {
-  font-size: 0.75rem;
-  color: var(--ink-40);
-  margin-top: 4px;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: rgba(255,255,255,0.3);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  flex-shrink: 0;
+  padding-bottom: 8px;
 }
 
 /* ═══ SECTION — 安藤忠雄式横向结构 ═══ */
@@ -569,8 +536,8 @@ img { display: block; max-width: 100%; }
 
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 1024px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-  .hero-text { padding: 40px 0 0; }
+  .hero-content { flex-direction: column; align-items: flex-start; }
+  .hero-scroll-hint { display: none; }
   .closing { grid-template-columns: 1fr; gap: 24px; }
   .section-head { flex-direction: column; align-items: flex-start; }
   .section-note { text-align: left; max-width: 100%; }
@@ -588,14 +555,14 @@ img { display: block; max-width: 100%; }
     align-items: flex-start;
     gap: 10px;
   }
-  .hero { padding-top: 100px; }
+  .hero-content { padding-bottom: 48px; }
   .section { padding-top: 64px; }
   .closing { margin: 64px 0 40px; padding: 28px 0; }
   .footer-inner { flex-direction: column; gap: 8px; }
 }
 @media (max-width: 480px) {
   :root { --content-w: calc(100vw - 32px); }
-  .hero-title { font-size: clamp(2.8rem, 16vw, 4rem); }
+  .hero-title { font-size: clamp(2.4rem, 14vw, 3.6rem); }
   .hero-stats { flex-direction: column; gap: 16px; }
   .board-grid { gap: 12px; }
 }
@@ -622,8 +589,8 @@ img { display: block; max-width: 100%; }
           <circle cx="22" cy="26" r="1.8" fill="#1a1a18"/>
           <circle cx="16" cy="16" r="1.8" fill="#c8b898"/>
         </svg>
-        <span class="nav-brand-mark">Selected Works</span>
-        <span class="nav-brand-sub">Portfolio / 2026</span>
+        <span class="nav-brand-mark">H · Archive</span>
+        <span class="nav-brand-sub">Design · Strategy · Code</span>
       </div>
       <div class="nav-links">
         <a href="#design" class="active">Design</a>
@@ -636,14 +603,18 @@ img { display: block; max-width: 100%; }
   <main>
     <!-- ═══ HERO ═══ -->
     <section class="hero">
-      <div class="hero-inner">
+      <div class="hero-bg">
+        <img src="./works/hero-light.png" alt="Light through concrete">
+      </div>
+      <div class="hero-content">
         <div class="hero-text fade-in">
-          <div class="hero-kicker">Design Archive — 2026</div>
+          <div class="hero-kicker">Design · Strategy · Code — 2026</div>
           <h1 class="hero-title">
-            Selected<br><em>Works</em>
+            在缝隙中<br><em>捕捉光</em>
           </h1>
           <p class="hero-desc">
-            设计与实践项目归档。
+            设计、策略与工程的交叉地带。<br>
+            用结构思维拆解复杂问题，用视觉语言讲述完整故事。
           </p>
           <div class="hero-line"></div>
           <div class="hero-stats">
@@ -656,53 +627,12 @@ img { display: block; max-width: 100%; }
               <div class="hero-stat-label">Boards Live</div>
             </div>
             <div>
-              <div class="hero-stat-num">Open</div>
+              <div class="hero-stat-num">∞</div>
               <div class="hero-stat-label">Expanding</div>
             </div>
           </div>
         </div>
-
-        <div class="hero-visual fade-in">
-          <div class="hero-frame">
-            <div class="hero-frame-bar">
-              <div class="hero-frame-dot"></div>
-              <div class="hero-frame-dot"></div>
-              <div class="hero-frame-dot"></div>
-            </div>
-            <div class="hero-frame-body">
-              <a class="hero-preview-card" href="./works/soviet/index.html">
-                <div class="hero-preview-thumb">
-                  <img loading="lazy" src="./works/soviet/Gemini_Generated_Image_ap1natap1natap1n.webp" alt="构成主义">
-                </div>
-                <div class="hero-preview-info">
-                  <div class="hero-preview-tag">Design / Experimental</div>
-                  <div class="hero-preview-name">ИKAP · 构成主义网页实验</div>
-                  <div class="hero-preview-desc">高对比构图、红色秩序与纪念碑式编排</div>
-                </div>
-              </a>
-              <a class="hero-preview-card" href="./works/nendo/index.html">
-                <div class="hero-preview-thumb">
-                  <img loading="lazy" src="./works/nendo/images/hero-vase.jpg" alt="Nendo">
-                </div>
-                <div class="hero-preview-info">
-                  <div class="hero-preview-tag">Design / Brand Web</div>
-                  <div class="hero-preview-name">Nendo · 静默品牌展示站</div>
-                  <div class="hero-preview-desc">留白、比例与对象呈现的品牌作品册</div>
-                </div>
-              </a>
-              <a class="hero-preview-card" href="./works/virtual-interview/index.html">
-                <div class="hero-preview-thumb">
-                  <img loading="lazy" src="./works/virtual-interview/screenshots/11-manual-2026-03-03T09-51-29.png" alt="Virtual Interview">
-                </div>
-                <div class="hero-preview-info">
-                  <div class="hero-preview-tag">Practice / Product</div>
-                  <div class="hero-preview-name">Virtual Interview · AI 访谈平台</div>
-                  <div class="hero-preview-desc">智能驱动的用户研究与洞察系统</div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
+        <div class="hero-scroll-hint fade-in">Scroll to explore</div>
       </div>
     </section>
 
@@ -874,10 +804,10 @@ img { display: block; max-width: 100%; }
     <section class="container">
       <div class="closing fade-in">
         <div class="closing-title">
-          更多作品持续更新中。
+          每个项目都是一道缝隙，<br>让光透进来。
         </div>
         <p class="closing-text">
-          如有合作意向，欢迎联系。
+          持续更新中 · 如有合作意向欢迎联系。
         </p>
       </div>
     </section>
@@ -885,8 +815,8 @@ img { display: block; max-width: 100%; }
 
   <footer class="site-footer container">
     <div class="footer-inner">
-      <span>Selected Works</span>
-      <span>Design · Practice · Expanding</span>
+      <span>H · Archive</span>
+      <span>Design · Strategy · Code · 2026</span>
     </div>
   </footer>
 </div>
@@ -897,6 +827,16 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ── 导航滚动状态 ── */
+const navWrap = document.querySelector('.site-nav-wrap');
+const hero = document.querySelector('.hero');
+const toggleNav = () => {
+  const scrolled = window.scrollY > hero.offsetHeight * 0.7;
+  navWrap.classList.toggle('scrolled', scrolled);
+};
+window.addEventListener('scroll', toggleNav, { passive: true });
+toggleNav();
 
 /* ── 导航高亮 ── */
 const navLinks = document.querySelectorAll('.nav-links a');

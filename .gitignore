@@ -1,4 +1,12 @@
+# 系统文件
 .user.ini
 .DS_Store
 Thumbs.db
 *.swp
+
+# 本地素材（不需要进 git）
+Sia/
+nendo_temp/
+*.pptx
+*.zip
+portfolio_4.html

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Interview - 项目全景图</title>
+    <!-- Vue 3 & TDesign -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tdesign-vue-next/dist/tdesign.min.css">
+    <script src="https://unpkg.com/tdesign-vue-next/dist/tdesign.min.js"></script>
+    <script src="https://unpkg.com/tdesign-icons-vue-next/dist/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-page: #e8eaef;
+            --bg-card: #ffffff;
+            --primary: #0052D9;
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-page);
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 导出悬浮操作栏 */
+        .export-toolbar {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* 海报容器：便当盒网格 */
+        .poster-container {
+            width: 100%;
+            max-width: 1400px; /* 适合主流 16:9 屏幕 */
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            box-sizing: border-box;
+        }
+
+        /* 通用卡片样式 */
+        .bento-card {
+            background: #f4f5f9;
+            border-radius: 24px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .col-span-2 { grid-column: span 2; }
+
+        /* 左上：标题与统计区 */
+        .header-card {
+            background: linear-gradient(135deg, #0052D9 0%, #003380 100%);
+            color: #fff;
+            justify-content: space-between;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-card h1 {
+            font-size: 44px;
+            margin: 0 0 16px 0;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            font-weight: 800;
+        }
+        .header-card p {
+            font-size: 16px;
+            opacity: 0.85;
+            line-height: 1.6;
+            max-width: 90%;
+            margin: 0 0 32px 0;
+            font-weight: 300;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: auto;
+        }
+        .stat-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat-num { font-size: 26px; font-weight: 800; margin-bottom: 4px; font-family: 'Inter'; }
+        .stat-label { font-size: 12px; opacity: 0.8; font-weight: 500; }
+
+        /* 右上：主界面 Hero 截图 */
+        .hero-card {
+            background: #EBF1FF; /* 浅蓝背景呼应主题 */
+            padding: 0;
+            align-items: center;
+            justify-content: flex-end; /* 截图靠下对齐 */
+            cursor: zoom-in;
+        }
+        .hero-mockup-wrapper {
+            width: 92%;
+            transform: translateY(32px);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .hero-card:hover .hero-mockup-wrapper { transform: translateY(16px); }
+
+        /* 下方：四个功能卡片 */
+        .feature-card {
+            padding: 24px;
+            cursor: zoom-in;
+            transition: background 0.3s;
+        }
+        .feature-card:hover { background: #f0f2f7; }
+        .icon-box {
+            width: 44px; height: 44px;
+            background: #fff;
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
+        }
+        .feature-card h3 {
+            font-size: 20px; margin: 0 0 12px 0; font-weight: 700; color: var(--text-main);
+        }
+        .feature-card ul {
+            padding-left: 0; list-style: none; margin: 0 0 24px 0; flex: 1;
+        }
+        .feature-card li {
+            font-size: 13px; color: var(--text-sub); margin-bottom: 8px;
+            display: flex; align-items: center; gap: 6px; font-weight: 500;
+        }
+
+        .check-icon {
+            width: 16px; height: 16px; color: var(--primary); flex-shrink: 0;
+        }
+
+        .mini-mockup-wrapper {
+            margin: auto -24px -24px -24px;
+            padding: 20px 20px 0 20px;
+            background: linear-gradient(to bottom, rgba(0,82,217,0.02), rgba(0,82,217,0.08));
+        }
+
+        /* 浏览器外壳（统一组件） */
+        .browser-mockup {
+            background: #fff;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            border: 1px solid rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+        .hero-mockup-wrapper .browser-mockup { border-radius: 16px 16px 0 0; }
+        .browser-header {
+            height: 22px; background: #f5f5f7; display: flex; align-items: center; padding: 0 12px; gap: 6px; border-bottom: 1px solid #eaeaea;
+        }
+        .hero-mockup-wrapper .browser-header { height: 28px; padding: 0 16px; gap: 8px; }
+        .browser-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .hero-mockup-wrapper .browser-dot { width: 10px; height: 10px; }
+        .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+        .browser-content img { display: block; width: 100%; height: auto; }
+
+        @media (max-width: 1200px) {
+            .poster-container { grid-template-columns: repeat(2, 1fr); }
+            .hero-mockup-wrapper { width: 85%; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+        <!-- 海报主容器 -->
+        <div class="poster-container" id="poster">
+            
+            <!-- 1. 标题与数据（占2列） -->
+            <div class="bento-card col-span-2 header-card">
+                <div>
+                    <div class="badge">AI User Research Platform</div>
+                    <h1>Virtual Interview<br>让洞察触手可及</h1>
+                    <p>一款企业级 AI 用户研究平台。像金牌访谈员一样，通过自然对话挖掘用户真实心声，内置全工作流，自动生成专业洞察报告。</p>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-box"><div class="stat-num">10x</div><div class="stat-label">访谈效率提升</div></div>
+                    <div class="stat-box"><div class="stat-num">-90%</div><div class="stat-label">单次访谈费用</div></div>
+                    <div class="stat-box"><div class="stat-num">24/7</div><div class="stat-label">全天候随时访谈</div></div>
+                    <div class="stat-box"><div class="stat-num">100%</div><div class="stat-label">自动生成专业报告</div></div>
+                </div>
+            </div>
+
+            <!-- 2. Dashboard 截图（占2列） -->
+            <div class="bento-card col-span-2 hero-card" @click="handlePreview('screenshots/11-manual-2026-03-03T09-51-29.png')">
+                <div class="hero-mockup-wrapper">
+                    <div class="browser-mockup">
+                        <div class="browser-header">
+                            <div class="browser-dot dot-r"></div><div class="browser-dot dot-y"></div><div class="browser-dot dot-g"></div>
+                        </div>
+                        <div class="browser-content">
+                            <img src="screenshots/11-manual-2026-03-03T09-51-29.png" alt="Dashboard">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 功能：创建大纲 -->
+            <div class="bento-card feature-card" @click="handlePreview('screenshots/12-manual-2026-03-03T09-51-36.png')">
+                <div class="icon-box"><t-icon name="edit-1" /></div>
+                <h3>一句话生成大纲</h3>
+                <ul>
+                    <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.76 11.7574L11.0026 16Z" fill="currentColor"/></svg> 智能识别研究意图</li>
+                    <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.76 11.7574L11.0026 16Z" fill="currentColor"/></svg> 自动生成破冰开场白</li>
+                </ul>
+                <div class="mini-mockup-wrapper">
+                    <div class="browser-mockup">
+                        <div class="browser-header"><div class="browser-dot dot-r"></div><div class="browser-dot dot-y"></div><div class="browser-dot dot-g"></div></div>
+                        <div class="browser-content"><img src="screenshots/12-manual-2026-03-03T09-51-36.png" alt="Create"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 功能：仿真测试 -->
+            <div class="bento-card feature-card" @click="handlePreview('screenshots/26-manual-2026-03-03T09-55-47.png')">
+                <div class="icon-box"><t-icon name="user-talk" /></div>
+                <h3>Persona 虚拟仿真</h3>
+                <ul>
+                    <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.76 11.7574L11.0026 16Z" fill="currentColor"/></svg> 发布前进行压力测试</li>
+                    <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.76 11.7574L11.0026 16Z" fill="currentColor"/></svg> 多模型人格对抗演练</li>
+                </ul>
+                <div class="mini-mockup-wrapper">
+                    <div class="browser-mockup">
+                        <div class="browser-header"><div class="browser-dot dot-r"></div><div class="browser-dot dot-y"></div><div class="browser-dot dot-g"></div></div>
+                        <div class="browser-content"><img src="screenshots/26-manual-2026-03-03T09-55-47.png" alt="Simulation"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 功能：洞察报告 -->
+            <div class="bento-card feature-card" @click="handlePreview('screenshots/23-manual-2026-03-03T09-54-48.png')">
+                <div class="icon-box"><t-icon name="chart-analytics" /></div>
+                <h3>深度洞察报告</h3>
+                <ul>
+                    <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.76 11.7574L11.0026 16Z" fill="currentColor"/></svg> Agent自动提取痛点</li>
+                    <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.76 11.7574L11.0026 16Z" fill="currentColor"/></svg> 一键导出业务报告</li>
+                </ul>
+                <div class="mini-mockup-wrapper">
+                    <div class="browser-mockup">
+                        <div class="browser-header"><div class="browser-dot dot-r"></div><div class="browser-dot dot-y"></div><div class="browser-dot dot-g"></div></div>
+                        <div class="browser-content"><img src="screenshots/23-manual-2026-03-03T09-54-48.png" alt="Report"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. 功能：企业后台 -->
+            <div class="bento-card feature-card" @click="handlePreview('screenshots/29-manual-2026-03-03T09-56-55.png')">
+                <div class="icon-box"><t-icon name="setting" /></div>
+                <h3>企业级管理后台</h3>
+                <ul>
+                    <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.76 11.7574L11.0026 16Z" fill="currentColor"/></svg> 自动化流水线监控</li>
+                    <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.76 11.7574L11.0026 16Z" fill="currentColor"/></svg> 严格的对外发布审批</li>
+                </ul>
+                <div class="mini-mockup-wrapper">
+                    <div class="browser-mockup">
+                        <div class="browser-header"><div class="browser-dot dot-r"></div><div class="browser-dot dot-y"></div><div class="browser-dot dot-g"></div></div>
+                        <div class="browser-content"><img src="screenshots/29-manual-2026-03-03T09-56-55.png" alt="Admin"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 点击放大看图的画廊 -->
+        <t-image-viewer v-model:visible="viewerVisible" :images="[viewerSrc]" :index="0" @close="viewerVisible = false" />
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        const app = createApp({
+            setup() {
+                const viewerVisible = ref(false);
+                const viewerSrc = ref('');
+
+                const handlePreview = (src) => {
+                    viewerSrc.value = src;
+                    viewerVisible.value = true;
+                };
+
+                const handleExport = async () => {
+                    const MessagePlugin = TDesign.MessagePlugin || TDesign.Message;
+                    let msgInstance = null;
+                    
+                    if (MessagePlugin) {
+                        msgInstance = MessagePlugin.loading('正在高清渲染海报，请稍候...', 0);
+                    }
+
+                    try {
+                        // 确保图片都已渲染
+                        await new Promise(resolve => setTimeout(resolve, 300));
+
+                        // 选中海报主容器
+                        const element = document.getElementById('poster');
+                        
+                        const canvas = await html2canvas(element, { 
+                            scale: 2, // 2倍超清分辨率
+                            useCORS: true,
+                            backgroundColor: null, // 保持透明圆角
+                        });
+
+                        const link = document.createElement('a');
+                        link.download = `Virtual-Interview-Poster-${Date.now()}.png`;
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                        
+                        if (MessagePlugin) MessagePlugin.success('海报保存成功！');
+                    } catch (error) {
+                        console.error('Export failed:', error);
+                        if (MessagePlugin) MessagePlugin.error('保存失败');
+                    } finally {
+                        if (MessagePlugin && msgInstance) MessagePlugin.close(msgInstance);
+                    }
+                };
+
+                return {
+                    viewerVisible,
+                    viewerSrc,
+                    handlePreview,
+                    handleExport
+                };
+            }
+        });
+        
+        app.use(TDesign);
+        app.mount('#app');
+    </script>
+</body>
+</html>

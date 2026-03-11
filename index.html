@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selected Works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+SC:wght@200;300;400;500&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   PALETTE — 安藤忠雄的清水混凝土 × 隈研吾的木与光
+   原研哉的"白"× 三宅一生的褶皱与空气感
+   ═══════════════════════════════════════════ */
+:root {
+  /* 清水混凝土色阶 */
+  --concrete-0: #fafafa;
+  --concrete-1: #f5f5f4;
+  --concrete-2: #ececea;
+  --concrete-3: #e0dfdc;
+  --concrete-4: #d4d2ce;
+  --concrete-5: #b8b5af;
+
+  /* 木色（隈研吾） */
+  --hinoki: #c8b898;       /* 桧木色 — 用于极少量点缀 */
+  --hinoki-light: #e8dcc8; /* 浅桧木 */
+
+  /* 墨色层级 */
+  --ink-100: #1a1a18;
+  --ink-80: #3d3d38;
+  --ink-60: #6b6b64;
+  --ink-40: #9e9d96;
+  --ink-20: #c8c7c2;
+
+  /* 功能色 */
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --line: rgba(26, 26, 24, 0.07);
+  --line-strong: rgba(26, 26, 24, 0.12);
+  --shadow-s: 0 2px 20px rgba(0,0,0,0.03);
+  --shadow-m: 0 8px 40px rgba(0,0,0,0.05);
+  --shadow-l: 0 20px 60px rgba(0,0,0,0.07);
+
+  --radius: 6px;
+  --content-w: min(1120px, calc(100vw - 48px));
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink-80);
+  font-family: 'Noto Sans SC', 'Hiragino Sans', 'PingFang SC', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* 极淡的混凝土纹理 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  opacity: 0.35;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(200,184,152,0.06) 0, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(200,184,152,0.04) 0, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+.page { position: relative; z-index: 1; }
+.container { width: var(--content-w); margin: 0 auto; }
+
+/* ═══ NAVIGATION — 安藤式极简水平线 ═══ */
+.site-nav-wrap {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(250,250,248,0.85);
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+  border-bottom: 1px solid var(--line);
+}
+.site-nav {
+  width: var(--content-w);
+  margin: 0 auto;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.nav-brand-mark {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-100);
+}
+.nav-brand-sub {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  font-weight: 400;
+}
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+.nav-links a {
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  font-weight: 400;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--ink-100);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--ink-100);
+}
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+/* ═══ HERO — 原研哉式"白的容器"，大量留白 ═══ */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 52px 0 0;
+}
+.hero-inner {
+  width: var(--content-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.hero-text {
+  padding: 60px 0;
+}
+.hero-kicker {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  font-weight: 400;
+  margin-bottom: 28px;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(3.8rem, 8vw, 6.4rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--ink-100);
+  margin-bottom: 32px;
+}
+.hero-title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink-60);
+}
+.hero-desc {
+  max-width: 440px;
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--ink-60);
+  font-weight: 300;
+}
+.hero-line {
+  width: 48px;
+  height: 1px;
+  background: var(--concrete-4);
+  margin: 28px 0;
+}
+.hero-stats {
+  display: flex;
+  gap: 40px;
+}
+.hero-stat-num {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink-100);
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  margin-top: 6px;
+}
+
+/* Hero 右侧 — 清水混凝土质感展示框 */
+.hero-visual {
+  position: relative;
+}
+.hero-frame {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-m);
+}
+.hero-frame-bar {
+  height: 32px;
+  background: var(--concrete-1);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 6px;
+}
+.hero-frame-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--concrete-3);
+}
+.hero-frame-body {
+  padding: 20px;
+  display: grid;
+  gap: 12px;
+}
+.hero-preview-card {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: box-shadow 0.3s, transform 0.3s;
+  text-decoration: none;
+  color: inherit;
+}
+.hero-preview-card:hover {
+  box-shadow: var(--shadow-s);
+  transform: translateY(-2px);
+}
+.hero-preview-thumb {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--concrete-2);
+}
+.hero-preview-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.hero-preview-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.hero-preview-tag {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+}
+.hero-preview-name {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--ink-100);
+  margin-top: 5px;
+  line-height: 1.3;
+}
+.hero-preview-desc {
+  font-size: 0.75rem;
+  color: var(--ink-40);
+  margin-top: 4px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ═══ SECTION — 安藤忠雄式横向结构 ═══ */
+.section {
+  padding: 100px 0 0;
+}
+.section + .section { margin-top: 0; }
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 48px;
+}
+.section-index {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.85rem;
+  color: var(--ink-40);
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: 0.02em;
+  color: var(--ink-100);
+  line-height: 1.3;
+}
+.section-note {
+  max-width: 380px;
+  font-size: 0.85rem;
+  color: var(--ink-40);
+  line-height: 1.8;
+  text-align: right;
+}
+
+/* ═══ PROJECT CARDS — 三宅一生式"褶皱"卡片 ═══ */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.project-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease, border-color 0.4s;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-l);
+  border-color: var(--line-strong);
+}
+.project-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--concrete-2);
+}
+.project-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.project-card:hover .project-media img {
+  transform: scale(1.03);
+}
+.project-card.soviet .project-media img { object-position: center 18%; }
+.project-card.nendo .project-media img { object-position: center 46%; }
+.project-body {
+  padding: 28px 28px 32px;
+}
+.project-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.project-num {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.4rem;
+  color: var(--ink-20);
+}
+.project-tag {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+.project-name {
+  margin-top: 16px;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.4;
+  color: var(--ink-100);
+  letter-spacing: 0.01em;
+}
+.project-caption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--ink-40);
+  line-height: 1.8;
+}
+.project-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+.project-chips span {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+.project-go {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+}
+.project-go svg {
+  width: 14px; height: 14px;
+  transition: transform 0.3s;
+}
+.project-card:hover .project-go svg {
+  transform: translate(3px, -3px);
+}
+
+/* ═══ BOARDS — 隈研吾式木格栅卡片 ═══ */
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.board-card {
+  padding: 28px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+.board-card:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-s);
+}
+.board-card.active {
+  border-left: 2px solid var(--ink-100);
+}
+.board-no {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.6rem;
+  color: var(--ink-20);
+  line-height: 1;
+}
+.board-name {
+  margin-top: 20px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink-100);
+}
+.board-status {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  width: fit-content;
+}
+.board-desc {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 0.82rem;
+  color: var(--ink-40);
+  line-height: 1.7;
+}
+
+/* ═══ CLOSING — 原研哉"虚无的容器" ═══ */
+.closing {
+  margin: 100px 0 60px;
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.closing-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 500;
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  line-height: 1.7;
+  color: var(--ink-100);
+  letter-spacing: 0.02em;
+}
+.closing-text {
+  font-size: 0.88rem;
+  color: var(--ink-40);
+  line-height: 1.9;
+}
+
+/* ═══ FOOTER ═══ */
+.site-footer {
+  padding: 0 0 36px;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  color: var(--ink-40);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ═══ ANIMATIONS ═══ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-text { padding: 40px 0 0; }
+  .closing { grid-template-columns: 1fr; gap: 24px; }
+  .section-head { flex-direction: column; align-items: flex-start; }
+  .section-note { text-align: left; max-width: 100%; }
+}
+@media (max-width: 768px) {
+  .project-grid,
+  .board-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-stats { gap: 28px; }
+  .site-nav {
+    height: auto;
+    padding: 14px 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .hero { padding-top: 100px; }
+  .section { padding-top: 64px; }
+  .closing { margin: 64px 0 40px; padding: 28px 0; }
+  .footer-inner { flex-direction: column; gap: 8px; }
+}
+@media (max-width: 480px) {
+  :root { --content-w: calc(100vw - 32px); }
+  .hero-title { font-size: clamp(2.8rem, 16vw, 4rem); }
+  .hero-stats { flex-direction: column; gap: 16px; }
+  .board-grid { gap: 12px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── NAV ── -->
+  <header class="site-nav-wrap">
+    <nav class="site-nav">
+      <div class="nav-brand">
+        <span class="nav-brand-mark">Selected Works</span>
+        <span class="nav-brand-sub">Portfolio / 2026</span>
+      </div>
+      <div class="nav-links">
+        <a href="#design" class="active">Design</a>
+        <a href="#practice">Practice</a>
+        <a href="#boards">Boards</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ═══ HERO ═══ -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-text fade-in">
+          <div class="hero-kicker">Design Archive — 2026</div>
+          <h1 class="hero-title">
+            Selected<br><em>Works</em>
+          </h1>
+          <p class="hero-desc">
+            设计与实践项目归档。
+          </p>
+          <div class="hero-line"></div>
+          <div class="hero-stats">
+            <div>
+              <div class="hero-stat-num">04</div>
+              <div class="hero-stat-label">Projects</div>
+            </div>
+            <div>
+              <div class="hero-stat-num">02</div>
+              <div class="hero-stat-label">Boards Live</div>
+            </div>
+            <div>
+              <div class="hero-stat-num">Open</div>
+              <div class="hero-stat-label">Expanding</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual fade-in">
+          <div class="hero-frame">
+            <div class="hero-frame-bar">
+              <div class="hero-frame-dot"></div>
+              <div class="hero-frame-dot"></div>
+              <div class="hero-frame-dot"></div>
+            </div>
+            <div class="hero-frame-body">
+              <a class="hero-preview-card" href="./works/soviet/">
+                <div class="hero-preview-thumb">
+                  <img loading="lazy" src="./works/soviet/Gemini_Generated_Image_ap1natap1natap1n.webp" alt="构成主义">
+                </div>
+                <div class="hero-preview-info">
+                  <div class="hero-preview-tag">Design / Experimental</div>
+                  <div class="hero-preview-name">ИKAP · 构成主义网页实验</div>
+                  <div class="hero-preview-desc">高对比构图、红色秩序与纪念碑式编排</div>
+                </div>
+              </a>
+              <a class="hero-preview-card" href="./works/nendo/">
+                <div class="hero-preview-thumb">
+                  <img loading="lazy" src="./works/nendo/images/hero-vase.jpg" alt="Nendo">
+                </div>
+                <div class="hero-preview-info">
+                  <div class="hero-preview-tag">Design / Brand Web</div>
+                  <div class="hero-preview-name">Nendo · 静默品牌展示站</div>
+                  <div class="hero-preview-desc">留白、比例与对象呈现的品牌作品册</div>
+                </div>
+              </a>
+              <a class="hero-preview-card" href="./works/virtual-interview/">
+                <div class="hero-preview-thumb">
+                  <img loading="lazy" src="./works/virtual-interview/screenshots/11-manual-2026-03-03T09-51-29.png" alt="Virtual Interview">
+                </div>
+                <div class="hero-preview-info">
+                  <div class="hero-preview-tag">Practice / Product</div>
+                  <div class="hero-preview-name">Virtual Interview · AI 访谈平台</div>
+                  <div class="hero-preview-desc">智能驱动的用户研究与洞察系统</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ DESIGN BOARD ═══ -->
+    <section class="section container" id="design">
+      <div class="section-head fade-in">
+        <div>
+          <div class="section-index">01</div>
+          <h2 class="section-title">设计作品</h2>
+        </div>
+        <p class="section-note">视觉网页实验。</p>
+      </div>
+
+      <div class="project-grid">
+        <a class="project-card soviet fade-in" href="./works/soviet/">
+          <div class="project-media">
+            <img loading="lazy" src="./works/soviet/Gemini_Generated_Image_ap1natap1natap1n.webp" alt="苏联构成主义网页">
+          </div>
+          <div class="project-body">
+            <div class="project-topline">
+              <div class="project-num">01</div>
+              <div class="project-tag">Experimental</div>
+            </div>
+            <h3 class="project-name">ИKAP / 构成主义网页实验</h3>
+            <p class="project-caption">几何、红色秩序与纪念碑式编排。</p>
+            <div class="project-chips">
+              <span>Art Direction</span>
+              <span>Editorial</span>
+              <span>Visual Experiment</span>
+            </div>
+            <div class="project-go">
+              <span>View Project</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+
+        <a class="project-card nendo fade-in" href="./works/nendo/">
+          <div class="project-media">
+            <img loading="lazy" src="./works/nendo/images/hero-vase.jpg" alt="Nendo 设计工作室">
+          </div>
+          <div class="project-body">
+            <div class="project-topline">
+              <div class="project-num">02</div>
+              <div class="project-tag">Brand Web</div>
+            </div>
+            <h3 class="project-name">Nendo / 静默品牌展示站</h3>
+            <p class="project-caption">留白与物件的品牌型作品册。</p>
+            <div class="project-chips">
+              <span>Brand Narrative</span>
+              <span>Minimal</span>
+              <span>Studio Presentation</span>
+            </div>
+            <div class="project-go">
+              <span>View Project</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══ PRACTICE BOARD ═══ -->
+    <section class="section container" id="practice">
+      <div class="section-head fade-in">
+        <div>
+          <div class="section-index">02</div>
+          <h2 class="section-title">实践项目</h2>
+        </div>
+        <p class="section-note">完整落地的产品项目。</p>
+      </div>
+
+      <div class="project-grid">
+        <a class="project-card fade-in" href="./works/virtual-interview/">
+          <div class="project-media">
+            <img loading="lazy" src="./works/virtual-interview/screenshots/11-manual-2026-03-03T09-51-29.png" alt="Virtual Interview Dashboard" style="object-position: center top;">
+          </div>
+          <div class="project-body">
+            <div class="project-topline">
+              <div class="project-num">03</div>
+              <div class="project-tag">Product / AI</div>
+            </div>
+            <h3 class="project-name">Virtual Interview / AI 访谈系统</h3>
+            <p class="project-caption">AI 驱动的用户研究平台。</p>
+            <div class="project-chips">
+              <span>AI / DeepSeek</span>
+              <span>Full-Stack</span>
+              <span>Vue + TDesign</span>
+            </div>
+            <div class="project-go">
+              <span>View Project</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+
+        <a class="project-card fade-in" href="./works/bain-case/">
+          <div class="project-media">
+            <img loading="lazy" src="./works/bain-case/slides/slide1_img0.jpg" alt="Bain Case Competition">
+          </div>
+          <div class="project-body">
+            <div class="project-topline">
+              <div class="project-num">04</div>
+              <div class="project-tag">Strategy</div>
+            </div>
+            <h3 class="project-name">Bain Case / AI+ESG 增长战略</h3>
+            <p class="project-caption">贝恩杯商赛 · 新能源五年战略。</p>
+            <div class="project-chips">
+              <span>Case Competition</span>
+              <span>AI + ESG</span>
+              <span>Strategy</span>
+            </div>
+            <div class="project-go">
+              <span>View Project</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7"></path><path d="M8 7h9v9"></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══ MORE BOARDS ═══ -->
+    <section class="section container" id="boards">
+      <div class="section-head fade-in">
+        <div>
+          <div class="section-index">···</div>
+          <h2 class="section-title">后续板块</h2>
+        </div>
+        <p class="section-note">持续扩展中。</p>
+      </div>
+
+      <div class="board-grid">
+        <div class="board-card active fade-in">
+          <div class="board-no">01</div>
+          <div class="board-name">设计</div>
+          <div class="board-status">2 Projects Live</div>
+          <div class="board-desc">视觉网页实验与品牌展示站。</div>
+        </div>
+        <div class="board-card active fade-in">
+          <div class="board-no">02</div>
+          <div class="board-name">实践</div>
+          <div class="board-status">1 Project Live</div>
+          <div class="board-desc">产品级工具与 AI 应用项目。</div>
+        </div>
+        <div class="board-card fade-in">
+          <div class="board-no">03</div>
+          <div class="board-name">摄影</div>
+          <div class="board-status">Planned</div>
+          <div class="board-desc">系列图像与城市观察。</div>
+        </div>
+        <div class="board-card fade-in">
+          <div class="board-no">04</div>
+          <div class="board-name">写作</div>
+          <div class="board-status">Planned</div>
+          <div class="board-desc">方法论、设计思考与项目记录。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CLOSING ═══ -->
+    <section class="container">
+      <div class="closing fade-in">
+        <div class="closing-title">
+          更多作品持续更新中。
+        </div>
+        <p class="closing-text">
+          如有合作意向，欢迎联系。
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <div class="footer-inner">
+      <span>Selected Works</span>
+      <span>Design · Practice · Expanding</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ── 滚动渐入 ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ── 导航高亮 ── */
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = [...navLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const setActive = () => {
+  const cur = sections.find(s => {
+    const r = s.getBoundingClientRect();
+    return r.top <= 140 && r.bottom >= 140;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', cur && a.getAttribute('href') === '#' + cur.id);
+  });
+};
+window.addEventListener('scroll', setActive, { passive: true });
+setActive();
+</script>
+</body>
+</html>

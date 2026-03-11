@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bain Case Competition · AI-in-ESG Growth Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Sans+SC:wght@200;300;400;500&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --ink-100: #1a1a18;
+  --ink-60: #6b6b64;
+  --ink-40: #9e9d96;
+  --ink-20: #c8c7c2;
+  --line: rgba(26,26,24,0.07);
+  --line-strong: rgba(26,26,24,0.12);
+  --shadow-s: 0 2px 20px rgba(0,0,0,0.03);
+  --shadow-m: 0 8px 40px rgba(0,0,0,0.05);
+  --radius: 6px;
+  --content-w: min(960px, calc(100vw - 48px));
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink-60);font-family:'Noto Sans SC','PingFang SC',sans-serif;font-weight:300;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+.back{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(250,250,248,0.85);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--line);
+}
+.back-inner{
+  width:var(--content-w);margin:0 auto;height:48px;
+  display:flex;align-items:center;gap:12px;
+}
+.back a{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-40);transition:color .3s}
+.back a:hover{color:var(--ink-100)}
+
+.container{width:var(--content-w);margin:0 auto}
+
+/* Hero */
+.hero{
+  padding:100px 0 60px;
+}
+.hero-cover{
+  width:100%;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow-m);
+}
+.hero-cover img{width:100%;height:100%;object-fit:cover}
+.hero-info{
+  margin-top:40px;
+  display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end;
+}
+.hero-title{
+  font-family:'Noto Serif SC',serif;font-weight:500;
+  font-size:clamp(1.4rem,3vw,1.8rem);color:var(--ink-100);line-height:1.5;
+}
+.hero-meta{
+  font-size:0.75rem;color:var(--ink-40);line-height:1.8;text-align:right;
+}
+
+/* Slides grid */
+.slides-section{
+  padding:60px 0 40px;
+  border-top:1px solid var(--line);
+  margin-top:48px;
+}
+.slides-label{
+  font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--ink-40);margin-bottom:32px;
+}
+.slides-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+}
+.slide-card{
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  background:var(--surface);transition:box-shadow .3s,transform .3s;
+  cursor:pointer;
+}
+.slide-card:hover{box-shadow:var(--shadow-m);transform:translateY(-3px)}
+.slide-card img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center top;background:#f0f0ee}
+.slide-card .slide-num{
+  padding:10px 14px;font-size:0.7rem;color:var(--ink-40);
+  border-top:1px solid var(--line);
+}
+
+/* Lightbox */
+.lightbox{
+  position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.85);
+  display:none;align-items:center;justify-content:center;
+  cursor:zoom-out;
+}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:4px;box-shadow:0 0 60px rgba(0,0,0,0.3)}
+
+/* Description */
+.desc-section{
+  padding:48px 0 80px;
+}
+.desc-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;
+}
+.desc-block h3{
+  font-family:'Noto Serif SC',serif;font-weight:500;font-size:1rem;
+  color:var(--ink-100);margin-bottom:12px;
+}
+.desc-block p{font-size:0.88rem;color:var(--ink-40);line-height:1.9}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.chips span{
+  font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--ink-40);padding:5px 8px;border:1px solid var(--line);border-radius:3px;
+}
+
+.footer{
+  padding:24px 0;border-top:1px solid var(--line);
+  font-size:0.68rem;color:var(--ink-40);letter-spacing:0.1em;text-transform:uppercase;
+}
+
+@media(max-width:768px){
+  .slides-grid{grid-template-columns:1fr}
+  .hero-info{grid-template-columns:1fr}
+  .hero-meta{text-align:left}
+  .desc-grid{grid-template-columns:1fr;gap:32px}
+}
+</style>
+</head>
+<body>
+
+<div class="back">
+  <div class="back-inner">
+    <a href="../../">← Back</a>
+  </div>
+</div>
+
+<div class="container">
+  <section class="hero">
+    <div class="hero-cover">
+      <img src="slides/slide1_img0.jpg" alt="Bain Case Competition Cover">
+    </div>
+    <div class="hero-info">
+      <div>
+        <h1 class="hero-title">2025 Bain Case Competition<br>AI-in-ESG · 新能源企业五年增长战略</h1>
+      </div>
+      <div class="hero-meta">
+        Team BainPioneers<br>
+        19 Slides · Strategy Deck
+      </div>
+    </div>
+  </section>
+
+  <section class="slides-section">
+    <div class="slides-label">Slide Deck</div>
+    <div class="slides-grid" id="slidesGrid">
+    </div>
+  </section>
+
+  <section class="desc-section">
+    <div class="desc-grid">
+      <div class="desc-block">
+        <h3>项目背景</h3>
+        <p>贝恩杯初赛作品。为 AI-in-ESG 虚拟公司制定五年增长战略，聚焦新能源市场中 AI 驱动的碳管理与电力交易优化。</p>
+      </div>
+      <div class="desc-block">
+        <h3>核心策略</h3>
+        <p>ESG 智能引擎 + 市场撮合 + SaaS 向 PaaS 转型，覆盖碳核算自动化、发电预测、绿电交易全链路。</p>
+        <div class="chips">
+          <span>Strategy</span>
+          <span>AI + ESG</span>
+          <span>Renewable Energy</span>
+          <span>Case Competition</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>Bain Case Competition 2025</span>
+  </footer>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+// Available slide images extracted from PPT
+const slideImages = [
+  {src: 'slides/slide1_img0.jpg', num: 1},
+  {src: 'slides/slide6_img2.png', num: 6},
+  {src: 'slides/slide10_img8.png', num: 10},
+  {src: 'slides/slide10_img9.png', num: 10},
+  {src: 'slides/slide11_img8.png', num: 11},
+  {src: 'slides/slide12_img11.png', num: 12},
+  {src: 'slides/slide12_img12.png', num: 12},
+  {src: 'slides/slide16_img2.png', num: 16},
+];
+
+const grid = document.getElementById('slidesGrid');
+slideImages.forEach((s, i) => {
+  const card = document.createElement('div');
+  card.className = 'slide-card';
+  card.innerHTML = `<img loading="lazy" src="${s.src}" alt="Slide ${s.num}"><div class="slide-num">Slide ${s.num}</div>`;
+  card.onclick = () => {
+    document.getElementById('lightboxImg').src = s.src;
+    document.getElementById('lightbox').classList.add('active');
+  };
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>

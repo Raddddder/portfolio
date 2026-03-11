@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 变体A：点阵构字 — 用点的大小和深浅构成 S -->
+  <rect width="512" height="512" rx="56" fill="#e8e7e4"/>
+  
+  <!-- 背景点阵 6×6 -->
+  <g fill="#d4d2ce">
+    <!-- Row 1 -->
+    <circle cx="96" cy="96" r="5"/><circle cx="180" cy="96" r="5"/>
+    <circle cx="264" cy="96" r="5"/><circle cx="348" cy="96" r="5"/>
+    <circle cx="432" cy="96" r="5"/>
+    <!-- Row 2 -->
+    <circle cx="96" cy="180" r="5"/>
+    <circle cx="348" cy="180" r="5"/><circle cx="432" cy="180" r="5"/>
+    <!-- Row 3 -->
+    <circle cx="96" cy="264" r="5"/>
+    <circle cx="432" cy="264" r="5"/>
+    <!-- Row 4 -->
+    <circle cx="96" cy="348" r="5"/><circle cx="180" cy="348" r="5"/>
+    <circle cx="432" cy="348" r="5"/>
+    <!-- Row 5 -->
+    <circle cx="96" cy="432" r="5"/><circle cx="180" cy="432" r="5"/>
+    <circle cx="264" cy="432" r="5"/><circle cx="348" cy="432" r="5"/>
+    <circle cx="432" cy="432" r="5"/>
+  </g>
+  
+  <!-- S 形点阵（加重 + 墨色） -->
+  <g fill="#1a1a18">
+    <!-- S 顶部横 -->
+    <circle cx="180" cy="96" r="10"/><circle cx="264" cy="96" r="10"/><circle cx="348" cy="96" r="10"/>
+    <!-- S 左竖上 -->
+    <circle cx="180" cy="180" r="10"/>
+    <!-- S 中间横 -->
+    <circle cx="180" cy="264" r="10"/><circle cx="264" cy="264" r="10"/><circle cx="348" cy="264" r="10"/>
+    <!-- S 右竖下 -->
+    <circle cx="348" cy="348" r="10"/>
+    <!-- S 底部横 -->
+    <circle cx="180" cy="432" r="10"/><circle cx="264" cy="432" r="10"/><circle cx="348" cy="432" r="10"/>
+  </g>
+</svg>

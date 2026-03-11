@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 变体F：极致留白 — 9 个点构成 S -->
+  <rect width="512" height="512" rx="56" fill="#fafaf8"/>
+  
+  <!-- 用9个点直接构成 S 的路径 -->
+  <g>
+    <!-- S 顶部三点 -->
+    <circle cx="316" cy="136" r="12" fill="#1a1a18"/>
+    <circle cx="256" cy="136" r="12" fill="#1a1a18"/>
+    <circle cx="196" cy="136" r="12" fill="#1a1a18"/>
+    <!-- S 左上一点 -->
+    <circle cx="196" cy="216" r="12" fill="#1a1a18"/>
+    <!-- S 中间一点 -->
+    <circle cx="256" cy="256" r="14" fill="#c8b898"/>
+    <!-- S 右下一点 -->
+    <circle cx="316" cy="296" r="12" fill="#1a1a18"/>
+    <!-- S 底部三点 -->
+    <circle cx="316" cy="376" r="12" fill="#1a1a18"/>
+    <circle cx="256" cy="376" r="12" fill="#1a1a18"/>
+    <circle cx="196" cy="376" r="12" fill="#1a1a18"/>
+  </g>
+  
+  <!-- 极淡的辅助线暗示网格 -->
+  <line x1="196" y1="100" x2="196" y2="412" stroke="#e0dfdc" stroke-width="0.5" opacity="0.4"/>
+  <line x1="256" y1="100" x2="256" y2="412" stroke="#e0dfdc" stroke-width="0.5" opacity="0.4"/>
+  <line x1="316" y1="100" x2="316" y2="412" stroke="#e0dfdc" stroke-width="0.5" opacity="0.4"/>
+  <line x1="160" y1="136" x2="352" y2="136" stroke="#e0dfdc" stroke-width="0.5" opacity="0.4"/>
+  <line x1="160" y1="256" x2="352" y2="256" stroke="#e0dfdc" stroke-width="0.5" opacity="0.4"/>
+  <line x1="160" y1="376" x2="352" y2="376" stroke="#e0dfdc" stroke-width="0.5" opacity="0.4"/>
+</svg>

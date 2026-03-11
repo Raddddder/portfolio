@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- H4：点阵边框 + 衬线 H -->
+  <rect width="512" height="512" rx="56" fill="#efeeeb"/>
+  
+  <!-- 点阵方形边框 -->
+  <g fill="#b8b5af" opacity="0.6">
+    <!-- 顶边 -->
+    <circle cx="80" cy="80" r="3.5"/><circle cx="136" cy="80" r="3.5"/>
+    <circle cx="192" cy="80" r="3.5"/><circle cx="248" cy="80" r="3.5"/>
+    <circle cx="304" cy="80" r="3.5"/><circle cx="360" cy="80" r="3.5"/>
+    <circle cx="416" cy="80" r="3.5"/>
+    <!-- 底边 -->
+    <circle cx="80" cy="432" r="3.5"/><circle cx="136" cy="432" r="3.5"/>
+    <circle cx="192" cy="432" r="3.5"/><circle cx="248" cy="432" r="3.5"/>
+    <circle cx="304" cy="432" r="3.5"/><circle cx="360" cy="432" r="3.5"/>
+    <circle cx="416" cy="432" r="3.5"/>
+    <!-- 左边 -->
+    <circle cx="80" cy="136" r="3.5"/><circle cx="80" cy="192" r="3.5"/>
+    <circle cx="80" cy="248" r="3.5"/><circle cx="80" cy="304" r="3.5"/>
+    <circle cx="80" cy="360" r="3.5"/>
+    <!-- 右边 -->
+    <circle cx="432" cy="136" r="3.5"/><circle cx="432" cy="192" r="3.5"/>
+    <circle cx="432" cy="248" r="3.5"/><circle cx="432" cy="304" r="3.5"/>
+    <circle cx="432" cy="360" r="3.5"/>
+  </g>
+  
+  <!-- 衬线 H — Cormorant 感 -->
+  <g stroke="#1a1a18" fill="none" stroke-linecap="square">
+    <!-- 左竖 -->
+    <line x1="192" y1="140" x2="192" y2="372" stroke-width="8"/>
+    <!-- 右竖 -->
+    <line x1="320" y1="140" x2="320" y2="372" stroke-width="8"/>
+    <!-- 中横 -->
+    <line x1="192" y1="256" x2="320" y2="256" stroke-width="6"/>
+    <!-- 衬线（顶端） -->
+    <line x1="172" y1="140" x2="212" y2="140" stroke-width="3"/>
+    <line x1="300" y1="140" x2="340" y2="140" stroke-width="3"/>
+    <!-- 衬线（底端） -->
+    <line x1="172" y1="372" x2="212" y2="372" stroke-width="3"/>
+    <line x1="300" y1="372" x2="340" y2="372" stroke-width="3"/>
+  </g>
+  
+  <!-- 底部桧木色细线 -->
+  <line x1="192" y1="400" x2="320" y2="400" stroke="#c8b898" stroke-width="1.5" opacity="0.5"/>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 方案1：建筑感方块 + 衬线 SW -->
+  <rect width="512" height="512" rx="64" fill="#1a1a18"/>
+  <!-- 混凝土质感的内框 -->
+  <rect x="40" y="40" width="432" height="432" rx="8" fill="none" stroke="#3d3d38" stroke-width="1.5"/>
+  <!-- SW 衬线字母 -->
+  <text x="256" y="310" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="400" font-size="220" fill="#fafaf8" letter-spacing="-8">SW</text>
+  <!-- 底部细线装饰 -->
+  <line x1="120" y1="380" x2="392" y2="380" stroke="#c8b898" stroke-width="2" opacity="0.6"/>
+</svg>

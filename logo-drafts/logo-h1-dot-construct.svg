@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- H1：点阵构字 — 用圆点直接拼出 H -->
+  <rect width="512" height="512" rx="56" fill="#e8e7e4"/>
+  
+  <!-- 背景辅助点（淡） -->
+  <g fill="#d4d2ce" opacity="0.5">
+    <circle cx="96" cy="96" r="4"/><circle cx="416" cy="96" r="4"/>
+    <circle cx="96" cy="416" r="4"/><circle cx="416" cy="416" r="4"/>
+    <circle cx="256" cy="96" r="4"/><circle cx="256" cy="416" r="4"/>
+    <circle cx="96" cy="256" r="4"/><circle cx="416" cy="256" r="4"/>
+  </g>
+  
+  <!-- H 主体点阵（墨色） -->
+  <g fill="#1a1a18">
+    <!-- 左竖 5 点 -->
+    <circle cx="176" cy="116" r="13"/>
+    <circle cx="176" cy="196" r="13"/>
+    <circle cx="176" cy="256" r="13"/>
+    <circle cx="176" cy="316" r="13"/>
+    <circle cx="176" cy="396" r="13"/>
+    <!-- 右竖 5 点 -->
+    <circle cx="336" cy="116" r="13"/>
+    <circle cx="336" cy="196" r="13"/>
+    <circle cx="336" cy="256" r="13"/>
+    <circle cx="336" cy="316" r="13"/>
+    <circle cx="336" cy="396" r="13"/>
+    <!-- 中横 1 点（桧木色） -->
+    <circle cx="256" cy="256" r="13" fill="#c8b898"/>
+  </g>
+</svg>

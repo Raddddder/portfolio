@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 变体B：负空间点阵 — 深底，S 由"空缺"的点构成 -->
+  <rect width="512" height="512" rx="56" fill="#1a1a18"/>
+  
+  <!-- 满铺点阵 7×7，S 路径上的点省略，形成负空间 -->
+  <g fill="#3d3d38" opacity="0.6">
+    <!-- Row 1 -->
+    <circle cx="76" cy="76" r="4.5"/><circle cx="148" cy="76" r="4.5"/>
+    <circle cx="364" cy="76" r="4.5"/><circle cx="436" cy="76" r="4.5"/>
+    <!-- Row 2 -->
+    <circle cx="76" cy="148" r="4.5"/>
+    <circle cx="292" cy="148" r="4.5"/><circle cx="364" cy="148" r="4.5"/><circle cx="436" cy="148" r="4.5"/>
+    <!-- Row 3 -->
+    <circle cx="76" cy="220" r="4.5"/><circle cx="148" cy="220" r="4.5"/>
+    <circle cx="364" cy="220" r="4.5"/><circle cx="436" cy="220" r="4.5"/>
+    <!-- Row 4 (center) -->
+    <circle cx="76" cy="292" r="4.5"/>
+    <circle cx="148" cy="292" r="4.5"/><circle cx="436" cy="292" r="4.5"/>
+    <!-- Row 5 -->
+    <circle cx="76" cy="364" r="4.5"/><circle cx="148" cy="364" r="4.5"/>
+    <circle cx="220" cy="364" r="4.5"/><circle cx="436" cy="364" r="4.5"/>
+    <!-- Row 6 -->
+    <circle cx="76" cy="436" r="4.5"/><circle cx="148" cy="436" r="4.5"/>
+    <circle cx="364" cy="436" r="4.5"/><circle cx="436" cy="436" r="4.5"/>
+  </g>
+  
+  <!-- S 路径上的点 — 桧木色高亮 -->
+  <g fill="#c8b898" opacity="0.85">
+    <!-- S 顶横 -->
+    <circle cx="220" cy="76" r="5"/><circle cx="292" cy="76" r="5"/>
+    <!-- S 左上竖 -->
+    <circle cx="148" cy="148" r="5"/><circle cx="220" cy="148" r="5"/>
+    <!-- S 中横 -->
+    <circle cx="220" cy="220" r="5"/><circle cx="292" cy="220" r="5"/>
+    <circle cx="292" cy="292" r="5"/><circle cx="364" cy="292" r="5"/>
+    <!-- S 右下竖 -->
+    <circle cx="292" cy="364" r="5"/><circle cx="364" cy="364" r="5"/>
+    <!-- S 底横 -->
+    <circle cx="220" cy="436" r="5"/><circle cx="292" cy="436" r="5"/>
+  </g>
+</svg>

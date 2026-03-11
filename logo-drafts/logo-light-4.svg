@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="light4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#f0e6d0"/>
+      <stop offset="100%" stop-color="#c8b898" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="beam4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#c8b898" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow4">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="outerGlow4">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+    <clipPath id="roundRect4">
+      <rect width="512" height="512" rx="56"/>
+    </clipPath>
+  </defs>
+  
+  <g clip-path="url(#roundRect4)">
+    <!-- 混凝土暗面 -->
+    <rect width="512" height="512" fill="#222220"/>
+    
+    <!-- 混凝土板缝纹理 -->
+    <g stroke="#2c2c28" stroke-width="0.8" opacity="0.6">
+      <line x1="0" y1="128" x2="512" y2="128"/>
+      <line x1="0" y1="256" x2="512" y2="256"/>
+      <line x1="0" y1="384" x2="512" y2="384"/>
+    </g>
+    
+    <!-- 大范围光晕散射 -->
+    <rect x="230" y="40" width="52" height="432" fill="#f5eedd" opacity="0.06" filter="url(#outerGlow4)"/>
+    
+    <!-- 光缝（偏左，像照片中的位置） -->
+    <g filter="url(#glow4)">
+      <rect x="248" y="56" width="16" height="400" rx="2" fill="url(#light4)"/>
+    </g>
+    
+    <!-- 光束投射（斜向右下） -->
+    <polygon points="264,56 264,456 420,512 360,56" fill="url(#beam4)"/>
+    
+    <!-- 地面光斑 -->
+    <ellipse cx="300" cy="480" rx="60" ry="12" fill="#c8b898" opacity="0.06"/>
+    
+    <!-- 右下角极小的 H 文字标记 -->
+    <text x="440" y="456" font-family="'Cormorant Garamond', Georgia, serif" font-size="28" font-weight="300" fill="#3d3d38" opacity="0.5" letter-spacing="1">H</text>
+  </g>
+</svg>

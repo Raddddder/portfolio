@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- H3：线条 + 节点 — 建筑蓝图感 -->
+  <rect width="512" height="512" rx="56" fill="#f5f5f4"/>
+  
+  <!-- 背景网格点 -->
+  <g fill="#e0dfdc" opacity="0.5">
+    <circle cx="96" cy="96" r="3"/><circle cx="176" cy="96" r="3"/>
+    <circle cx="256" cy="96" r="3"/><circle cx="336" cy="96" r="3"/><circle cx="416" cy="96" r="3"/>
+    <circle cx="96" cy="176" r="3"/><circle cx="416" cy="176" r="3"/>
+    <circle cx="96" cy="256" r="3"/><circle cx="416" cy="256" r="3"/>
+    <circle cx="96" cy="336" r="3"/><circle cx="416" cy="336" r="3"/>
+    <circle cx="96" cy="416" r="3"/><circle cx="176" cy="416" r="3"/>
+    <circle cx="256" cy="416" r="3"/><circle cx="336" cy="416" r="3"/><circle cx="416" cy="416" r="3"/>
+  </g>
+  
+  <!-- H 线条框架 -->
+  <g stroke="#1a1a18" stroke-width="5" stroke-linecap="round" fill="none">
+    <!-- 左竖 -->
+    <line x1="176" y1="116" x2="176" y2="396"/>
+    <!-- 右竖 -->
+    <line x1="336" y1="116" x2="336" y2="396"/>
+    <!-- 中横 -->
+    <line x1="176" y1="256" x2="336" y2="256"/>
+  </g>
+  
+  <!-- 节点标记 -->
+  <g fill="#1a1a18">
+    <circle cx="176" cy="116" r="8"/>
+    <circle cx="176" cy="396" r="8"/>
+    <circle cx="336" cy="116" r="8"/>
+    <circle cx="336" cy="396" r="8"/>
+  </g>
+  <!-- 交叉节点（桧木色） -->
+  <circle cx="176" cy="256" r="8" fill="#c8b898"/>
+  <circle cx="336" cy="256" r="8" fill="#c8b898"/>
+  
+  <!-- 尺寸标注线（建筑图感） -->
+  <g stroke="#d4d2ce" stroke-width="0.8" opacity="0.5">
+    <line x1="136" y1="116" x2="136" y2="396"/>
+    <line x1="132" y1="116" x2="140" y2="116"/>
+    <line x1="132" y1="396" x2="140" y2="396"/>
+  </g>
+</svg>

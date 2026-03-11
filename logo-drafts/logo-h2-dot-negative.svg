@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- H2：暗底负空间 — 深墨色底，H 用桧木/浅色点 -->
+  <rect width="512" height="512" rx="56" fill="#1a1a18"/>
+  
+  <!-- 环境点阵（极淡） -->
+  <g fill="#3d3d38" opacity="0.4">
+    <circle cx="80" cy="80" r="3.5"/><circle cx="160" cy="80" r="3.5"/>
+    <circle cx="352" cy="80" r="3.5"/><circle cx="432" cy="80" r="3.5"/>
+    <circle cx="80" cy="160" r="3.5"/><circle cx="432" cy="160" r="3.5"/>
+    <circle cx="80" cy="256" r="3.5"/><circle cx="432" cy="256" r="3.5"/>
+    <circle cx="80" cy="352" r="3.5"/><circle cx="432" cy="352" r="3.5"/>
+    <circle cx="80" cy="432" r="3.5"/><circle cx="160" cy="432" r="3.5"/>
+    <circle cx="352" cy="432" r="3.5"/><circle cx="432" cy="432" r="3.5"/>
+  </g>
+  
+  <!-- H 主体（浅灰白） -->
+  <g fill="#e0dfdc">
+    <!-- 左竖 -->
+    <circle cx="176" cy="120" r="10"/>
+    <circle cx="176" cy="180" r="10"/>
+    <circle cx="176" cy="256" r="10"/>
+    <circle cx="176" cy="332" r="10"/>
+    <circle cx="176" cy="392" r="10"/>
+    <!-- 右竖 -->
+    <circle cx="336" cy="120" r="10"/>
+    <circle cx="336" cy="180" r="10"/>
+    <circle cx="336" cy="256" r="10"/>
+    <circle cx="336" cy="332" r="10"/>
+    <circle cx="336" cy="392" r="10"/>
+  </g>
+  <!-- 中横（桧木色） -->
+  <circle cx="216" cy="256" r="10" fill="#c8b898" opacity="0.85"/>
+  <circle cx="256" cy="256" r="10" fill="#c8b898" opacity="0.85"/>
+  <circle cx="296" cy="256" r="10" fill="#c8b898" opacity="0.85"/>
+</svg>

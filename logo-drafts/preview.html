@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo 方案预览 — 光之教堂系列</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Sans+SC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #111110;
+  --surface: #1a1a18;
+  --ink-100: #fafaf8;
+  --ink-60: #9e9d96;
+  --ink-40: #6b6b64;
+  --line: rgba(255,255,255,0.06);
+  --hinoki: #c8b898;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 300;
+  color: var(--ink-60);
+  padding: 60px 40px;
+}
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 2.6rem;
+  color: var(--ink-100);
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+h1 em {
+  font-style: italic;
+  color: var(--hinoki);
+  font-weight: 300;
+}
+.subtitle {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--ink-40);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 56px;
+}
+/* 模拟浏览器标签页 */
+.tab-sim {
+  max-width: 1020px;
+  margin: 0 auto 40px;
+  display: flex;
+  gap: 0;
+  background: #0e0e0d;
+  border-radius: 8px 8px 0 0;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-bottom: none;
+  overflow-x: auto;
+}
+.tab-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: var(--surface);
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+  color: var(--ink-60);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.tab-item img {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+}
+.tab-item + .tab-item { margin-left: 4px; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  max-width: 1020px;
+  margin: 0 auto;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(200,184,152,0.06);
+}
+.card-preview {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0e0e0d;
+  aspect-ratio: 1;
+}
+.card-preview img {
+  width: 82%;
+  height: 82%;
+  border-radius: 12px;
+}
+.card-info {
+  padding: 20px 24px 24px;
+}
+.card-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  margin-bottom: 6px;
+}
+.card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--ink-100);
+  margin-bottom: 6px;
+}
+.card-desc {
+  font-size: 0.8rem;
+  color: var(--ink-40);
+  line-height: 1.7;
+}
+.size-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.size-row span {
+  font-size: 0.58rem;
+  color: var(--ink-40);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.size-row img {
+  border-radius: 3px;
+}
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; max-width: 400px; }
+  body { padding: 32px 20px; }
+}
+</style>
+</head>
+<body>
+
+<h1>Church of <em>Light</em></h1>
+<p class="subtitle">光之教堂 · 光缝 × 清水混凝土 × H · 6 个方案</p>
+
+<!-- 模拟标签页 favicon -->
+<div class="tab-sim">
+  <div class="tab-item"><img src="logo-light-1.svg" alt="">光缝 H</div>
+  <div class="tab-item"><img src="logo-light-2.svg" alt="">纤细光缝</div>
+  <div class="tab-item"><img src="logo-light-3.svg" alt="">板缝光</div>
+  <div class="tab-item"><img src="logo-light-4.svg" alt="">单缝光</div>
+  <div class="tab-item"><img src="logo-light-5.svg" alt="">层次光</div>
+  <div class="tab-item"><img src="logo-light-6.svg" alt="">光点融合</div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="card-preview">
+      <img src="logo-light-1.svg" alt="方案1">
+    </div>
+    <div class="card-info">
+      <div class="card-label">Light 01</div>
+      <div class="card-name">光缝 H</div>
+      <div class="card-desc">混凝土暗面上三道光缝直接构成 H，光从白到桧木色渐变，地面有光投影。</div>
+      <div class="size-row">
+        <span>32px</span>
+        <img src="logo-light-1.svg" width="32" height="32" alt="">
+        <span>16px</span>
+        <img src="logo-light-1.svg" width="16" height="16" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <img src="logo-light-2.svg" alt="方案2">
+    </div>
+    <div class="card-info">
+      <div class="card-label">Light 02</div>
+      <div class="card-name">纤细光缝</div>
+      <div class="card-desc">更细的光缝 H，混凝土板缝纹理可见，整体漏光效果柔和内敛。</div>
+      <div class="size-row">
+        <span>32px</span>
+        <img src="logo-light-2.svg" width="32" height="32" alt="">
+        <span>16px</span>
+        <img src="logo-light-2.svg" width="16" height="16" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <img src="logo-light-3.svg" alt="方案3">
+    </div>
+    <div class="card-info">
+      <div class="card-label">Light 03</div>
+      <div class="card-name">板缝光</div>
+      <div class="card-desc">致敬光之教堂经典构图，混凝土板缝形成网格，H 光缝中有灰尘微粒。</div>
+      <div class="size-row">
+        <span>32px</span>
+        <img src="logo-light-3.svg" width="32" height="32" alt="">
+        <span>16px</span>
+        <img src="logo-light-3.svg" width="16" height="16" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <img src="logo-light-4.svg" alt="方案4">
+    </div>
+    <div class="card-info">
+      <div class="card-label">Light 04</div>
+      <div class="card-name">单缝光</div>
+      <div class="card-desc">最接近照片原图 — 一道竖直光缝+斜向光束投射，右下角隐约 H 字标。</div>
+      <div class="size-row">
+        <span>32px</span>
+        <img src="logo-light-4.svg" width="32" height="32" alt="">
+        <span>16px</span>
+        <img src="logo-light-4.svg" width="16" height="16" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <img src="logo-light-5.svg" alt="方案5">
+    </div>
+    <div class="card-info">
+      <div class="card-label">Light 05</div>
+      <div class="card-name">层次光</div>
+      <div class="card-desc">H 的三道光缝粗细不同：左竖主光最亮，右竖稍暗，横缝最细，有呼吸层次。</div>
+      <div class="size-row">
+        <span>32px</span>
+        <img src="logo-light-5.svg" width="32" height="32" alt="">
+        <span>16px</span>
+        <img src="logo-light-5.svg" width="16" height="16" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-preview">
+      <img src="logo-light-6.svg" alt="方案6">
+    </div>
+    <div class="card-info">
+      <div class="card-label">Light 06</div>
+      <div class="card-name">光点融合</div>
+      <div class="card-desc">光缝 H + 散落光点，融合之前的点阵元素，像光穿过混凝土小孔的效果。</div>
+      <div class="size-row">
+        <span>32px</span>
+        <img src="logo-light-6.svg" width="32" height="32" alt="">
+        <span>16px</span>
+        <img src="logo-light-6.svg" width="16" height="16" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

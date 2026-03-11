@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- H5：圆形点阵 + 中心 H -->
+  <rect width="512" height="512" rx="56" fill="#eceae6"/>
+  
+  <!-- 外圈点阵 -->
+  <g fill="#c8c7c2" opacity="0.5">
+    <circle cx="256" cy="72" r="4"/>
+    <circle cx="348" cy="99" r="4"/>
+    <circle cx="413" cy="164" r="4"/>
+    <circle cx="440" cy="256" r="4"/>
+    <circle cx="413" cy="348" r="4"/>
+    <circle cx="348" cy="413" r="4"/>
+    <circle cx="256" cy="440" r="4"/>
+    <circle cx="164" cy="413" r="4"/>
+    <circle cx="99" cy="348" r="4"/>
+    <circle cx="72" cy="256" r="4"/>
+    <circle cx="99" cy="164" r="4"/>
+    <circle cx="164" cy="99" r="4"/>
+  </g>
+  
+  <!-- 内圈点阵 -->
+  <g fill="#b8b5af" opacity="0.4">
+    <circle cx="256" cy="126" r="3"/>
+    <circle cx="348" cy="164" r="3"/>
+    <circle cx="386" cy="256" r="3"/>
+    <circle cx="348" cy="348" r="3"/>
+    <circle cx="256" cy="386" r="3"/>
+    <circle cx="164" cy="348" r="3"/>
+    <circle cx="126" cy="256" r="3"/>
+    <circle cx="164" cy="164" r="3"/>
+  </g>
+  
+  <!-- H 线条 — 纤细优雅 -->
+  <g stroke="#1a1a18" stroke-width="6" stroke-linecap="round" fill="none">
+    <line x1="204" y1="166" x2="204" y2="346"/>
+    <line x1="308" y1="166" x2="308" y2="346"/>
+    <line x1="204" y1="256" x2="308" y2="256"/>
+  </g>
+  
+  <!-- 四角方位标记 -->
+  <g stroke="#c8b898" stroke-width="1" opacity="0.45">
+    <line x1="52" y1="52" x2="72" y2="52"/><line x1="52" y1="52" x2="52" y2="72"/>
+    <line x1="460" y1="52" x2="440" y2="52"/><line x1="460" y1="52" x2="460" y2="72"/>
+    <line x1="52" y1="460" x2="72" y2="460"/><line x1="52" y1="460" x2="52" y2="440"/>
+    <line x1="460" y1="460" x2="440" y2="460"/><line x1="460" y1="460" x2="460" y2="440"/>
+  </g>
+</svg>

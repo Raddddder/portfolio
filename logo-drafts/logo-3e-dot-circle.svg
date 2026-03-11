@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 变体E：圆形点阵 + 中心 s -->
+  <rect width="512" height="512" rx="56" fill="#eceae6"/>
+  
+  <!-- 圆形排列的点阵 -->
+  <g fill="#c8c7c2" opacity="0.55">
+    <!-- 外圈 12 点 -->
+    <circle cx="256" cy="76" r="4"/>
+    <circle cx="346" cy="103" r="4"/>
+    <circle cx="409" cy="166" r="4"/>
+    <circle cx="436" cy="256" r="4"/>
+    <circle cx="409" cy="346" r="4"/>
+    <circle cx="346" cy="409" r="4"/>
+    <circle cx="256" cy="436" r="4"/>
+    <circle cx="166" cy="409" r="4"/>
+    <circle cx="103" cy="346" r="4"/>
+    <circle cx="76" cy="256" r="4"/>
+    <circle cx="103" cy="166" r="4"/>
+    <circle cx="166" cy="103" r="4"/>
+  </g>
+  
+  <g fill="#b8b5af" opacity="0.45">
+    <!-- 内圈 8 点 -->
+    <circle cx="256" cy="126" r="3"/>
+    <circle cx="348" cy="164" r="3"/>
+    <circle cx="386" cy="256" r="3"/>
+    <circle cx="348" cy="348" r="3"/>
+    <circle cx="256" cy="386" r="3"/>
+    <circle cx="164" cy="348" r="3"/>
+    <circle cx="126" cy="256" r="3"/>
+    <circle cx="164" cy="164" r="3"/>
+  </g>
+  
+  <!-- 中心 S 曲线 — 极细，书法感 -->
+  <path d="M 310 185 C 310 185 280 170 245 170 
+           C 210 170 190 185 190 208 
+           C 190 235 220 248 256 258 
+           C 295 268 325 282 325 312 
+           C 325 338 300 352 265 352 
+           C 230 352 200 338 200 338"
+        fill="none" stroke="#1a1a18" stroke-width="7" stroke-linecap="round"/>
+  
+  <!-- 四角极细的方位标记 -->
+  <line x1="55" y1="55" x2="75" y2="55" stroke="#c8b898" stroke-width="1" opacity="0.5"/>
+  <line x1="55" y1="55" x2="55" y2="75" stroke="#c8b898" stroke-width="1" opacity="0.5"/>
+  <line x1="457" y1="55" x2="437" y2="55" stroke="#c8b898" stroke-width="1" opacity="0.5"/>
+  <line x1="457" y1="55" x2="457" y2="75" stroke="#c8b898" stroke-width="1" opacity="0.5"/>
+  <line x1="55" y1="457" x2="75" y2="457" stroke="#c8b898" stroke-width="1" opacity="0.5"/>
+  <line x1="55" y1="457" x2="55" y2="437" stroke="#c8b898" stroke-width="1" opacity="0.5"/>
+  <line x1="457" y1="457" x2="437" y2="457" stroke="#c8b898" stroke-width="1" opacity="0.5"/>
+  <line x1="457" y1="457" x2="457" y2="437" stroke="#c8b898" stroke-width="1" opacity="0.5"/>
+</svg>

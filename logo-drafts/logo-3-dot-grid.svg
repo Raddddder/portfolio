@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 方案3：点阵秩序 + 极细 S -->
+  <rect width="512" height="512" rx="64" fill="#e0dfdc"/>
+  <!-- 点阵网格（4x4 暗示结构感） -->
+  <g fill="#b8b5af" opacity="0.5">
+    <circle cx="100" cy="100" r="4"/><circle cx="200" cy="100" r="4"/>
+    <circle cx="312" cy="100" r="4"/><circle cx="412" cy="100" r="4"/>
+    <circle cx="100" cy="200" r="4"/><circle cx="412" cy="200" r="4"/>
+    <circle cx="100" cy="312" r="4"/><circle cx="412" cy="312" r="4"/>
+    <circle cx="100" cy="412" r="4"/><circle cx="200" cy="412" r="4"/>
+    <circle cx="312" cy="412" r="4"/><circle cx="412" cy="412" r="4"/>
+  </g>
+  <!-- 中心细线 S -->
+  <path d="M 310 135 C 310 135 340 135 340 135 
+           C 370 135 370 160 370 175 
+           C 370 200 340 210 310 215 
+           L 200 240 
+           C 170 245 142 260 142 290 
+           C 142 320 170 340 200 340 
+           L 210 340 C 210 340 240 340 240 340" 
+        fill="none" stroke="#1a1a18" stroke-width="5" stroke-linecap="round"/>
+  <!-- 重新绘制更清晰的 S -->
+  <path d="M 320 150 L 220 150 C 180 150 155 175 155 210 C 155 245 180 260 220 268 L 290 284 C 330 292 355 310 355 345 C 355 380 330 400 290 400 L 190 400" 
+        fill="none" stroke="#1a1a18" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

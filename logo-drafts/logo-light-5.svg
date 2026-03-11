@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="light5a" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e8dcc8" stop-opacity="0.6"/>
+    </linearGradient>
+    <linearGradient id="light5b" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0ece0"/>
+      <stop offset="100%" stop-color="#c8b898" stop-opacity="0.4"/>
+    </linearGradient>
+    <filter id="glow5a">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow5b">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="ambient5">
+      <feGaussianBlur stdDeviation="25"/>
+    </filter>
+    <clipPath id="roundRect5">
+      <rect width="512" height="512" rx="56"/>
+    </clipPath>
+  </defs>
+  
+  <g clip-path="url(#roundRect5)">
+    <!-- 深色混凝土底 -->
+    <rect width="512" height="512" fill="#1c1c1a"/>
+    
+    <!-- 混凝土模板缝 -->
+    <g stroke="#262624" stroke-width="0.6" opacity="0.5">
+      <line x1="0" y1="102" x2="512" y2="102"/>
+      <line x1="0" y1="205" x2="512" y2="205"/>
+      <line x1="0" y1="307" x2="512" y2="307"/>
+      <line x1="0" y1="410" x2="512" y2="410"/>
+    </g>
+    
+    <!-- 左竖光的散射 -->
+    <rect x="150" y="70" width="50" height="372" fill="#f5eedd" opacity="0.04" filter="url(#ambient5)"/>
+    
+    <!-- H 光缝 — 粗细层次 -->
+    <!-- 左竖（主光源，最亮最粗） -->
+    <g filter="url(#glow5a)">
+      <rect x="170" y="90" width="14" height="332" rx="2" fill="url(#light5a)"/>
+    </g>
+    
+    <!-- 右竖（次光源，稍细） -->
+    <g filter="url(#glow5b)">
+      <rect x="328" y="90" width="8" height="332" rx="1.5" fill="url(#light5b)" opacity="0.8"/>
+    </g>
+    
+    <!-- 横缝（最细，连接光） -->
+    <g filter="url(#glow5b)">
+      <rect x="184" y="252" width="144" height="5" rx="1" fill="url(#light5b)" opacity="0.7"/>
+    </g>
+    
+    <!-- 灰尘微粒 -->
+    <g fill="#ffffff" opacity="0.12">
+      <circle cx="178" cy="150" r="1.2"/>
+      <circle cx="174" cy="230" r="0.8"/>
+      <circle cx="180" cy="320" r="1"/>
+      <circle cx="332" cy="180" r="0.7"/>
+      <circle cx="330" cy="300" r="0.9"/>
+      <circle cx="250" cy="254" r="0.6"/>
+    </g>
+  </g>
+</svg>

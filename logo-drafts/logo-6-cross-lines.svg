@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 方案6：建筑平面图式——交叉线条构成的抽象标记 -->
+  <rect width="512" height="512" rx="64" fill="#fafaf8"/>
+  <!-- 外框 -->
+  <rect x="56" y="56" width="400" height="400" fill="none" stroke="#1a1a18" stroke-width="1.5" opacity="0.15"/>
+  <!-- 十字结构线 -->
+  <line x1="256" y1="100" x2="256" y2="412" stroke="#1a1a18" stroke-width="1" opacity="0.12"/>
+  <line x1="100" y1="256" x2="412" y2="256" stroke="#1a1a18" stroke-width="1" opacity="0.12"/>
+  <!-- 核心标记：两条对角线交错形成动感 -->
+  <line x1="160" y1="160" x2="352" y2="352" stroke="#1a1a18" stroke-width="10" stroke-linecap="round"/>
+  <line x1="160" y1="352" x2="352" y2="160" stroke="#1a1a18" stroke-width="10" stroke-linecap="round"/>
+  <!-- 中心小圆 -->
+  <circle cx="256" cy="256" r="24" fill="none" stroke="#c8b898" stroke-width="2.5"/>
+  <!-- 四角点 -->
+  <circle cx="160" cy="160" r="6" fill="#1a1a18"/>
+  <circle cx="352" cy="160" r="6" fill="#1a1a18"/>
+  <circle cx="160" cy="352" r="6" fill="#1a1a18"/>
+  <circle cx="352" cy="352" r="6" fill="#1a1a18"/>
+</svg>

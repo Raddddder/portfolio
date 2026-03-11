@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 变体D：点阵边框 + 中心字组 -->
+  <rect width="512" height="512" rx="56" fill="#efeeeb"/>
+  
+  <!-- 点阵构成的方形边框 -->
+  <g fill="#b8b5af" opacity="0.7">
+    <!-- 顶边 -->
+    <circle cx="80" cy="80" r="4"/><circle cx="128" cy="80" r="4"/>
+    <circle cx="176" cy="80" r="4"/><circle cx="224" cy="80" r="4"/>
+    <circle cx="272" cy="80" r="4"/><circle cx="320" cy="80" r="4"/>
+    <circle cx="368" cy="80" r="4"/><circle cx="416" cy="80" r="4"/>
+    <!-- 右边 -->
+    <circle cx="432" cy="128" r="4"/><circle cx="432" cy="176" r="4"/>
+    <circle cx="432" cy="224" r="4"/><circle cx="432" cy="272" r="4"/>
+    <circle cx="432" cy="320" r="4"/><circle cx="432" cy="368" r="4"/>
+    <circle cx="432" cy="416" r="4"/>
+    <!-- 底边 -->
+    <circle cx="80" cy="432" r="4"/><circle cx="128" cy="432" r="4"/>
+    <circle cx="176" cy="432" r="4"/><circle cx="224" cy="432" r="4"/>
+    <circle cx="272" cy="432" r="4"/><circle cx="320" cy="432" r="4"/>
+    <circle cx="368" cy="432" r="4"/><circle cx="416" cy="432" r="4"/>
+    <!-- 左边 -->
+    <circle cx="80" cy="128" r="4"/><circle cx="80" cy="176" r="4"/>
+    <circle cx="80" cy="224" r="4"/><circle cx="80" cy="272" r="4"/>
+    <circle cx="80" cy="320" r="4"/><circle cx="80" cy="368" r="4"/>
+    <circle cx="80" cy="416" r="4"/>
+  </g>
+  
+  <!-- 中心 SW 字组 — Cormorant Garamond 感 -->
+  <text x="256" y="285" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-weight="300" font-size="160" fill="#1a1a18" letter-spacing="-8">SW</text>
+  
+  <!-- 底部极细横线 -->
+  <line x1="176" y1="340" x2="336" y2="340" stroke="#c8b898" stroke-width="1.5" opacity="0.6"/>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="light2" x1="0.3" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#f0e8d4" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#c8b898" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="wall2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2e2e2a"/>
+      <stop offset="100%" stop-color="#1a1a18"/>
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softglow2">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <clipPath id="roundRect2">
+      <rect width="512" height="512" rx="56"/>
+    </clipPath>
+  </defs>
+  
+  <g clip-path="url(#roundRect2)">
+    <!-- 混凝土暗面 -->
+    <rect width="512" height="512" fill="url(#wall2)"/>
+    
+    <!-- 极淡的混凝土纹理线 -->
+    <g stroke="#3d3d38" stroke-width="0.5" opacity="0.3">
+      <line x1="0" y1="128" x2="512" y2="128"/>
+      <line x1="0" y1="256" x2="512" y2="256"/>
+      <line x1="0" y1="384" x2="512" y2="384"/>
+    </g>
+    
+    <!-- 光的散射区域（柔和的大光晕） -->
+    <ellipse cx="256" cy="256" rx="120" ry="200" fill="#c8b898" opacity="0.04" filter="url(#softglow2)"/>
+    
+    <!-- H 光缝 — 微微发光 -->
+    <g filter="url(#glow2)">
+      <!-- 左竖 -->
+      <rect x="182" y="116" width="7" height="280" rx="1.5" fill="url(#light2)"/>
+      <!-- 右竖 -->
+      <rect x="323" y="116" width="7" height="280" rx="1.5" fill="url(#light2)"/>
+      <!-- 横 -->
+      <rect x="182" y="253" width="148" height="7" rx="1.5" fill="url(#light2)"/>
+    </g>
+    
+    <!-- 光线在地面的投射 -->
+    <polygon points="182,396 170,480 196,480" fill="url(#light2)" opacity="0.06"/>
+    <polygon points="323,396 311,480 349,480" fill="url(#light2)" opacity="0.06"/>
+  </g>
+</svg>

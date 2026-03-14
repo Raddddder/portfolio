@@ -408,6 +408,25 @@ nav a:hover { color: var(--accent); }
 
 .project-item:hover .project-img img { transform: scale(1.16); }
 
+/* 竖版封面图适配 */
+.project-img-portrait {
+  background: #F4F1EA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.project-img-portrait img {
+  width: auto;
+  height: 100%;
+  max-width: 60%;
+  object-fit: contain;
+  transform: scale(1);
+}
+
+.project-item:hover .project-img-portrait img { transform: scale(1.04); }
+
 .project-info {
   padding: 24px 32px 28px;
   display: flex;
@@ -1076,7 +1095,7 @@ footer {
     <span class="ticker-item"><strong>Nendo</strong>留白 · 物件 · 静默品牌</span>
     <span class="ticker-item"><strong>Virtual Interview</strong>AI · DeepSeek · 用户研究</span>
     <span class="ticker-item"><strong>Bain Case</strong>AI+ESG · 新能源 · 五年战略</span>
-    <span class="ticker-item"><strong>食录</strong>AI生成 · 社区食评 · React</span>
+    <span class="ticker-item"><strong>食录</strong>活字印刷风 · AI 司膳 · 社区食评</span>
     <span class="ticker-item"><strong>Photography</strong>Planned · 城市观察</span>
     <span class="ticker-item"><strong>Writing</strong>Planned · 设计思考</span>
     <!-- duplicate -->
@@ -1084,7 +1103,7 @@ footer {
     <span class="ticker-item"><strong>Nendo</strong>留白 · 物件 · 静默品牌</span>
     <span class="ticker-item"><strong>Virtual Interview</strong>AI · DeepSeek · 用户研究</span>
     <span class="ticker-item"><strong>Bain Case</strong>AI+ESG · 新能源 · 五年战略</span>
-    <span class="ticker-item"><strong>食录</strong>AI生成 · 社区食评 · React</span>
+    <span class="ticker-item"><strong>食录</strong>活字印刷风 · AI 司膳 · 社区食评</span>
     <span class="ticker-item"><strong>Photography</strong>Planned · 城市观察</span>
     <span class="ticker-item"><strong>Writing</strong>Planned · 设计思考</span>
   </div>
@@ -1094,7 +1113,7 @@ footer {
 <section class="section" id="design">
   <div class="section-header">
     <span class="section-title">01 · 设计作品</span>
-    <span class="section-more" style="color:var(--gray);cursor:default;">视觉网页实验</span>
+    <span class="section-more" style="color:var(--gray);cursor:default;">视觉网页实验 · 交互设计</span>
   </div>
   <div class="project-grid">
     <a class="project-item fade-in" href="./works/soviet/index.html">
@@ -1135,6 +1154,25 @@ footer {
         <div class="project-arrow">View Project</div>
       </div>
     </a>
+    <a class="project-item fade-in" href="./works/food-booklet/index.html">
+      <div class="project-img project-img-portrait">
+        <img loading="lazy" src="./works/food-booklet/food-booklet-cover.png" alt="食录 The Food Booklet" style="object-position: center top;">
+      </div>
+      <div class="project-info">
+        <div class="project-meta">
+          <span class="project-num">03</span>
+          <span class="project-cat experimental">Experimental</span>
+        </div>
+        <div class="project-name">食录 / 大学城饮食情报网络</div>
+        <div class="project-desc">宋体活字印刷风的食评社区 · AI 司膳。</div>
+        <div class="project-chips">
+          <span>Visual Design</span>
+          <span>React + AI</span>
+          <span>Typography</span>
+        </div>
+        <div class="project-arrow">View Project</div>
+      </div>
+    </a>
   </div>
 </section>
 
@@ -1151,7 +1189,7 @@ footer {
       </div>
       <div class="project-info">
         <div class="project-meta">
-          <span class="project-num">03</span>
+          <span class="project-num">04</span>
           <span class="project-cat product">Product / AI</span>
         </div>
         <div class="project-name">Virtual Interview / AI 访谈系统</div>
@@ -1170,7 +1208,7 @@ footer {
       </div>
       <div class="project-info">
         <div class="project-meta">
-          <span class="project-num">04</span>
+          <span class="project-num">05</span>
           <span class="project-cat product">Strategy</span>
         </div>
         <div class="project-name">Bain Case / AI+ESG 增长战略</div>
@@ -1179,25 +1217,6 @@ footer {
           <span>Case Competition</span>
           <span>AI + ESG</span>
           <span>Strategy</span>
-        </div>
-        <div class="project-arrow">View Project</div>
-      </div>
-    </a>
-    <a class="project-item fade-in" href="./works/food-booklet/index.html">
-      <div class="project-img" style="background: #F4F1EA;">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=800&q=80" alt="食录 The Food Booklet" style="object-position: center center;">
-      </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span class="project-num">05</span>
-          <span class="project-cat product">Product / AI</span>
-        </div>
-        <div class="project-name">食录 / 大学城饮食情报网络</div>
-        <div class="project-desc">AI 生成美食影像 · 社区化食评。</div>
-        <div class="project-chips">
-          <span>React</span>
-          <span>Gemini AI</span>
-          <span>Tailwind</span>
         </div>
         <div class="project-arrow">View Project</div>
       </div>
@@ -1216,13 +1235,13 @@ footer {
       <span class="board-num">01</span>
       <span class="board-label">Design</span>
       <div class="board-name">设计</div>
-      <div class="board-status">2 Projects Live</div>
+      <div class="board-status">3 Projects Live</div>
     </div>
     <div class="board-card fade-in">
       <span class="board-num">02</span>
       <span class="board-label">Practice</span>
       <div class="board-name">实践</div>
-      <div class="board-status">3 Projects Live</div>
+      <div class="board-status">2 Projects Live</div>
     </div>
     <div class="board-card fade-in">
       <span class="board-num">03</span>

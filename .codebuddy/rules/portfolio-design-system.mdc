@@ -1,0 +1,226 @@
+---
+description: Portfolio 网站设计系统规范。涉及页面设计、CSS 风格、排版、配色、动画、组件结构等问题时使用。
+alwaysApply: false
+enabled: true
+updatedAt: 2026-03-11T09:46:23.711Z
+provider: 
+---
+
+# Portfolio 设计系统 — H · Design Archive
+
+## 设计哲学
+
+融合四位日本设计大师的美学理念：
+- **安藤忠雄** — 清水混凝土，极简结构线条
+- **隈研吾** — 木与光，自然材质点缀
+- **原研哉** — "白"的哲学，留白与虚无容器
+- **三宅一生** — 褶皱与空气感，微妙的层次变化
+
+风格关键词：**日式建筑美学 + 瑞士排版**，极度克制，接近无彩色。
+
+---
+
+## 架构原则
+
+- **单文件 SPA**：HTML / CSS / JS 全部内联在一个 `index.html` 中，零构建工具依赖
+- **纯原生 JS**：不使用任何第三方库或框架
+- **Google Fonts CDN**：通过 `<link>` 引入字体
+- **语义化 HTML**：`<header>` / `<main>` / `<section>` / `<footer>` 结构清晰
+- **文档语言**：`zh-CN`
+
+---
+
+## CSS 变量体系
+
+```css
+:root {
+  /* 清水混凝土色阶（6级灰） */
+  --concrete-0: #fafafa;
+  --concrete-1: #f5f5f4;
+  --concrete-2: #ececea;
+  --concrete-3: #e0dfdc;
+  --concrete-4: #d4d2ce;
+  --concrete-5: #b8b5af;
+
+  /* 木色（桧木 — 唯一的暖色点缀） */
+  --hinoki: #c8b898;
+  --hinoki-light: #e8dcc8;
+
+  /* 墨色层级（5级） */
+  --ink-100: #1a1a18;  /* 最深 — 标题 */
+  --ink-80: #3d3d38;   /* 正文 */
+  --ink-60: #6b6b64;   /* 次要文字 */
+  --ink-40: #9e9d96;   /* 辅助/标签 */
+  --ink-20: #c8c7c2;   /* 最淡 — 编号 */
+
+  /* 功能色 */
+  --bg: #fafaf8;           /* 微暖白背景 */
+  --surface: #ffffff;      /* 卡片白 */
+  --line: rgba(26,26,24,0.07);
+  --line-strong: rgba(26,26,24,0.12);
+  --shadow-s: 0 2px 20px rgba(0,0,0,0.03);
+  --shadow-m: 0 8px 40px rgba(0,0,0,0.05);
+  --shadow-l: 0 20px 60px rgba(0,0,0,0.07);
+
+  --radius: 6px;
+  --content-w: min(1120px, calc(100vw - 48px));
+}
+```
+
+**配色核心原则**：
+- 整体无彩色，仅用明度和极低饱和度的暖灰表达层次
+- `--hinoki`（桧木色）是**唯一的色彩**，仅出现在 Logo 中心点和 Hero 标题斜体
+- 不使用任何纯色彩色（无蓝/红/绿等）
+
+---
+
+## 排版系统
+
+| 用途 | 字体 | 字重 |
+|------|------|------|
+| 西文标题 / 数字 / 编号 | Cormorant Garamond（衬线） | 300, 400, 500, 600 |
+| 中文标题 | Noto Serif SC（宋体） | 400, 500, 600 |
+| 正文 / UI | Noto Sans SC（黑体） | 200, 300, 400, 500 |
+| 后备 | Hiragino Sans, PingFang SC | — |
+
+**字体加载**：
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+SC:wght@200;300;400;500&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+```
+
+**排版规则**：
+- 基础字号 `15px`，行高 `1.7`
+- 标签/标注统一 `text-transform: uppercase`，`letter-spacing: 0.10em ~ 0.22em`
+- Hero 标题使用 `clamp()` 流式响应：`clamp(3.2rem, 7vw, 5.6rem)`
+- 开启 `-webkit-font-smoothing: antialiased` 和 `text-rendering: optimizeLegibility`
+
+---
+
+## Class 命名规范
+
+采用 **kebab-case 模块-元素**二级结构（非 BEM `__` `--` 风格）：
+
+| 模块 | 示例 |
+|------|------|
+| 导航 | `site-nav-wrap` / `nav-brand` / `nav-brand-logo` / `nav-brand-mark` / `nav-links` |
+| Hero | `hero-bg` / `hero-content` / `hero-text` / `hero-kicker` / `hero-title` / `hero-desc` / `hero-line` / `hero-stats` / `hero-stat-num` / `hero-stat-label` |
+| Section | `section-head` / `section-index` / `section-title` / `section-note` |
+| 项目卡片 | `project-grid` / `project-card` / `project-media` / `project-body` / `project-topline` / `project-num` / `project-tag` / `project-name` / `project-caption` / `project-chips` / `project-go` |
+| 看板卡片 | `board-grid` / `board-card` / `board-no` / `board-name` / `board-status` / `board-desc` |
+| 结尾 | `closing` / `closing-title` / `closing-text` |
+| 状态类 | `.scrolled` / `.active` / `.visible` / `.fade-in` |
+| 项目修饰符 | `.soviet` / `.nendo`（直接加在 `.project-card` 上） |
+
+---
+
+## 组件规范
+
+### 导航栏
+- 固定定位 `position: fixed`，`z-index: 100`
+- Hero 区域内：**透明背景 + 白色文字**
+- 滚动超过 Hero 70% 高度后：添加 `.scrolled` 类 → 白底毛玻璃 `blur(24px) saturate(120%)` + 深色文字
+- 链接 hover：下划线 `width: 0 → 100%` 水平展开动画
+- Logo：SVG 内嵌，点阵构成的 "H"，中心点为 `--hinoki` 色
+
+### Hero 区域
+- 全屏高度 `min-height: 100svh`
+- 背景图 `<img>` + `object-fit: cover`
+- 多层渐变遮罩叠加（底/顶/左/右/右下角径向 + box-shadow 暗角）
+- 文字在底部左侧，白色文字叠在暗色渐变上
+- 标题中 `<em>` 用 `--hinoki-light` 色
+- 图片优化：`fetchpriority="high"` + `decoding="async"`，优先用 JPEG/WebP 而非 PNG
+
+### 项目卡片
+- 2 列 Grid 布局 `repeat(2, 1fr)`
+- 白色卡片 + 1px 淡边框 + 6px 圆角
+- 悬停：`translateY(-6px)` + 投影加深 + 图片 `scale(1.03)`
+- 内容结构：编号 / 标签 / 标题 / 描述 / chips / "View Project" 链接
+- 图片懒加载 `loading="lazy"`
+
+### 看板卡片
+- 4 列 Grid
+- 最小高度 `200px`，flex 纵向布局
+- `.active` 状态：左边框 2px 实线
+- 编号用 Cormorant Garamond 大字
+
+### Section 头部
+- flex 两端对齐，底部 1px 分割线
+- 左侧：编号（Cormorant Garamond）+ 中文标题（Noto Serif SC）
+- 右侧：简短说明文字
+
+---
+
+## 动画规范
+
+- **核心缓动函数**：`cubic-bezier(0.22, 1, 0.36, 1)` — "弹性减速"，贯穿全站
+- **滚动渐入**：`.fade-in` → `.fade-in.visible`，`translateY(20px) + opacity 0→1`，时长 `0.7s`
+- **卡片悬停**：过渡 `0.5s ~ 0.8s`，同一缓动曲线
+- **无 keyframe 动画**：全靠 `transition` + JS 类名切换
+- **交互克制**：无弹窗、无轮播、无花哨特效
+
+---
+
+## 响应式断点
+
+| 断点 | 关键变化 |
+|------|---------|
+| `≤1024px` | Hero 纵向排列，隐藏滚动提示，Closing 单列，Section 头部纵向 |
+| `≤768px` | 项目/看板 Grid 改单列，导航纵向堆叠，间距缩小 |
+| `≤480px` | `--content-w` 改为 `100vw - 32px`，Hero 标题缩小，统计数据纵向 |
+
+---
+
+## JS 交互（纯原生）
+
+仅 3 个功能模块：
+
+1. **滚动渐入**：`IntersectionObserver`，`threshold: 0.1`，`rootMargin: '0px 0px -40px 0px'`
+2. **导航背景切换**：`window.scrollY > hero.offsetHeight * 0.7` 时添加 `.scrolled`，`passive: true`
+3. **导航高亮**：根据滚动位置判断当前 section，自动切换 `.active`
+
+---
+
+## CSS 注释规范
+
+每个模块用日本设计师名字标注美学参照：
+
+```css
+/* ═══ NAVIGATION — 安藤式极简水平线 ═══ */
+/* ═══ HERO — 全屏光影主图 + 文字叠层 ═══ */
+/* ═══ SECTION — 安藤忠雄式横向结构 ═══ */
+/* ═══ PROJECT CARDS — 三宅一生式"褶皱"卡片 ═══ */
+/* ═══ BOARDS — 隈研吾式木格栅卡片 ═══ */
+/* ═══ CLOSING — 原研哉"虚无的容器" ═══ */
+```
+
+分隔线用 `═══` 双线。
+
+---
+
+## 图片优化规范
+
+- Hero 背景图使用 **JPEG**（不需要透明通道时），避免 PNG
+- 项目卡片内图片统一 `loading="lazy"`
+- Hero 图片加 `fetchpriority="high"` + `decoding="async"`
+- 推荐压缩到 300KB 以内
+- 如有水印，通过 CSS 多层渐变 + `box-shadow: inset` 暗角遮盖
+
+---
+
+## 项目文件结构
+
+```
+/
+├── index.html          ← 主页（HTML/CSS/JS 全内联）
+├── 404.html            ← 自定义 404 页
+├── favicon.svg         ← SVG 图标（点阵 H）
+├── logo-drafts/        ← Logo 设计迭代记录
+└── works/              ← 作品子项目
+    ├── hero-light.jpg  ← Hero 背景图
+    ├── soviet/         ← 项目 01
+    ├── nendo/          ← 项目 02
+    ├── virtual-interview/ ← 项目 03
+    └── bain-case/      ← 项目 04
+```

@@ -1,0 +1,5 @@
+{
+  "name": "食录 (The Food booklet)",
+  "description": "大学城周边最懂真实就餐场景的饮食情报网络",
+  "requestFramePermissions": ["camera", "geolocation"]
+}

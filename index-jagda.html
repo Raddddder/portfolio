@@ -115,19 +115,19 @@ nav a:hover { color: var(--accent); }
   overflow: hidden;
 }
 
-.hero-bg-text {
+.hero-particles {
   position: absolute;
-  top: 30px;
-  right: -10px;
-  font-family: var(--mono);
-  font-size: 220px;
-  font-weight: 400;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--light);
-  letter-spacing: -0.05em;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
-  line-height: 1;
 }
+
+.hero-left > *:not(.hero-particles) {
+  position: relative;
+  z-index: 1;
+}
+
+
 
 .hero-year {
   font-family: var(--mono);
@@ -574,79 +574,430 @@ nav a:hover { color: var(--accent); }
 
 .board-status.planned { color: var(--gray); }
 
-/* ── FEATURED STRIP (replaces poster section) ── */
-.featured-strip {
+/* ── PROJECT ROW (横条布局) ── */
+.project-row {
   display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 48px;
-  align-items: start;
-  padding: 56px 48px;
+  grid-template-columns: 1fr 380px;
+  gap: 0;
   border-bottom: 1px solid var(--black);
-}
-
-.featured-info {}
-
-.featured-tag {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  text-decoration: none;
   color: var(--black);
-  border: 1px solid var(--black);
-  display: inline-block;
-  padding: 3px 8px;
-  margin-bottom: 28px;
+  transition: background 0.25s;
+  cursor: pointer;
 }
 
-.featured-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  color: var(--gray);
+.project-row:hover { background: rgba(0,0,0,0.015); }
+
+.project-row-info {
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid var(--light);
+}
+
+.project-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   margin-bottom: 14px;
 }
 
-.featured-title {
+.project-row-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+}
+
+.project-row-cat {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  padding: 2px 6px;
+  color: var(--gray);
+}
+
+.project-row-cat.experimental { color: var(--accent); border-color: var(--accent); }
+.project-row-cat.product { color: var(--black); border-color: var(--black); }
+
+.project-row-name {
   font-family: var(--serif);
-  font-size: clamp(18px, 2vw, 26px);
+  font-size: 20px;
   font-weight: 300;
-  line-height: 1.6;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.project-row-desc {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.8;
+  max-width: 400px;
+  margin-bottom: 14px;
+}
+
+.project-row-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-bottom: 16px;
 }
 
-.featured-body {
-  font-size: 13px;
-  line-height: 2;
+.project-row-chips span {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--gray);
-  max-width: 460px;
-  margin-bottom: 24px;
 }
 
-.featured-visual {
+.project-row-chips span::before {
+  content: '·';
+  margin-right: 4px;
+  color: var(--light);
+}
+
+.project-row-chips span:first-child::before { display: none; }
+
+.project-row-arrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  transition: color 0.2s;
+}
+
+.project-row-arrow::after { content: ' →'; transition: transform 0.2s; }
+.project-row:hover .project-row-arrow { color: var(--accent); }
+
+.project-row-visual {
   overflow: hidden;
+  background: var(--light);
   position: relative;
-  background: #e8e6e1;
-  aspect-ratio: 4 / 3;
 }
 
-.featured-visual img {
+.project-row-visual img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
-  transform: scale(1.12);
+  transform: scale(1.08);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.featured-visual-overlay {
-  position: absolute;
-  bottom: 8px;
-  left: 10px;
+.project-row:hover .project-row-visual img { transform: scale(1.14); }
+
+.project-row-visual.portrait {
+  background: #F4F1EA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.project-row-visual.portrait img {
+  width: auto;
+  height: 85%;
+  max-width: 55%;
+  object-fit: contain;
+  transform: scale(1);
+}
+
+.project-row:hover .project-row-visual.portrait img { transform: scale(1.04); }
+
+/* ── SIMPLE ROW (02+ 板块简化版) ── */
+.simple-row {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 0;
+  border-bottom: 1px solid var(--light);
+  text-decoration: none;
+  color: var(--black);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.simple-row:last-child { border-bottom: 1px solid var(--black); }
+.simple-row:hover { background: rgba(0,0,0,0.015); }
+
+.simple-row-info {
+  padding: 28px 48px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  border-right: 1px solid var(--light);
+}
+
+.simple-row-num {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--light);
+  -webkit-text-stroke: 1px var(--black);
+  line-height: 1;
+  flex-shrink: 0;
+  letter-spacing: -0.03em;
+}
+
+.simple-row-text { flex: 1; }
+
+.simple-row-name {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.simple-row-desc {
+  font-size: 11px;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+.simple-row-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.simple-row-chips span {
   font-family: var(--mono);
   font-size: 7px;
-  color: rgba(0,0,0,0.35);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.simple-row-arrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.simple-row-arrow::after { content: ' →'; }
+.simple-row:hover .simple-row-arrow { color: var(--accent); }
+
+.simple-row-visual {
+  overflow: hidden;
+  background: var(--light);
+}
+
+.simple-row-visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transform: scale(1.06);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.simple-row:hover .simple-row-visual img { transform: scale(1.1); }
+
+/* ── BOARD LIST (极简横条) ── */
+.board-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  border-bottom: 1px solid var(--light);
+  transition: background 0.2s;
+}
+
+.board-row:last-child { border-bottom: none; }
+.board-row:hover { background: rgba(0,0,0,0.015); }
+
+.board-row-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.board-row-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+  width: 24px;
+}
+
+.board-row-name {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.board-row-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  margin-left: 12px;
+}
+
+.board-row-status {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.board-row-status.planned { color: var(--gray); }
+
+/* ── WRITING ARTICLE (写作展开卡片) ── */
+.board-writing-toggle {
+  cursor: pointer;
+  user-select: none;
+}
+
+.board-writing-toggle .board-row-status::after {
+  content: ' ↓';
+  font-size: 10px;
+  transition: transform 0.3s;
+  display: inline-block;
+}
+
+.board-writing-toggle.expanded .board-row-status::after {
+  content: ' ↑';
+}
+
+.writing-article {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  border-bottom: 1px solid var(--light);
+}
+
+.writing-article.open {
+  max-height: 3000px;
+}
+
+.writing-article-inner {
+  padding: 48px;
+  max-width: 680px;
+}
+
+.writing-article-tag {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.writing-article-tag::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.writing-article-title {
+  font-family: var(--serif);
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 300;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.writing-article-subtitle {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--gray);
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.writing-article-body h3 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin: 32px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--light);
+}
+
+.writing-article-body h3:first-child { margin-top: 0; }
+
+.writing-article-body p {
+  font-size: 13px;
+  line-height: 2.2;
+  color: var(--gray);
+  margin-bottom: 16px;
+}
+
+.writing-article-body p strong {
+  color: var(--black);
+  font-weight: 400;
+}
+
+.writing-article-body blockquote {
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-left: 2px solid var(--accent);
+  background: rgba(0,0,0,0.012);
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 2;
+  color: var(--black);
+  font-style: normal;
+}
+
+.writing-article-body blockquote cite {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  margin-top: 12px;
+  font-style: normal;
+}
+
+.writing-article-footer {
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--light);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.writing-article-footer span {
+  font-family: var(--mono);
+  font-size: 8px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  color: var(--gray);
 }
+
+.writing-article-footer a {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  margin-left: auto;
+  transition: opacity 0.2s;
+}
+
+.writing-article-footer a:hover { opacity: 0.7; }
 
 /* ── EXPERIENCE ── */
 .exp-grid {
@@ -1007,10 +1358,13 @@ footer {
   .hero-left { border-right: none; border-bottom: 1px solid var(--black); padding: 48px 24px; }
   .hero-right { grid-template-rows: auto auto; }
   .hero-feature { padding: 28px 24px; }
-  .featured-strip { grid-template-columns: 1fr; padding: 40px 24px; gap: 24px; }
-  .featured-visual { max-width: 320px; }
   .about-strip { grid-template-columns: 1fr; gap: 40px; padding: 48px 24px; }
-  .section-header, .project-info { padding-left: 24px; padding-right: 24px; }
+  .section-header { padding-left: 24px; padding-right: 24px; }
+  .project-row { grid-template-columns: 1fr 280px; }
+  .project-row-info { padding: 32px 24px; }
+  .simple-row { grid-template-columns: 1fr 200px; }
+  .simple-row-info { padding: 24px; gap: 20px; }
+  .board-row { padding: 16px 24px; }
   .exp-grid { grid-template-columns: 1fr; }
   .exp-card { border-right: none; border-bottom: 1px solid var(--black); }
   .exp-card:last-child { border-bottom: none; }
@@ -1021,10 +1375,12 @@ footer {
 
 @media (max-width: 768px) {
   nav { display: none; }
-  .project-grid, .boards-grid { grid-template-columns: 1fr; }
-  .project-item { border-right: none !important; }
-  .board-card { border-right: none; border-bottom: 1px solid var(--light); min-height: auto; }
-  .board-card:last-child { border-bottom: none; }
+  .project-row { grid-template-columns: 1fr; }
+  .project-row-info { border-right: none; }
+  .project-row-visual { height: 220px; }
+  .simple-row { grid-template-columns: 1fr; }
+  .simple-row-visual { height: 160px; }
+  .simple-row-info { border-right: none; }
   .footer-top { flex-direction: column; gap: 20px; }
   .footer-nav { flex-wrap: wrap; gap: 16px; }
   footer { padding: 32px 24px; }
@@ -1032,7 +1388,6 @@ footer {
 
 @media (max-width: 480px) {
   .hero-title { font-size: clamp(26px, 10vw, 36px); }
-  .hero-bg-text { font-size: 120px; }
   .stat-grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -1055,7 +1410,7 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-bg-text">Fo</div>
+    <canvas class="hero-particles" id="heroParticles"></canvas>
     <div class="hero-year fade-up">Design · Strategy · Code — 2026</div>
     <h1 class="hero-title fade-up delay-1">
       振凯的<br><em>作品集</em>
@@ -1115,65 +1470,66 @@ footer {
     <span class="section-title">01 · 设计作品</span>
     <span class="section-more" style="color:var(--gray);cursor:default;">视觉网页实验 · 交互设计</span>
   </div>
-  <div class="project-grid">
-    <a class="project-item fade-in" href="./works/soviet/index.html">
-      <div class="project-img">
-        <img loading="lazy" src="./works/soviet/Gemini_Generated_Image_ap1natap1natap1n.webp" alt="苏联构成主义网页" style="object-position: center 18%;">
+
+  <a class="project-row fade-in" href="./works/soviet/index.html">
+    <div class="project-row-info">
+      <div class="project-row-meta">
+        <span class="project-row-num">01</span>
+        <span class="project-row-cat experimental">Experimental</span>
       </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span class="project-num">01</span>
-          <span class="project-cat experimental">Experimental</span>
-        </div>
-        <div class="project-name">ИKAP / 构成主义网页实验</div>
-        <div class="project-desc">几何、红色秩序与纪念碑式编排。</div>
-        <div class="project-chips">
-          <span>Art Direction</span>
-          <span>Editorial</span>
-          <span>Visual Experiment</span>
-        </div>
-        <div class="project-arrow">View Project</div>
+      <div class="project-row-name">ИKAP / 构成主义网页实验</div>
+      <div class="project-row-desc">以苏联构成主义运动为灵感，用纯 HTML/CSS 重新诠释 El Lissitzky 的视觉语法——斜线构图、红黑对撞、纪念碑式排版。</div>
+      <div class="project-row-chips">
+        <span>Art Direction</span>
+        <span>Editorial</span>
+        <span>Visual Experiment</span>
       </div>
-    </a>
-    <a class="project-item fade-in" href="./works/nendo/index.html">
-      <div class="project-img">
-        <img loading="lazy" src="./works/nendo/images/hero-vase.jpg" alt="Nendo 设计工作室" style="object-position: center 46%;">
+      <div class="project-row-arrow">View Project</div>
+    </div>
+    <div class="project-row-visual">
+      <img loading="lazy" src="./works/soviet/Gemini_Generated_Image_ap1natap1natap1n.webp" alt="苏联构成主义网页" style="object-position: center 18%;">
+    </div>
+  </a>
+
+  <a class="project-row fade-in" href="./works/nendo/index.html">
+    <div class="project-row-info">
+      <div class="project-row-meta">
+        <span class="project-row-num">02</span>
+        <span class="project-row-cat">Brand Web</span>
       </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span class="project-num">02</span>
-          <span class="project-cat">Brand Web</span>
-        </div>
-        <div class="project-name">Nendo / 静默品牌展示站</div>
-        <div class="project-desc">留白与物件的品牌型作品册。</div>
-        <div class="project-chips">
-          <span>Brand Narrative</span>
-          <span>Minimal</span>
-          <span>Studio Presentation</span>
-        </div>
-        <div class="project-arrow">View Project</div>
+      <div class="project-row-name">Nendo / 静默品牌展示站</div>
+      <div class="project-row-desc">留白与物件的品牌型作品册。极简主义设计哲学，用呼吸感传递 Nendo 工作室的设计气质。</div>
+      <div class="project-row-chips">
+        <span>Brand Narrative</span>
+        <span>Minimal</span>
+        <span>Studio Presentation</span>
       </div>
-    </a>
-    <a class="project-item fade-in" href="./works/food-booklet/index.html">
-      <div class="project-img project-img-portrait">
-        <img loading="lazy" src="./works/food-booklet/food-booklet-cover.png" alt="食录 The Food Booklet" style="object-position: center top;">
+      <div class="project-row-arrow">View Project</div>
+    </div>
+    <div class="project-row-visual">
+      <img loading="lazy" src="./works/nendo/images/hero-vase.jpg" alt="Nendo 设计工作室" style="object-position: center 46%;">
+    </div>
+  </a>
+
+  <a class="project-row fade-in" href="./works/food-booklet/index.html">
+    <div class="project-row-info">
+      <div class="project-row-meta">
+        <span class="project-row-num">03</span>
+        <span class="project-row-cat experimental">Experimental</span>
       </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span class="project-num">03</span>
-          <span class="project-cat experimental">Experimental</span>
-        </div>
-        <div class="project-name">食录 / 大学城饮食情报网络</div>
-        <div class="project-desc">宋体活字印刷风的食评社区 · AI 司膳。</div>
-        <div class="project-chips">
-          <span>Visual Design</span>
-          <span>React + AI</span>
-          <span>Typography</span>
-        </div>
-        <div class="project-arrow">View Project</div>
+      <div class="project-row-name">食录 / 大学城饮食情报网络</div>
+      <div class="project-row-desc">宋体活字印刷风的食评社区。内置 AI 司膳顾问，借鉴一兰拉面量表思路的结构化美食记录。</div>
+      <div class="project-row-chips">
+        <span>Visual Design</span>
+        <span>React + AI</span>
+        <span>Typography</span>
       </div>
-    </a>
-  </div>
+      <div class="project-row-arrow">View Project</div>
+    </div>
+    <div class="project-row-visual portrait">
+      <img loading="lazy" src="./works/food-booklet/food-booklet-cover.png" alt="食录 The Food Booklet">
+    </div>
+  </a>
 </section>
 
 <!-- PRACTICE PROJECTS -->
@@ -1182,100 +1538,46 @@ footer {
     <span class="section-title">02 · 实践项目</span>
     <span class="section-more" style="color:var(--gray);cursor:default;">完整落地的产品项目</span>
   </div>
-  <div class="project-grid">
-    <a class="project-item fade-in" href="./works/virtual-interview/index.html">
-      <div class="project-img">
-        <img loading="lazy" src="./works/virtual-interview/screenshots/11-manual-2026-03-03T09-51-29.png" alt="Virtual Interview Dashboard" style="object-position: center top;">
-      </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span class="project-num">04</span>
-          <span class="project-cat product">Product / AI</span>
-        </div>
-        <div class="project-name">Virtual Interview / AI 访谈系统</div>
-        <div class="project-desc">AI 驱动的用户研究平台。</div>
-        <div class="project-chips">
+
+  <a class="simple-row fade-in" href="./works/virtual-interview/index.html">
+    <div class="simple-row-info">
+      <div class="simple-row-num">04</div>
+      <div class="simple-row-text">
+        <div class="simple-row-name">Virtual Interview / AI 访谈系统</div>
+        <div class="simple-row-desc">AI 驱动的企业级用户研究平台，访谈效率提升 10 倍。</div>
+        <div class="simple-row-chips">
           <span>AI / DeepSeek</span>
-          <span>Full-Stack</span>
-          <span>Vue + TDesign</span>
+          <span>· Full-Stack</span>
+          <span>· Vue + TDesign</span>
         </div>
-        <div class="project-arrow">View Project</div>
       </div>
-    </a>
-    <a class="project-item fade-in" href="./works/bain-case/index.html">
-      <div class="project-img">
-        <img loading="lazy" src="./works/bain-case/slides/slide1_img0.jpg" alt="Bain Case Competition">
-      </div>
-      <div class="project-info">
-        <div class="project-meta">
-          <span class="project-num">05</span>
-          <span class="project-cat product">Strategy</span>
-        </div>
-        <div class="project-name">Bain Case / AI+ESG 增长战略</div>
-        <div class="project-desc">贝恩杯商赛 · 新能源五年战略。</div>
-        <div class="project-chips">
+      <div class="simple-row-arrow">View</div>
+    </div>
+    <div class="simple-row-visual">
+      <img loading="lazy" src="./works/virtual-interview/screenshots/11-manual-2026-03-03T09-51-29.png" alt="Virtual Interview Dashboard" style="object-position: center top;">
+    </div>
+  </a>
+
+  <a class="simple-row fade-in" href="./works/bain-case/index.html">
+    <div class="simple-row-info">
+      <div class="simple-row-num">05</div>
+      <div class="simple-row-text">
+        <div class="simple-row-name">Bain Case / AI+ESG 增长战略</div>
+        <div class="simple-row-desc">贝恩杯商赛 · 新能源五年战略方案。</div>
+        <div class="simple-row-chips">
           <span>Case Competition</span>
-          <span>AI + ESG</span>
-          <span>Strategy</span>
+          <span>· AI + ESG</span>
+          <span>· Strategy</span>
         </div>
-        <div class="project-arrow">View Project</div>
       </div>
-    </a>
-  </div>
+      <div class="simple-row-arrow">View</div>
+    </div>
+    <div class="simple-row-visual">
+      <img loading="lazy" src="./works/bain-case/slides/slide1_img0.jpg" alt="Bain Case Competition">
+    </div>
+  </a>
 </section>
 
-<!-- BOARDS -->
-<section class="section" id="boards">
-  <div class="section-header">
-    <span class="section-title">Boards · 板块</span>
-    <span class="section-more" style="color:var(--gray);cursor:default;">持续扩展中</span>
-  </div>
-  <div class="boards-grid">
-    <div class="board-card fade-in">
-      <span class="board-num">01</span>
-      <span class="board-label">Design</span>
-      <div class="board-name">设计</div>
-      <div class="board-status">3 Projects Live</div>
-    </div>
-    <div class="board-card fade-in">
-      <span class="board-num">02</span>
-      <span class="board-label">Practice</span>
-      <div class="board-name">实践</div>
-      <div class="board-status">2 Projects Live</div>
-    </div>
-    <div class="board-card fade-in">
-      <span class="board-num">03</span>
-      <span class="board-label">Photography</span>
-      <div class="board-name">摄影</div>
-      <div class="board-status planned">Planned</div>
-    </div>
-    <div class="board-card fade-in">
-      <span class="board-num">04</span>
-      <span class="board-label">Writing</span>
-      <div class="board-name">写作</div>
-      <div class="board-status planned">Planned</div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURED — 用苏联项目的图做视觉 -->
-<section class="featured-strip">
-  <div class="featured-info">
-    <div class="featured-tag">Featured</div>
-    <div class="featured-label">Featured Project · 2026</div>
-    <h2 class="featured-title">ИKAP<br>构成主义网页实验</h2>
-    <p class="featured-body">
-      以苏联构成主义运动为灵感，用纯 HTML/CSS 重新诠释
-      El Lissitzky、Rodchenko 的视觉语法——斜线构图、
-      红黑对撞、纪念碑式排版。一次完整的艺术方向实验。
-    </p>
-    <a href="./works/soviet/index.html" class="hero-cta">View Full Project</a>
-  </div>
-  <div class="featured-visual">
-    <img src="./works/soviet/Gemini_Generated_Image_ap1natap1natap1n.webp" alt="ИKAP" style="object-position: center 18%;">
-    <div class="featured-visual-overlay">ИKAP — Art Direction · 2026</div>
-  </div>
-</section>
 
 <!-- EXPERIENCE -->
 <section class="section" id="experience">
@@ -1374,6 +1676,96 @@ footer {
   </div>
 </section>
 
+<!-- BOARDS -->
+<section class="section" id="boards">
+  <div class="section-header">
+    <span class="section-title">Boards · 板块</span>
+    <span class="section-more" style="color:var(--gray);cursor:default;">持续扩展中</span>
+  </div>
+  <div class="board-row fade-in">
+    <div class="board-row-left">
+      <span class="board-row-num">01</span>
+      <span class="board-row-name">设计</span>
+      <span class="board-row-label">Design</span>
+    </div>
+    <span class="board-row-status">3 Projects Live</span>
+  </div>
+  <div class="board-row fade-in">
+    <div class="board-row-left">
+      <span class="board-row-num">02</span>
+      <span class="board-row-name">实践</span>
+      <span class="board-row-label">Practice</span>
+    </div>
+    <span class="board-row-status">2 Projects Live</span>
+  </div>
+  <div class="board-row fade-in">
+    <div class="board-row-left">
+      <span class="board-row-num">03</span>
+      <span class="board-row-name">摄影</span>
+      <span class="board-row-label">Photography</span>
+    </div>
+    <span class="board-row-status planned">Planned</span>
+  </div>
+  <div class="board-row board-writing-toggle fade-in" onclick="toggleWriting()">
+    <div class="board-row-left">
+      <span class="board-row-num">04</span>
+      <span class="board-row-name">写作</span>
+      <span class="board-row-label">Writing</span>
+    </div>
+    <span class="board-row-status">1 Article Live</span>
+  </div>
+  <div class="writing-article" id="writingArticle">
+    <div class="writing-article-inner">
+      <div class="writing-article-tag">Writing · 01 · 产品设计随笔</div>
+      <h2 class="writing-article-title">用拉面量表的思路，设计一个美食社群</h2>
+      <p class="writing-article-subtitle">从一兰拉面的落单用纸出发，重新想象美食社区应有的样子。</p>
+
+      <div class="writing-article-body">
+        <p>不知道大家有没有用过一兰拉面的落单用纸——一页上列着拉面的所有维度：面的软硬、葱花的多少、汤的浓淡、辣椒油的程度……你只需要在每一栏画个圈，就能精准地吃到一碗"你的拉面"。</p>
+        <p><strong>这种对自己吃的食物拥有掌控感的体验，可能正是幸福感的来源。</strong></p>
+        <p>但反观现在的美食生态——打开任何一个平台，你看到的是达人探店、商家买榜、精修九宫格配着一句"绝绝子"。评分4.8的店踩雷，评分3.5的馆子反倒卧虎藏龙。我们在营销泡沫里筛选真话，在海量信息中寻找一顿果腹的便饭，疲惫且空虚。</p>
+        <p>所以我们做了<strong>食录（The Food Booklet）</strong>。</p>
+
+        <h3>核心理念：先付出，再获取</h3>
+        <p>借鉴一兰拉面的"落单用纸"思路，我们为每家店铺设计了一套<strong>食录量表</strong>——预算档位、用餐场景、噪声环境、出餐速度、个性标签，外加一句50字以内的老饕秘籍（比如"吃到最后留一口汤，找老板加个煎蛋捣碎拌着吃绝了"）。</p>
+        <p>不是随手写个好评差评，而是像填一份私人档案一样，用结构化的维度去"量化"一家店的真实面貌。</p>
+        <p><strong>每个人进入食录的方式只有一种：先交出你的第一份食录。</strong>介绍一家你吃过的、正在吃的、甚至只是路过闻到香味的店铺，分享你的小众吃法、私藏搭配、避坑心得。这不是门槛，这是入场券——用你的真诚，换取所有人花时间精力营造的美食交换氛围。</p>
+
+        <h3>人人权重相等的去中心化社群</h3>
+        <p>这里没有V认证，没有达人流量加成，没有"收藏过万"的虚假繁荣。一个刚进来的大一新生和一个吃遍全城的老饕，他们的食录并排陈列，<strong>权重完全相等</strong>。食录的价值不靠算法推荐，靠的是那句老饕秘籍够不够真、量表填得够不够细、有没有让人看完就想出门觅食的冲动。</p>
+        <p>唯一的排序依据，是其他食客盖下的<strong>声望印章</strong>——你觉得这条食录靠谱、有用、讲到了心坎上，就按一下"御印"。没有差评机制，只有正向认可。</p>
+
+        <h3>AI 司膳：你的私人美食顾问</h3>
+        <p>我们内置了一位<strong>AI 司膳</strong>——它读过社群里所有人的食录数据，了解每家店的预算、场景、噪声、速度和灵魂附言。</p>
+        <p>你可以像跟一个懂吃的朋友聊天一样问它："今晚预算五十以内，想找个安静的地方一个人吃点东西"——它会从食录库里精准匹配，带上标签和老饕秘籍一并推荐。</p>
+        <p>它还能生成你的<strong>饮食性格诊断报告</strong>：根据你记录过的所有食录，分析你的吃饭偏好，给你一个响亮的称号（比如"无辣不欢的DDL战士"、"深夜碳水狂魔"），配一段幽默的点评，最后盖章定论。</p>
+
+        <h3>探店悬赏：让每一次出门吃饭都有意义</h3>
+        <p>司膳会不定期发布<strong>探店悬赏令</strong>：某家新开的店还没有人写食录？某个品类在社群里是空白？悬赏令贴出来，谁先去吃、先写食录、先交量表，谁就能拿到额外的声望印章和专属头衔奖励。</p>
+        <p>这解决了社群冷启动和内容覆盖的问题——不用等运营去安排KOL探店，每个普通人都是探路先锋。你今天中午出门吃饭本来就要吃，顺手填一份食录、接一张悬赏，"吃饭"这件事突然就从日常消耗变成了一桩"每天的大事"。</p>
+
+        <h3>调性</h3>
+        <p>我们不想做下一个大众点评，也不想做另一个小红书美食号。</p>
+        <p>食录想做的，是一片接地气但有调性的美食自留地——像一本在朋友之间传阅的私房菜谱本，封面有点旧，字迹有点潦草，但每一页都是真实的。你翻开某一页，看到有人写"这家的牛肉面要加一勺他们家自制的辣子，然后把面条挑起来在碗沿蹭一下再吃"——你就知道，这个人是真的在这儿吃过。</p>
+
+        <blockquote>
+          四方食事，不过一碗人间烟火。
+          <cite>— 汪曾祺</cite>
+        </blockquote>
+
+        <p><strong>吃温度饭，品风味人间。食录想做的，就是把这碗烟火气，原原本本地端到你面前。</strong></p>
+      </div>
+
+      <div class="writing-article-footer">
+        <span>2026</span>
+        <span>·</span>
+        <span>产品设计随笔</span>
+        <a href="./works/food-booklet/index.html">查看食录项目 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="about-strip" id="about">
   <div>
@@ -1439,6 +1831,166 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ── 写作文章展开/收起 ── */
+function toggleWriting() {
+  const toggle = document.querySelector('.board-writing-toggle');
+  const article = document.getElementById('writingArticle');
+  toggle.classList.toggle('expanded');
+  article.classList.toggle('open');
+}
+
+/* ── Hero 几何粒子动画 ── */
+;(function() {
+  const canvas = document.getElementById('heroParticles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], mouse = { x: -999, y: -999 };
+  const OPTS = {
+    count: 45,
+    lineAlpha: 0.06,
+    dotAlpha: 0.12,
+    linkDist: 150,
+    speed: 0.3,
+    dotSize: 1.5,
+    mouseRadius: 200,
+    accentDots: 4          // 带红色的点数量
+  };
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    W = rect.width; H = rect.height;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function createParticle(i) {
+    const isAccent = i < OPTS.accentDots;
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * OPTS.speed,
+      vy: (Math.random() - 0.5) * OPTS.speed,
+      r: isAccent ? OPTS.dotSize * 1.8 : OPTS.dotSize + Math.random() * 0.8,
+      accent: isAccent,
+      // 少量十字/菱形标记
+      shape: (i < 3) ? ['cross', 'diamond', 'ring'][i] : 'dot'
+    };
+  }
+
+  function init() {
+    resize();
+    particles = [];
+    for (let i = 0; i < OPTS.count; i++) particles.push(createParticle(i));
+  }
+
+  function drawShape(p) {
+    const a = p.accent ? 0.35 : OPTS.dotAlpha;
+    const color = p.accent ? `rgba(212,0,15,${a})` : `rgba(10,10,10,${a})`;
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 0.8;
+
+    if (p.shape === 'cross') {
+      const s = p.r * 2.5;
+      ctx.beginPath();
+      ctx.moveTo(p.x - s, p.y); ctx.lineTo(p.x + s, p.y);
+      ctx.moveTo(p.x, p.y - s); ctx.lineTo(p.x, p.y + s);
+      ctx.stroke();
+    } else if (p.shape === 'diamond') {
+      const s = p.r * 2.2;
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y - s);
+      ctx.lineTo(p.x + s * 0.6, p.y);
+      ctx.lineTo(p.x, p.y + s);
+      ctx.lineTo(p.x - s * 0.6, p.y);
+      ctx.closePath();
+      ctx.stroke();
+    } else if (p.shape === 'ring') {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * 2, 0, Math.PI * 2);
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+
+    // 更新位置
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < -20) p.x = W + 20;
+      if (p.x > W + 20) p.x = -20;
+      if (p.y < -20) p.y = H + 20;
+      if (p.y > H + 20) p.y = -20;
+
+      // 鼠标排斥（轻微）
+      const dx = p.x - mouse.x, dy = p.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < OPTS.mouseRadius && dist > 0) {
+        const force = (OPTS.mouseRadius - dist) / OPTS.mouseRadius * 0.008;
+        p.vx += dx / dist * force;
+        p.vy += dy / dist * force;
+      }
+
+      // 限速
+      const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+      if (spd > OPTS.speed * 1.5) {
+        p.vx *= 0.98;
+        p.vy *= 0.98;
+      }
+    }
+
+    // 连线
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i], b = particles[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < OPTS.linkDist) {
+          const alpha = (1 - dist / OPTS.linkDist) * OPTS.lineAlpha;
+          const isAccentLine = a.accent || b.accent;
+          ctx.strokeStyle = isAccentLine
+            ? `rgba(212,0,15,${alpha * 0.8})`
+            : `rgba(10,10,10,${alpha})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // 画点
+    for (const p of particles) drawShape(p);
+
+    requestAnimationFrame(frame);
+  }
+
+  // 鼠标追踪（相对 hero-left）
+  canvas.parentElement.addEventListener('mousemove', (e) => {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  canvas.parentElement.addEventListener('mouseleave', () => {
+    mouse.x = -999; mouse.y = -999;
+  });
+
+  window.addEventListener('resize', () => { resize(); });
+  init();
+  frame();
+})();
 </script>
 </body>
 </html>

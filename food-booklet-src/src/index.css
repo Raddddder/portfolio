@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #F4F1EA; /* Warmer rice paper */
+  --color-ink: #2C302E; /* Softer ink */
+  --color-stamp: #3B4D43; /* Elegant deep pine green (黛绿) */
+  --color-cinnabar: #C04829; /* Cinnabar red for actual seals/accents */
+  --font-serif: "Noto Serif SC", "Songti SC", "SimSun", "STSong", serif;
+  --font-hand: "Ma Shan Zheng", "STKaiti", "KaiTi", cursive;
+  --font-seal: "Zhi Mang Xing", "STKaiti", cursive;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  /* Subtle paper texture */
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"), radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.05) 100%);
+}
+
+/* Hide scrollbar for cleaner look */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Markdown 内容强制换行，防止溢出 */
+.markdown-body {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.markdown-body pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.markdown-body p,
+.markdown-body li {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}

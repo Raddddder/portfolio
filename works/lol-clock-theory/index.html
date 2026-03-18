@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>时钟理论：英雄联盟排位赛的节奏与平衡</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  :root {
+    --gold-primary: #C89B3C;
+    --gold-light: #C8AA6E;
+    --gold-bright: #F0E6D3;
+    --gold-dark: #785A28;
+    --bg-deep: #010A13;
+    --bg-dark: #0A1428;
+    --bg-mid: #1E2328;
+    --bg-panel: #1a1f2e;
+    --bg-card: #0f1923;
+    --blue-accent: #0BC4E3;
+    --blue-mid: #1AAFDB;
+    --blue-dim: #0093B1;
+    --teal: #00C0E0;
+    --red-accent: #C84B31;
+    --red-bright: #E05C45;
+    --silver: #A0A8B4;
+    --silver-dim: #6B7280;
+    --border-gold: rgba(200, 155, 60, 0.35);
+    --border-gold-bright: rgba(200, 155, 60, 0.65);
+    --glow-gold: 0 0 20px rgba(200, 155, 60, 0.4);
+    --glow-blue: 0 0 20px rgba(11, 196, 227, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg-deep);
+    color: var(--gold-bright);
+    font-family: 'Noto Serif SC', 'Noto Sans SC', serif;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ===== BACKGROUND TEXTURE ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(11, 196, 227, 0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 90%, rgba(200, 155, 60, 0.04) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M0 0 L60 0 L60 60 L0 60 Z' fill='none' stroke='rgba(200,155,60,0.025)' stroke-width='0.5'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== HERO SECTION ===== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 60px 40px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 120% 80% at 50% 0%, rgba(11, 196, 227, 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200, 155, 60, 0.12) 0%, transparent 55%),
+      linear-gradient(180deg, #000d1a 0%, #010A13 40%, #05111f 100%);
+  }
+
+  /* Animated rune ring */
+  .rune-ring {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.08;
+    animation: rotate-slow 60s linear infinite;
+  }
+
+  .rune-ring-inner {
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.1;
+    animation: rotate-slow 40s linear infinite reverse;
+  }
+
+  @keyframes rotate-slow {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border-gold-bright);
+    padding: 6px 20px;
+    margin-bottom: 40px;
+    background: rgba(200, 155, 60, 0.08);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+  }
+
+  .hero-badge::before, .hero-badge::after {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold-primary);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .hero-subtitle-top {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 6px;
+    color: var(--blue-accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: 900;
+    line-height: 1.15;
+    background: linear-gradient(180deg, #F0E6D3 0%, #C8AA6E 50%, #785A28 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 24px;
+    text-shadow: none;
+    letter-spacing: 2px;
+  }
+
+  .hero-title-cn {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(22px, 3vw, 38px);
+    font-weight: 700;
+    background: linear-gradient(180deg, #C8AA6E 0%, #C89B3C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 40px;
+    letter-spacing: 4px;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px auto;
+    width: fit-content;
+  }
+
+  .hero-divider span { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-primary)); }
+  .hero-divider span:last-child { background: linear-gradient(90deg, var(--gold-primary), transparent); }
+
+  .hero-diamond {
+    width: 10px; height: 10px;
+    background: var(--gold-primary);
+    transform: rotate(45deg);
+    box-shadow: 0 0 12px rgba(200, 155, 60, 0.8);
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    color: rgba(200, 170, 110, 0.8);
+    max-width: 680px;
+    margin: 0 auto 48px;
+    line-height: 2;
+    font-weight: 300;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    text-align: center;
+  }
+
+  .meta-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--blue-accent);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+
+  .meta-value {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+
+  /* ===== SCROLL INDICATOR ===== */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.5;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  .scroll-hint span { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px; color: var(--gold-light); }
+  .scroll-arrow { width: 20px; height: 20px; border-right: 1px solid var(--gold-light); border-bottom: 1px solid var(--gold-light); transform: rotate(45deg); }
+
+  /* ===== NAV ===== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(1, 10, 19, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-gold);
+    padding: 0 40px;
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    height: 56px;
+    gap: 4px;
+  }
+
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold-primary);
+    letter-spacing: 2px;
+    margin-right: 32px;
+    white-space: nowrap;
+  }
+
+  nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--silver);
+    text-decoration: none;
+    padding: 8px 14px;
+    text-transform: uppercase;
+    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
+    border: 1px solid transparent;
+  }
+
+  nav a:hover {
+    color: var(--gold-light);
+    background: rgba(200, 155, 60, 0.08);
+    border-color: var(--border-gold);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ===== SECTION HEADERS ===== */
+  .section-header {
+    margin: 80px 0 48px;
+    text-align: center;
+  }
+
+  .section-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--blue-accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 700;
+    background: linear-gradient(180deg, #F0E6D3 0%, #C8AA6E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+
+  .section-title-cn {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(18px, 2vw, 26px);
+    font-weight: 600;
+    color: var(--gold-primary);
+    margin-bottom: 16px;
+    letter-spacing: 3px;
+  }
+
+  .section-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .section-line::before, .section-line::after {
+    content: '';
+    height: 1px;
+    width: 120px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark));
+  }
+
+  .section-line::after { background: linear-gradient(90deg, var(--gold-dark), transparent); }
+
+  .section-gem {
+    width: 8px; height: 8px;
+    background: var(--gold-primary);
+    transform: rotate(45deg);
+  }
+
+  /* ===== SUMMARY BOX ===== */
+  .summary-box {
+    position: relative;
+    border: 1px solid var(--border-gold-bright);
+    background: linear-gradient(135deg, rgba(200, 155, 60, 0.06) 0%, rgba(10, 20, 40, 0.8) 100%);
+    padding: 48px;
+    margin: 48px 0;
+    overflow: hidden;
+  }
+
+  .summary-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 60px; height: 60px;
+    border-top: 2px solid var(--gold-primary);
+    border-left: 2px solid var(--gold-primary);
+  }
+
+  .summary-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 60px; height: 60px;
+    border-bottom: 2px solid var(--gold-primary);
+    border-right: 2px solid var(--gold-primary);
+  }
+
+  .summary-box p {
+    font-size: 16px;
+    line-height: 2.1;
+    color: rgba(200, 170, 110, 0.88);
+    font-weight: 300;
+  }
+
+  .summary-box strong {
+    color: var(--gold-bright);
+    font-weight: 600;
+  }
+
+  /* ===== PILLAR CARDS ===== */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin: 48px 0;
+    border: 1px solid var(--border-gold);
+    background: var(--border-gold);
+  }
+
+  .pillar-card {
+    background: var(--bg-card);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .pillar-card:hover { background: rgba(15, 25, 35, 0.98); }
+
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary), var(--gold-dark));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .pillar-card:hover::before { opacity: 1; }
+
+  .pillar-num {
+    font-family: 'Cinzel', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: rgba(200, 155, 60, 0.12);
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    line-height: 1;
+  }
+
+  .pillar-icon { margin-bottom: 20px; }
+
+  .pillar-title {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .pillar-title-cn {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-primary);
+    margin-bottom: 16px;
+  }
+
+  .pillar-text {
+    font-size: 14px;
+    color: var(--silver);
+    line-height: 1.9;
+  }
+
+  /* ===== FRAMEWORK TABLE ===== */
+  .table-wrapper {
+    overflow-x: auto;
+    margin: 32px 0;
+    border: 1px solid var(--border-gold);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead {
+    background: linear-gradient(90deg, rgba(200, 155, 60, 0.15), rgba(11, 196, 227, 0.08), rgba(200, 155, 60, 0.15));
+    border-bottom: 1px solid var(--border-gold-bright);
+  }
+
+  th {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    padding: 14px 16px;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 12px 16px;
+    color: var(--silver);
+    border-bottom: 1px solid rgba(200, 155, 60, 0.08);
+    vertical-align: top;
+    line-height: 1.7;
+  }
+
+  tr:hover td { background: rgba(200, 155, 60, 0.04); }
+
+  td:first-child {
+    color: var(--gold-light);
+    font-weight: 500;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1px;
+    border: 1px solid;
+    margin: 2px;
+  }
+
+  .tag-high { border-color: var(--gold-primary); color: var(--gold-light); background: rgba(200, 155, 60, 0.1); }
+  .tag-mid { border-color: var(--blue-dim); color: var(--blue-mid); background: rgba(11, 196, 227, 0.08); }
+  .tag-low { border-color: var(--silver-dim); color: var(--silver); background: rgba(106, 114, 128, 0.1); }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    position: relative;
+    margin: 48px 0;
+    padding-left: 0;
+  }
+
+  .timeline-axis {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  .timeline-phase {
+    background: var(--bg-card);
+    border: 1px solid var(--border-gold);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .timeline-phase:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold-primary);
+  }
+
+  .phase-time {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-primary);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .phase-label {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold-bright);
+    margin-bottom: 10px;
+  }
+
+  .phase-desc {
+    font-size: 12px;
+    color: var(--silver-dim);
+    line-height: 1.7;
+  }
+
+  .phase-type {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    border: 1px solid;
+  }
+
+  .type-fixed { border-color: var(--blue-dim); color: var(--blue-mid); }
+  .type-threshold { border-color: var(--gold-dark); color: var(--gold-primary); }
+  .type-window { border-color: rgba(200, 74, 49, 0.5); color: var(--red-bright); }
+  .type-cycle { border-color: rgba(11, 196, 227, 0.4); color: var(--teal); }
+
+  /* ===== CHARTS SECTION ===== */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 48px 0;
+  }
+
+  .chart-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-gold);
+    padding: 32px;
+    position: relative;
+  }
+
+  .chart-panel-wide {
+    grid-column: 1 / -1;
+  }
+
+  .chart-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .chart-subtitle {
+    font-size: 12px;
+    color: var(--silver-dim);
+    margin-bottom: 24px;
+  }
+
+  .chart-canvas-wrap {
+    position: relative;
+    height: 280px;
+  }
+
+  /* ===== STATS GRID ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin: 48px 0;
+    background: var(--border-gold);
+    border: 1px solid var(--border-gold);
+  }
+
+  .stat-cell {
+    background: var(--bg-card);
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-cell::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold-dark);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+    transform-origin: left;
+  }
+
+  .stat-cell:hover::before { transform: scaleX(1); }
+
+  .stat-value {
+    font-family: 'Cinzel', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--gold-primary);
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-unit {
+    font-size: 14px;
+    color: var(--gold-dark);
+  }
+
+  .stat-label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 12px;
+    color: var(--silver);
+    margin-bottom: 6px;
+  }
+
+  .stat-note {
+    font-size: 10px;
+    color: var(--silver-dim);
+    font-style: italic;
+  }
+
+  /* ===== INSIGHT BLOCKS ===== */
+  .insights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 48px 0;
+  }
+
+  .insight-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-gold);
+    padding: 32px;
+    position: relative;
+  }
+
+  .insight-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--blue-accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .insight-label::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--blue-accent);
+  }
+
+  .insight-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-bright);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .insight-text {
+    font-size: 13px;
+    color: var(--silver);
+    line-height: 2;
+  }
+
+  .insight-text strong { color: var(--gold-light); }
+
+  /* ===== RECOMMENDATIONS ===== */
+  .recs {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .rec-item {
+    background: var(--bg-card);
+    border-left: 3px solid var(--gold-primary);
+    border-top: 1px solid var(--border-gold);
+    border-right: 1px solid var(--border-gold);
+    border-bottom: 1px solid var(--border-gold);
+    padding: 24px 28px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .rec-num {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--gold-primary);
+    line-height: 1;
+    min-width: 32px;
+    margin-top: 2px;
+  }
+
+  .rec-content { flex: 1; }
+
+  .rec-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold-bright);
+    margin-bottom: 8px;
+  }
+
+  .rec-desc {
+    font-size: 13px;
+    color: var(--silver);
+    line-height: 1.9;
+  }
+
+  .rec-tags {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* ===== CHECKLIST ===== */
+  .checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 32px 0;
+    background: var(--border-gold);
+    border: 1px solid var(--border-gold);
+  }
+
+  .check-item {
+    background: var(--bg-card);
+    padding: 24px 28px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .check-icon {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--gold-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--gold-primary);
+    font-size: 12px;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+  }
+
+  .check-text {
+    font-size: 13px;
+    color: var(--silver);
+    line-height: 1.8;
+  }
+
+  .check-text strong { color: var(--gold-light); display: block; margin-bottom: 4px; font-size: 14px; }
+
+  /* ===== SOURCES SECTION ===== */
+  .sources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 32px 0;
+    background: var(--border-gold);
+  }
+
+  .source-item {
+    background: var(--bg-card);
+    padding: 20px 24px;
+  }
+
+  .source-type {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--blue-accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .source-name {
+    font-size: 13px;
+    color: var(--gold-light);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .source-desc { font-size: 11px; color: var(--silver-dim); line-height: 1.6; }
+
+  .confidence-high { border-left: 2px solid var(--gold-primary); padding-left: 14px; }
+  .confidence-mid { border-left: 2px solid var(--blue-dim); padding-left: 14px; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1px solid var(--border-gold);
+    padding: 60px 40px;
+    text-align: center;
+    background: rgba(1, 10, 19, 0.8);
+    position: relative;
+  }
+
+  .footer-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold-primary);
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+  }
+
+  .footer-text {
+    font-size: 12px;
+    color: var(--silver-dim);
+    margin-bottom: 8px;
+  }
+
+  .footer-ver {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--gold-dark);
+    letter-spacing: 3px;
+  }
+
+  /* ===== SVG DECORATIONS ===== */
+  .deco-corner {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    pointer-events: none;
+  }
+
+  .deco-tl { top: 0; left: 0; }
+  .deco-tr { top: 0; right: 0; transform: scaleX(-1); }
+  .deco-bl { bottom: 0; left: 0; transform: scaleY(-1); }
+  .deco-br { bottom: 0; right: 0; transform: scale(-1); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    main { padding: 0 20px 60px; }
+    .pillars { grid-template-columns: 1fr; }
+    .charts-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .insights { grid-template-columns: 1fr; }
+    .checklist { grid-template-columns: 1fr; }
+    .sources-grid { grid-template-columns: 1fr; }
+    nav { overflow-x: auto; }
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in { animation: fadeInUp 0.7s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  /* ===== GLOW PULSE ===== */
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(200, 155, 60, 0.3); }
+    50% { box-shadow: 0 0 24px rgba(200, 155, 60, 0.7); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== SVG DEFS ===== -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="corner-deco" viewBox="0 0 48 48">
+      <path d="M0 0 L20 0 L20 2 L2 2 L2 20 L0 20 Z" fill="#C89B3C" opacity="0.8"/>
+      <path d="M6 0 L10 0 L10 1 L7 1 L7 6 L6 6 Z" fill="#C8AA6E" opacity="0.5"/>
+    </symbol>
+    <symbol id="diamond-icon" viewBox="0 0 24 24">
+      <polygon points="12,2 22,12 12,22 2,12" fill="none" stroke="#C89B3C" stroke-width="1.5"/>
+      <polygon points="12,6 18,12 12,18 6,12" fill="rgba(200,155,60,0.15)"/>
+    </symbol>
+    <symbol id="clock-icon" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="13" fill="none" stroke="#C89B3C" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="11" fill="none" stroke="rgba(200,155,60,0.2)" stroke-width="0.5"/>
+      <line x1="16" y1="16" x2="16" y2="8" stroke="#C8AA6E" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="16" y1="16" x2="21" y2="18" stroke="#C89B3C" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="16" cy="16" r="1.5" fill="#C89B3C"/>
+    </symbol>
+    <symbol id="sword-icon" viewBox="0 0 32 32">
+      <path d="M4 28 L24 8 M22 6 L26 10 M20 4 L28 12 L22 6 L20 4 Z" stroke="#C89B3C" stroke-width="1.5" fill="none"/>
+      <circle cx="5" cy="27" r="2" fill="rgba(200,155,60,0.4)" stroke="#C89B3C" stroke-width="1"/>
+    </symbol>
+    <symbol id="shield-icon" viewBox="0 0 32 32">
+      <path d="M16 3 L28 7 L28 16 C28 22 22 27 16 30 C10 27 4 22 4 16 L4 7 Z" fill="none" stroke="#C89B3C" stroke-width="1.5"/>
+      <path d="M16 8 L22 11 L22 17 C22 20.5 19 23 16 25 C13 23 10 20.5 10 17 L10 11 Z" fill="rgba(200,155,60,0.1)"/>
+    </symbol>
+    <symbol id="dragon-icon" viewBox="0 0 32 32">
+      <path d="M8 24 C6 20 5 15 8 11 C11 7 15 6 18 8 C22 10 24 8 26 6 C25 10 23 12 20 13 C22 17 21 22 18 25 C15 28 10 28 8 24 Z" fill="none" stroke="#C89B3C" stroke-width="1.5"/>
+      <circle cx="12" cy="14" r="1.5" fill="#C89B3C"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+
+  <!-- Animated rune rings -->
+  <svg class="rune-ring" viewBox="0 0 700 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="350" cy="350" r="340" stroke="#C89B3C" stroke-width="0.5" stroke-dasharray="12 6"/>
+    <circle cx="350" cy="350" r="300" stroke="#C8AA6E" stroke-width="0.3" stroke-dasharray="4 8"/>
+    <polygon points="350,15 669,187 669,513 350,685 31,513 31,187" stroke="#C89B3C" stroke-width="0.4" fill="none"/>
+    <polygon points="350,60 624,215 624,485 350,640 76,485 76,215" stroke="#785A28" stroke-width="0.3" fill="none"/>
+    <g stroke="#C89B3C" stroke-width="0.5" opacity="0.6">
+      <line x1="350" y1="10" x2="350" y2="690"/>
+      <line x1="10" y1="350" x2="690" y2="350"/>
+    </g>
+    <circle cx="350" cy="350" r="8" stroke="#C89B3C" stroke-width="1" fill="rgba(200,155,60,0.1)"/>
+  </svg>
+
+  <svg class="rune-ring-inner" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="240" cy="240" r="230" stroke="#0BC4E3" stroke-width="0.4" stroke-dasharray="8 16"/>
+    <polygon points="240,20 452,130 452,350 240,460 28,350 28,130" stroke="#0BC4E3" stroke-width="0.3" fill="none"/>
+    <circle cx="240" cy="240" r="180" stroke="rgba(11,196,227,0.3)" stroke-width="0.3" stroke-dasharray="3 9"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-badge fade-in">深度研究报告 · 2026赛季</div>
+    <p class="hero-subtitle-top fade-in delay-1">Clock Theory · Game Design Analysis</p>
+    <h1 class="hero-title fade-in delay-2">Clock Theory</h1>
+    <h2 class="hero-title-cn fade-in delay-2">时钟理论</h2>
+    <div class="hero-divider fade-in delay-3">
+      <span></span>
+      <div class="hero-diamond"></div>
+      <span></span>
+    </div>
+    <p class="hero-desc fade-in delay-3">
+      以"时钟理论"为核心视角，深度解析英雄联盟排位赛的<strong>节奏架构</strong>与<strong>平衡机制</strong>——
+      从定时事件、阶段阈值到资源争夺窗口，揭示召唤师峡谷如何在<strong>可玩性</strong>与<strong>策略多样性</strong>之间构建动态平衡。
+    </p>
+    <div class="hero-meta fade-in delay-4">
+      <div class="meta-item">
+        <div class="meta-label">版本基准</div>
+        <div class="meta-value">Patch 26.06</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">发布日期</div>
+        <div class="meta-value">2026-03-18</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">研究模式</div>
+        <div class="meta-value">Solo/Duo Ranked</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">分析维度</div>
+        <div class="meta-value">8 Dimensions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">LOL · 时钟理论</span>
+    <a href="#executive">执行摘要</a>
+    <a href="#framework">分析框架</a>
+    <a href="#timeline">时间线</a>
+    <a href="#data">量化数据</a>
+    <a href="#recommendations">改进建议</a>
+    <a href="#sources">来源</a>
+  </div>
+</nav>
+
+<!-- ===== MAIN ===== -->
+<main>
+
+  <!-- ===== EXECUTIVE SUMMARY ===== -->
+  <section id="executive">
+    <div class="section-header">
+      <div class="section-tag">Executive Summary</div>
+      <div class="section-title-cn">执行摘要</div>
+      <div class="section-line"><div class="section-gem"></div></div>
+    </div>
+
+    <div class="summary-box">
+      <p>
+        召唤师峡谷排位赛可被理解为一套由 <strong>定时事件（Timed Events）</strong>、<strong>进度阶段阈值（Phase Thresholds）</strong>
+        与 <strong>资源争夺窗口（Contest Windows）</strong> 共同构成的<strong>多层时间结构</strong>。这些时间结构把对局切分为
+        一系列可预期的"下一件事"，持续制造目标、冲突与推进机会，从而在<strong>可玩性</strong>（持续有事做/有决策）与
+        <strong>基础玩法平衡</strong>（避免单一路径垄断胜利）之间取得动态平衡。
+      </p>
+      <br>
+      <p>
+        26.06 作为常规平衡补丁，其节奏主骨架源于 <strong>26.01/26.1 赛季启动</strong>——对开局时间、兵线频率、推塔收益结构、
+        史诗资源耐久与回归机制、视野学习曲线、任务化进度等系统层的深层改造。
+      </p>
+    </div>
+
+    <!-- 4 Pillars -->
+    <div class="pillars">
+      <div class="pillar-card">
+        <div class="pillar-num">01</div>
+        <div class="pillar-icon">
+          <svg width="32" height="32"><use href="#clock-icon"/></svg>
+        </div>
+        <div class="pillar-title">Eliminate Dead Time</div>
+        <div class="pillar-title-cn">减少无意义等待</div>
+        <p class="pillar-text">通过开局 35 秒加速出兵、重开窗口前移等机制降低"空转时间"，直接提升玩家时间满意度（Temporal Satisfaction）。</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">02</div>
+        <div class="pillar-icon">
+          <svg width="32" height="32"><use href="#sword-icon"/></svg>
+        </div>
+        <div class="pillar-title">Diversify Victory Paths</div>
+        <div class="pillar-title-cn">推进多样性回归</div>
+        <p class="pillar-text">通过永久塔皮、塔皮价值衰减、晶体过生长（Crystalline Overgrowth）与中后期加速出兵，把胜利路径从"只围绕中立目标团战"拉回"推进/分带/换资源"。</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">03</div>
+        <div class="pillar-icon">
+          <svg width="32" height="32"><use href="#dragon-icon"/></svg>
+        </div>
+        <div class="pillar-title">Enable Meaningful Comebacks</div>
+        <div class="pillar-title-cn">翻盘机制可发生</div>
+        <p class="pillar-text">史诗目标耐久提高约 +15%，强化小龙与男爵"回归经验"，让落后方在关键节点仍能做出有意义的反制或交换，对抗线性滚雪球。</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">04</div>
+        <div class="pillar-icon">
+          <svg width="32" height="32"><use href="#shield-icon"/></svg>
+        </div>
+        <div class="pillar-title">Govern External Time Cost</div>
+        <div class="pillar-title-cn">排位时间成本治理</div>
+        <p class="pillar-text">补位补偿（Aegis of Valor）、按位置对等的补位匹配、对选人劫持/消极行为的惩罚机制，降低局外时间损耗，纳入节奏治理体系。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FRAMEWORK ===== -->
+  <section id="framework">
+    <div class="section-header">
+      <div class="section-tag">Analytical Framework</div>
+      <div class="section-title-cn">8 维分析框架</div>
+      <div class="section-line"><div class="section-gem"></div></div>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>时钟理论定义</th>
+            <th>排位可观测指标示例</th>
+            <th>重要性</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>事件节奏 <br><small style="color:var(--silver-dim)">Cadence</small></td>
+            <td>事件出现/刷新/阶段切换的频率与规律性</td>
+            <td>绝对时间点（0:30 出兵、2:55 河蟹）、刷新间隔（龙 5 分钟）、阶段阈值（11/14/30 分钟）</td>
+            <td><span class="tag tag-high">高</span></td>
+          </tr>
+          <tr>
+            <td>影响强度 <br><small style="color:var(--silver-dim)">Impact</small></td>
+            <td>事件对胜负概率、资源曲线、地图控制的边际影响</td>
+            <td>目标奖励（经验/金币/BUFF）、推塔加速、兵线强度变化、团战胜后推进速度</td>
+            <td><span class="tag tag-high">高</span></td>
+          </tr>
+          <tr>
+            <td>可预期性 <br><small style="color:var(--silver-dim)">Telegraphing</small></td>
+            <td>事件是否被 UI/规则清晰提示，学习成本多高</td>
+            <td>计时器、地图标记、血条分段（塔皮）、规则是否稳定且可记忆</td>
+            <td><span class="tag tag-high">高</span></td>
+          </tr>
+          <tr>
+            <td>玩家主导性 <br><small style="color:var(--silver-dim)">Agency</small></td>
+            <td>玩家能否通过选择改变事件结果或"下一拍"内容</td>
+            <td>控线/视野/换线/逼团来改写交换；推进 vs 打目标的对冲路径</td>
+            <td><span class="tag tag-high">高</span></td>
+          </tr>
+          <tr>
+            <td>风险/收益 <br><small style="color:var(--silver-dim)">Risk–Reward</small></td>
+            <td>参与事件的暴露风险与收益是否匹配</td>
+            <td>坑口暴露、赶路与丢线代价、目标耐久/伤害对偷/抢的门槛</td>
+            <td><span class="tag tag-mid">中高</span></td>
+          </tr>
+          <tr>
+            <td>资源沉没 <br><small style="color:var(--silver-dim)">Sinks</small></td>
+            <td>跟随时钟产生的不可逆成本（机会成本）</td>
+            <td>兵线损失、视野消耗、关键技能/CD 交换、回城与集结时间</td>
+            <td><span class="tag tag-mid">中</span></td>
+          </tr>
+          <tr>
+            <td>逆转机制 <br><small style="color:var(--silver-dim)">Comeback</small></td>
+            <td>落后方是否能在关键节点通过正确决策追回局势</td>
+            <td>回归经验（龙/男爵）、更可争夺的目标耐久/伤害结构、投降/重开等"时间止损"机制</td>
+            <td><span class="tag tag-high">高</span></td>
+          </tr>
+          <tr>
+            <td>平衡工具 <br><small style="color:var(--silver-dim)">Balance Tools</small></td>
+            <td>设计者用来调节节奏与节点价值的工具集合</td>
+            <td>刷新时间、奖励结构、耐久与伤害、UI 提示、排位规则（补位补偿/选人劫持治理）</td>
+            <td><span class="tag tag-high">高</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== TIMELINE ===== -->
+  <section id="timeline">
+    <div class="section-header">
+      <div class="section-tag">Key Timing Events</div>
+      <div class="section-title-cn">召唤师峡谷关键节拍时间线</div>
+      <div class="section-line"><div class="section-gem"></div></div>
+    </div>
+
+    <p style="color:var(--silver-dim);font-size:12px;text-align:center;margin-bottom:32px;">版本基准：Patch 26.06 现行结构 ｜ * 标注项来自社区 Wiki（非官方）</p>
+
+    <div class="timeline-axis">
+      <div class="timeline-phase">
+        <span class="phase-type type-fixed">Fixed</span>
+        <span class="phase-time">0:30</span>
+        <div class="phase-label">小兵首波刷新</div>
+        <p class="phase-desc">由 1:05 大幅提前，消除开局空转，更早推动兵线博弈与入侵决策。</p>
+      </div>
+      <div class="timeline-phase">
+        <span class="phase-type type-fixed">Fixed</span>
+        <span class="phase-time">0:55</span>
+        <div class="phase-label">野区营地首刷</div>
+        <p class="phase-desc">三狼/红蓝/F6 全面前移，打野路径规划提前，上下路入侵更早发生。</p>
+      </div>
+      <div class="timeline-phase">
+        <span class="phase-type type-window">Window</span>
+        <span class="phase-time">0:55–2:25</span>
+        <div class="phase-label">重开窗口</div>
+        <p class="phase-desc">由 1:30–3:00 前移，时间止损机制更早触发，降低对局外时间损耗。</p>
+      </div>
+      <div class="timeline-phase">
+        <span class="phase-type type-fixed">Fixed</span>
+        <span class="phase-time">2:55</span>
+        <div class="phase-label">双河蟹首刷</div>
+        <p class="phase-desc">早期视野与节奏争夺的核心节点，争夺风险中高，对换边决策影响显著。</p>
+      </div>
+      <div class="timeline-phase">
+        <span class="phase-type type-cycle">Cycle</span>
+        <span class="phase-time">5:00 *</span>
+        <div class="phase-label">小龙 / 潮虫首刷</div>
+        <p class="phase-desc">5 分钟周期循环，小龙奠定中期节奏主轴，潮虫提供分推替代路径。</p>
+      </div>
+      <div class="timeline-phase">
+        <span class="phase-type type-threshold">Threshold</span>
+        <span class="phase-time">11:00</span>
+        <div class="phase-label">塔皮衰减启动</div>
+        <p class="phase-desc">永久塔皮的价值与抗性开始随时间衰减，推进收益进入渐进兑现节拍。</p>
+      </div>
+      <div class="timeline-phase">
+        <span class="phase-type type-threshold">Threshold</span>
+        <span class="phase-time">14:00</span>
+        <div class="phase-label">兵线加速 + 先锋首刷 *</div>
+        <p class="phase-desc">每波 25 秒，兵线压力显著上升；Homeguard 增强，先锋窗口开启。</p>
+      </div>
+      <div class="timeline-phase">
+        <span class="phase-type type-window">Window</span>
+        <span class="phase-time">14–19:45 *</span>
+        <div class="phase-label">先锋存在窗口</div>
+        <p class="phase-desc">高价值上半区投入，召唤时机决策影响中期推进路线，偷取与对换均有价值。</p>
+      </div>
+      <div class="timeline-phase">
+        <span class="phase-type type-fixed">Official</span>
+        <span class="phase-time">20:00</span>
+        <div class="phase-label">男爵首刷（提前）</div>
+        <p class="phase-desc">由 25:00 大幅提前，终局争夺更早开启；金币大幅削减（1525→850），经验回归强化。</p>
+      </div>
+      <div class="timeline-phase">
+        <span class="phase-type type-threshold">Threshold</span>
+        <span class="phase-time">30:00</span>
+        <div class="phase-label">兵线再加速</div>
+        <p class="phase-desc">每波 20 秒，终局推进压力极高，处理线成本显著提升，换线惩罚加重。</p>
+      </div>
+    </div>
+
+    <!-- Insights -->
+    <div class="insights" style="margin-top:32px;">
+      <div class="insight-card">
+        <div class="insight-label">Early Phase · 0:00–5:00</div>
+        <div class="insight-title">开局空转削减</div>
+        <p class="insight-text">
+          官方把出兵从 1:05 提前到 0:30，整体野区首刷与河蟹前移，remake 窗口前移。
+          <strong>设计意图明确：更快进入行动、减少开局浪费时间。</strong>
+          这属于典型"时间沉没削减"，直接作用于玩家时间满意度（Temporal Satisfaction）。
+        </p>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Mid Phase · 11:00–20:00</div>
+        <div class="insight-title">推进替代时钟</div>
+        <p class="insight-text">
+          通过<strong>永久塔皮 + 11 分钟起衰减</strong>，配合晶体过生长（90 秒启动/冷却 + 成长曲线），
+          系统把"推进收益"拆成小步可兑现的节拍，意图减少"只有抢中立目标才推进得动"的单一路径。
+        </p>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Baron · 20:00 Reform</div>
+        <div class="insight-title">男爵节点重构</div>
+        <p class="insight-text">
+          首刷提前 5 分钟，<strong>总金币 1525→850（降幅 44%）</strong>，经验改为全局 650，
+          并引入按等级差放大经验（每级差 +25%，上限 2x）。
+          更早开启终局争夺、降低金币滚雪球、提高经验回归翻盘可能。
+        </p>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Dragon · Comeback Design</div>
+        <div class="insight-title">小龙翻盘杠杆</div>
+        <p class="insight-text">
+          Dragon Vengeance 伤害减免显著上调（<strong>15/30/45%</strong>），
+          使魂点附近的龙更可争夺；回归经验线性化并增强（4 级差上限 2x），
+          构成中后期关键节点的逆转机制杠杆。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUANTITATIVE DATA ===== -->
+  <section id="data">
+    <div class="section-header">
+      <div class="section-tag">Quantitative Evidence</div>
+      <div class="section-title-cn">量化证据与可观测指标</div>
+      <div class="section-line"><div class="section-gem"></div></div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <span class="stat-value">79.9<span class="stat-unit">%</span></span>
+        <div class="stat-label">First Baron 获取后胜率（蓝方）</div>
+        <div class="stat-note">League of Graphs · Platinum+ · Patch 16.5</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-value">64.1<span class="stat-unit">%</span></span>
+        <div class="stat-label">First Dragon 获取后胜率（蓝方）</div>
+        <div class="stat-note">League of Graphs · Platinum+ · Patch 16.5</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-value">+15<span class="stat-unit">%</span></span>
+        <div class="stat-label">史诗目标耐久提升</div>
+        <div class="stat-note">2026 Season One Dev Preview · 官方明确</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-value">-44<span class="stat-unit">%</span></span>
+        <div class="stat-label">男爵金币降幅（1525→850）</div>
+        <div class="stat-note">Patch 26.1 Notes · 官方</div>
+      </div>
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="charts-grid">
+      <div class="chart-panel chart-panel-wide">
+        <div class="chart-title">平均对局时长（分钟）按段位</div>
+        <div class="chart-subtitle">15.24 vs 16.1 版本对比 ｜ 社区统计，非官方 ｜ 可理解为 2025 年末 vs 2026 赛季启动期</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="durationChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-panel">
+        <div class="chart-title">关键节点与胜率关联</div>
+        <div class="chart-subtitle">First Objective Win Rate · Platinum+ · Patch 16.5</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="winrateChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-panel">
+        <div class="chart-title">男爵奖励结构变化</div>
+        <div class="chart-subtitle">26.1 改动前后对比 ｜ 官方数据</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="baronChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analysis note -->
+    <div class="summary-box" style="margin-top:16px;">
+      <p>
+        <strong>解读：</strong>对局时长的变化并不必然同向缩短，因为系统同时在做两类相反的事：
+        一方面减少开局空转（更快出兵/首刷）<strong>降低总时长下限</strong>；
+        另一方面提高史诗目标耐久、强化争夺可见性与可反制性，可能使对局在关键节点更倾向
+        <strong>"拉扯—争夺—推进"</strong> 而不是"一波偷目标结束"，把时长分布拉回更集中但不一定更短。
+        First Baron 的强信号（~80%）解释了官方为何降低男爵金币并强化经验回归：<strong>若男爵节点过于"赢了就结束"，策略多样性与翻盘空间会下降。</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== RECOMMENDATIONS ===== -->
+  <section id="recommendations">
+    <div class="section-header">
+      <div class="section-tag">Design Recommendations</div>
+      <div class="section-title-cn">策划与内容管理改进建议</div>
+      <div class="section-line"><div class="section-gem"></div></div>
+    </div>
+
+    <div class="recs">
+      <div class="rec-item">
+        <div class="rec-num">01</div>
+        <div class="rec-content">
+          <div class="rec-title">让"对冲时钟"真正可用</div>
+          <p class="rec-desc">用内部数据评估"放弃一条龙/一组潮虫/一个先锋时，能否通过推进节拍（塔皮/过生长/兵线加速）换回等效价值"。否则玩家生态会重新收缩到"目标必争"剧本，加剧 Objective Fatigue（目标疲劳）。</p>
+          <div class="rec-tags">
+            <span class="tag tag-high">玩法</span>
+            <span class="tag tag-mid">数据驱动</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-num">02</div>
+        <div class="rec-content">
+          <div class="rec-title">贯彻"可争夺但可反制"的史诗目标设计</div>
+          <p class="rec-desc">持续围绕两个可量化指标收敛：① 节点前 90 秒的"地图准备行为"（插眼/扫眼/推线）是否比单一团战操作更重要；② 男爵节点的"终结效率"是否建立在推进而非纯打架（否则说明推进时钟仍不足）。</p>
+          <div class="rec-tags">
+            <span class="tag tag-high">平衡</span>
+            <span class="tag tag-high">可争夺性</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-num">03</div>
+        <div class="rec-content">
+          <div class="rec-title">UI 层：统一"下一拍面板"</div>
+          <p class="rec-desc">把"下一条龙/男爵/先锋/潮虫"与"推进时钟（塔皮价值衰减、过生长成熟、兵线加速阈值）"并列显示，避免玩家 UI 只盯中立目标计时器，从而主动强化对冲路径的可见性。同时把"回归触发条件"在目标计时器旁显性化（当前回归倍率/触发条件）。</p>
+          <div class="rec-tags">
+            <span class="tag tag-mid">UI/UX</span>
+            <span class="tag tag-mid">可预期性</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-num">04</div>
+        <div class="rec-content">
+          <div class="rec-title">教学：节拍化训练脚本</div>
+          <p class="rec-desc">围绕"关键节点前 90 秒"建立标准训练脚本：推线 → 回城/补给 → 布视野（含火光位）→ 扫眼 → 站位与技能 CD 交换 → 进坑/换资源。把"宏观意识"从抽象语言变成可重复训练的时钟流程。</p>
+          <div class="rec-tags">
+            <span class="tag tag-low">教学</span>
+            <span class="tag tag-mid">可学习性</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-num">05</div>
+        <div class="rec-content">
+          <div class="rec-title">排位规则：补位治理透明化</div>
+          <p class="rec-desc">将"补位对等"结果做成可审计日志（内部）与轻量透明提示（外部），降低玩家把失败归因于系统不公平的概率，减少情绪性时间损耗（连败/摆烂）。对 Aegis of Valor 的"表现达标"标准公开更高层评价维度（不泄露反作弊细节）。</p>
+          <div class="rec-tags">
+            <span class="tag tag-high">排位系统</span>
+            <span class="tag tag-mid">透明度</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-item">
+        <div class="rec-num">06</div>
+        <div class="rec-content">
+          <div class="rec-title">补丁治理：节奏改动专栏 + 回滚阈值</div>
+          <p class="rec-desc">在补丁说明中固定"节奏与时钟变更"栏目，集中呈现所有影响节拍的变动，降低玩家与生态理解成本。为高风险时钟改动预设翻盘率/目标价值的目标区间，一旦越界允许热修或下一补丁快速回滚。</p>
+          <div class="rec-tags">
+            <span class="tag tag-high">发布治理</span>
+            <span class="tag tag-mid">灰度/回滚</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Design Checklist -->
+    <div class="section-header" style="margin-top:60px;">
+      <div class="section-tag">Design Review Checklist</div>
+      <div class="section-title-cn">时钟化设计清单（新机制评审用）</div>
+      <div class="section-line"><div class="section-gem"></div></div>
+    </div>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-icon">01</div>
+        <div class="check-text">
+          <strong>解决的体验问题</strong>
+          该时钟解决的是什么问题？空转？目标疲劳？推进乏力？翻盘无望？
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">02</div>
+        <div class="check-text">
+          <strong>可预期且可学习</strong>
+          是否有清晰提示？规则是否稳定？是否能被训练脚本化？
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">03</div>
+        <div class="check-text">
+          <strong>存在对冲路径</strong>
+          不打这个时钟能否通过另一路径换回价值？是否避免目标单一垄断？
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">04</div>
+        <div class="check-text">
+          <strong>风险-收益匹配且可反制</strong>
+          偷/抢门槛合理吗？暴露成本与奖励分配是否公平？
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">05</div>
+        <div class="check-text">
+          <strong>节点化逆转机制</strong>
+          回归经验/时间止损机制是否显性且合理？落后方是否有可感知的翻盘窗口？
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">06</div>
+        <div class="check-text">
+          <strong>平衡杠杆充足</strong>
+          策划可用的调节工具是否够用？时间/奖励/耐久/UI/排位规则/灰度回滚？
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SOURCES ===== -->
+  <section id="sources">
+    <div class="section-header">
+      <div class="section-tag">Sources & Credibility</div>
+      <div class="section-title-cn">关键来源清单与可信度说明</div>
+      <div class="section-line"><div class="section-gem"></div></div>
+    </div>
+
+    <div class="sources-grid">
+      <div class="source-item confidence-high">
+        <div class="source-type">官方 · 高可信度</div>
+        <div class="source-name">Patch 26.06 / 26.1 Notes</div>
+        <p class="source-desc">版本基准、26.06 具体改动点与发布时间；现行核心系统参数——开局时间、兵线加速、塔皮/过生长、男爵/小龙回归经验、排位匹配治理</p>
+      </div>
+      <div class="source-item confidence-high">
+        <div class="source-type">官方 · 高可信度</div>
+        <div class="source-name">/dev: 2026 Season One Gameplay Preview</div>
+        <p class="source-desc">系统级设计意图——减少目标疲劳、提升推进价值、史诗目标耐久与回归机制、视野学习曲线</p>
+      </div>
+      <div class="source-item confidence-high">
+        <div class="source-type">官方 · 高可信度</div>
+        <div class="source-name">URF Academy: Goals & Pacing</div>
+        <p class="source-desc">官方公开的"目标/子目标带来节奏与玩家满意度"的设计框架；"好目标结构提供节奏与意义"的教学命题</p>
+      </div>
+      <div class="source-item confidence-high">
+        <div class="source-type">学术 · 高可信度</div>
+        <div class="source-name">Byers et al. (DiGRA 2025)</div>
+        <p class="source-desc">Shaping Time in Games: Developer Approaches to Temporality — 从开发者视角描述"如何塑形游戏时间"的分析语言</p>
+      </div>
+      <div class="source-item confidence-high">
+        <div class="source-type">学术 · 高可信度</div>
+        <div class="source-name">Byers et al. (OzCHI 2025, ACM DL)</div>
+        <p class="source-desc">Evaluating Time in Play and Temporal Satisfaction — 把"时间满意度"作为体验评估维度，为排位节奏治理提供评估框架</p>
+      </div>
+      <div class="source-item confidence-mid">
+        <div class="source-type">学术 · 中高可信度</div>
+        <div class="source-name">Geheeb et al. (arXiv 2024)</div>
+        <p class="source-desc">PaceMaker: A Practical Tool for Pacing Video Games — 把节奏规划工具化（pacing diagram），支持节点前准备脚本化训练/设计评审</p>
+      </div>
+      <div class="source-item confidence-mid">
+        <div class="source-type">社区数据 · 中可信度</div>
+        <div class="source-name">League of Graphs (Win Stats)</div>
+        <p class="source-desc">First Dragon / First Baron 等关键节点与胜率的关联信号；站点声明不代表官方，页面存在动态渲染，依赖摘要文本抓取</p>
+      </div>
+      <div class="source-item confidence-mid">
+        <div class="source-type">社区统计 · 中可信度</div>
+        <div class="source-name">Reddit 社区 · 按段位对局时长</div>
+        <p class="source-desc">15.24 vs 16.1 大样本版本切换期时长变化近似观测；非官方发布，但给出样本量与表格结构，可复核</p>
+      </div>
+      <div class="source-item confidence-mid">
+        <div class="source-type">社区资料 · 中可信度</div>
+        <div class="source-name">League of Legends Wiki (Fandom)</div>
+        <p class="source-desc">Dragon/Void Grubs/Rift Herald 的刷新绝对时间；高使用率社区资料，官方补丁未逐条列明，需内部 API/实测校验</p>
+      </div>
+    </div>
+
+    <p style="text-align:center;color:var(--silver-dim);font-size:12px;margin-top:24px;line-height:2;">
+      本报告以官方"机制参数 + 设计意图"为主干，以学术研究提供"时间/节奏的分析语言"，以社区数据补充"玩家侧可观测信号"。<br>
+      受限于公开数据可得性，翻盘率等关键 KPI 需要内部数据或 Riot API 复算以完成严谨闭环。
+    </p>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-logo">CLOCK THEORY</div>
+  <p class="footer-text">用"时钟理论"分析英雄联盟排位赛的节奏与平衡</p>
+  <p class="footer-text">排位节奏不是单一计时器，而是"开局加速—兵线加速—推塔小步收益—史诗目标回归机制—排位系统时间治理"叠加后的多层时钟系统</p>
+  <br>
+  <p class="footer-ver">Patch 26.06 · 2026 Season One · Deep Research Report</p>
+</footer>
+
+<!-- ===== CHARTS JS ===== -->
+<script>
+const GOLD = '#C89B3C';
+const GOLD_LIGHT = '#C8AA6E';
+const GOLD_DIM = 'rgba(200,155,60,0.3)';
+const BLUE = '#0BC4E3';
+const BLUE_DIM = 'rgba(11,196,227,0.3)';
+const SILVER = '#A0A8B4';
+const BG = '#0f1923';
+const RED = '#C84B31';
+
+Chart.defaults.color = SILVER;
+Chart.defaults.font.family = "'Noto Sans SC', sans-serif";
+Chart.defaults.font.size = 11;
+
+const gridLines = {
+  color: 'rgba(200,155,60,0.08)',
+  drawBorder: false,
+};
+
+// ---- Duration Chart ----
+new Chart(document.getElementById('durationChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Challenger','GM','Master','Diamond','Emerald','Platinum','Gold','Silver','Bronze','Iron'],
+    datasets: [
+      {
+        label: 'Patch 15.24',
+        data: [26.40, 26.80, 27.22, 28.50, 29.37, 29.88, 30.35, 30.72, 30.77, 30.58],
+        backgroundColor: 'rgba(200,155,60,0.5)',
+        borderColor: GOLD,
+        borderWidth: 1,
+      },
+      {
+        label: 'Patch 16.1',
+        data: [26.55, 27.02, 27.58, 27.98, 29.08, 30.00, 30.60, 31.05, 31.10, 30.63],
+        backgroundColor: 'rgba(11,196,227,0.3)',
+        borderColor: BLUE,
+        borderWidth: 1,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: { color: GOLD_LIGHT, padding: 16, font: { size: 11 } }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(10,20,40,0.95)',
+        borderColor: GOLD_DIM,
+        borderWidth: 1,
+        titleColor: GOLD_LIGHT,
+        bodyColor: SILVER,
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)} 分钟`
+        }
+      }
+    },
+    scales: {
+      x: { grid: gridLines, ticks: { color: SILVER } },
+      y: {
+        grid: gridLines,
+        ticks: { color: SILVER, callback: v => v + ' min' },
+        min: 25,
+        max: 32
+      }
+    }
+  }
+});
+
+// ---- Win Rate Chart ----
+new Chart(document.getElementById('winrateChart'), {
+  type: 'bar',
+  data: {
+    labels: ['First Dragon', 'First Baron'],
+    datasets: [
+      {
+        label: '蓝方 (Blue)',
+        data: [64.1, 79.9],
+        backgroundColor: 'rgba(200,155,60,0.55)',
+        borderColor: GOLD,
+        borderWidth: 1.5,
+        borderRadius: 2,
+      },
+      {
+        label: '红方 (Red)',
+        data: [60.6, 80.1],
+        backgroundColor: 'rgba(200,74,49,0.45)',
+        borderColor: RED,
+        borderWidth: 1.5,
+        borderRadius: 2,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: { color: GOLD_LIGHT, padding: 16 }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(10,20,40,0.95)',
+        borderColor: GOLD_DIM,
+        borderWidth: 1,
+        titleColor: GOLD_LIGHT,
+        bodyColor: SILVER,
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%`
+        }
+      }
+    },
+    scales: {
+      x: { grid: gridLines, ticks: { color: SILVER } },
+      y: {
+        grid: gridLines,
+        ticks: { color: SILVER, callback: v => v + '%' },
+        min: 55,
+        max: 85,
+      }
+    }
+  }
+});
+
+// ---- Baron Reform Chart ----
+new Chart(document.getElementById('baronChart'), {
+  type: 'bar',
+  data: {
+    labels: ['首刷时间 (分钟)', '团队金币', '经验 (全局)'],
+    datasets: [
+      {
+        label: '改动前',
+        data: [25, 1525, 300],
+        backgroundColor: 'rgba(160,168,180,0.3)',
+        borderColor: SILVER,
+        borderWidth: 1.5,
+        borderRadius: 2,
+      },
+      {
+        label: '改动后 (26.1)',
+        data: [20, 850, 650],
+        backgroundColor: 'rgba(200,155,60,0.5)',
+        borderColor: GOLD,
+        borderWidth: 1.5,
+        borderRadius: 2,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: { color: GOLD_LIGHT, padding: 16 }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(10,20,40,0.95)',
+        borderColor: GOLD_DIM,
+        borderWidth: 1,
+        titleColor: GOLD_LIGHT,
+        bodyColor: SILVER,
+      }
+    },
+    scales: {
+      x: { grid: gridLines, ticks: { color: SILVER } },
+      y: {
+        grid: gridLines,
+        ticks: { color: SILVER },
+        type: 'logarithmic',
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Bain Cup · Cold Brew Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0a0a0a;
+  --white: #f8f7f3;
+  --gray: #8a8a8a;
+  --light: #e8e6df;
+  --accent: #d4000f;
+  --serif: 'Noto Serif SC', serif;
+  --sans: 'Noto Sans SC', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+header {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid var(--black);
+  background: var(--white);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+}
+.mark {
+  width: 32px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background: var(--black);
+  color: var(--white);
+  letter-spacing: 0;
+}
+.back {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.hero {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.85fr) 1.15fr;
+  min-height: calc(100vh - 56px);
+  border-bottom: 1px solid var(--black);
+}
+.intro {
+  padding: 56px 48px;
+  border-right: 1px solid var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+}
+.kicker {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+h1 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 5vw, 62px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 22px;
+}
+.summary {
+  max-width: 520px;
+  color: var(--gray);
+}
+.meta {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid var(--light);
+  padding-top: 24px;
+}
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.meta-row span:first-child { color: var(--gray); }
+.cover {
+  min-height: 420px;
+  background: var(--light);
+}
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.viewer {
+  padding: 40px;
+  border-bottom: 1px solid var(--black);
+}
+.viewer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.viewer-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.viewer-link {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.deck-pages {
+  display: grid;
+  gap: 24px;
+}
+.deck-page {
+  background: white;
+  border: 1px solid var(--black);
+}
+.deck-page img {
+  width: 100%;
+  display: block;
+}
+@media (max-width: 900px) {
+  header { padding: 0 20px; }
+  .hero { grid-template-columns: 1fr; }
+  .intro { border-right: none; border-bottom: 1px solid var(--black); padding: 40px 24px; }
+  .cover { min-height: 240px; }
+  .viewer { padding: 28px 20px; }
+  .viewer-head { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .deck-pages { gap: 16px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="../../index.html"><span class="mark">Fo</span><span>lio</span></a>
+  <a class="back" href="../../index.html#design">Back to Design</a>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="intro">
+      <div>
+        <div class="kicker">Design 06 · 2026 Bain Cup</div>
+        <h1>Cold Brew Club<br>京东秒送增长策略</h1>
+        <p class="summary">围绕 JD Now 的即时零售增长命题，完成从用户场景、增长机会、品牌叙事到落地动作的策略提案。作品以“冷萃俱乐部”为创意框架，连接高频即时需求与年轻化消费心智。</p>
+      </div>
+      <div class="meta">
+        <div class="meta-row"><span>Format</span><span>Case Deck · PDF</span></div>
+        <div class="meta-row"><span>Pages</span><span>26</span></div>
+        <div class="meta-row"><span>Role</span><span>Strategy / Design</span></div>
+      </div>
+    </div>
+    <div class="cover">
+      <img src="./cover.png" alt="2026 Bain Cup Cold Brew Club 封面">
+    </div>
+  </section>
+
+  <section class="viewer">
+    <div class="viewer-head">
+      <div class="viewer-title">Deck Preview</div>
+      <a class="viewer-link" href="./cold-brew-club-bain-cup-2026.pdf" target="_blank" rel="noopener">Open PDF →</a>
+    </div>
+    <div class="deck-pages" aria-label="2026 Bain Cup deck pages">
+      <div class="deck-page"><img loading="lazy" src="./pages/page-01.webp" alt="2026 Bain Cup deck page 1"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-02.webp" alt="2026 Bain Cup deck page 2"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-03.webp" alt="2026 Bain Cup deck page 3"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-04.webp" alt="2026 Bain Cup deck page 4"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-05.webp" alt="2026 Bain Cup deck page 5"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-06.webp" alt="2026 Bain Cup deck page 6"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-07.webp" alt="2026 Bain Cup deck page 7"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-08.webp" alt="2026 Bain Cup deck page 8"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-09.webp" alt="2026 Bain Cup deck page 9"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-10.webp" alt="2026 Bain Cup deck page 10"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-11.webp" alt="2026 Bain Cup deck page 11"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-12.webp" alt="2026 Bain Cup deck page 12"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-13.webp" alt="2026 Bain Cup deck page 13"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-14.webp" alt="2026 Bain Cup deck page 14"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-15.webp" alt="2026 Bain Cup deck page 15"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-16.webp" alt="2026 Bain Cup deck page 16"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-17.webp" alt="2026 Bain Cup deck page 17"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-18.webp" alt="2026 Bain Cup deck page 18"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-19.webp" alt="2026 Bain Cup deck page 19"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-20.webp" alt="2026 Bain Cup deck page 20"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-21.webp" alt="2026 Bain Cup deck page 21"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-22.webp" alt="2026 Bain Cup deck page 22"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-23.webp" alt="2026 Bain Cup deck page 23"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-24.webp" alt="2026 Bain Cup deck page 24"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-25.webp" alt="2026 Bain Cup deck page 25"></div>
+      <div class="deck-page"><img loading="lazy" src="./pages/page-26.webp" alt="2026 Bain Cup deck page 26"></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

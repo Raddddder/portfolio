@@ -999,14 +999,45 @@ nav a:hover { color: var(--accent); }
 
 .writing-article-footer a:hover { opacity: 0.7; }
 
+.writing-link-card {
+  margin-top: 20px;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--light);
+  display: block;
+  text-decoration: none;
+  color: var(--black);
+  transition: color 0.2s;
+}
+
+.writing-link-card:hover { color: var(--accent); }
+
+.writing-link-card .writing-article-tag {
+  margin-bottom: 10px;
+}
+
+.writing-link-card-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.writing-link-card-desc {
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--gray);
+}
+
 /* ── EXPERIENCE ── */
 .exp-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .exp-card {
   border-right: 1px solid var(--black);
+  border-bottom: 1px solid var(--black);
   padding: 40px 32px;
   display: flex;
   flex-direction: column;
@@ -1015,8 +1046,15 @@ nav a:hover { color: var(--accent); }
   transition: background 0.3s;
 }
 
+.exp-card:nth-child(2n+3) { border-right: none; }
+.exp-card:nth-last-child(-n+2) { border-bottom: none; }
 .exp-card:last-child { border-right: none; }
 .exp-card:hover { background: rgba(0,0,0,0.015); }
+
+.exp-card.featured {
+  grid-column: 1 / -1;
+  border-right: none;
+}
 
 .exp-org {
   font-family: var(--serif);
@@ -1635,7 +1673,7 @@ footer {
       振凯的<br><em>作品集</em>
     </h1>
     <p class="hero-sub fade-up delay-2">
-      5 Projects · 5 Boards<br>
+      6 Projects · 4 Boards<br>
       Visual Experiment · Product · Strategy
     </p>
     <a href="#design" class="hero-cta fade-up delay-3">View Projects</a>
@@ -1669,19 +1707,19 @@ footer {
     <span class="ticker-item"><strong>Nendo</strong>留白 · 物件 · 静默品牌</span>
     <span class="ticker-item"><strong>Virtual Interview</strong>AI · DeepSeek · 用户研究</span>
     <span class="ticker-item"><strong>Bain Case</strong>AI+ESG · 新能源 · 五年战略</span>
+    <span class="ticker-item"><strong>2026 Bain Cup</strong>JD Now · Cold Brew Club · 增长策略</span>
     <span class="ticker-item"><strong>食录</strong>活字印刷风 · AI 司膳 · 社区食评</span>
     <span class="ticker-item"><strong>Photography</strong>Planned · 城市观察</span>
-    <span class="ticker-item"><strong>Clock Theory</strong>LOL排位 · 节奏架构 · 平衡机制</span>
-    <span class="ticker-item"><strong>Writing</strong>Planned · 设计思考</span>
+    <span class="ticker-item"><strong>Writing</strong>食录随笔 · 时钟理论 · 设计思考</span>
     <!-- duplicate -->
     <span class="ticker-item"><strong>苏联构成主义</strong>几何 · 红色秩序 · 纪念碑式编排</span>
     <span class="ticker-item"><strong>Nendo</strong>留白 · 物件 · 静默品牌</span>
     <span class="ticker-item"><strong>Virtual Interview</strong>AI · DeepSeek · 用户研究</span>
     <span class="ticker-item"><strong>Bain Case</strong>AI+ESG · 新能源 · 五年战略</span>
+    <span class="ticker-item"><strong>2026 Bain Cup</strong>JD Now · Cold Brew Club · 增长策略</span>
     <span class="ticker-item"><strong>食录</strong>活字印刷风 · AI 司膳 · 社区食评</span>
     <span class="ticker-item"><strong>Photography</strong>Planned · 城市观察</span>
-    <span class="ticker-item"><strong>Clock Theory</strong>LOL排位 · 节奏架构 · 平衡机制</span>
-    <span class="ticker-item"><strong>Writing</strong>Planned · 设计思考</span>
+    <span class="ticker-item"><strong>Writing</strong>食录随笔 · 时钟理论 · 设计思考</span>
   </div>
 </div>
 
@@ -1751,6 +1789,7 @@ footer {
       <img loading="lazy" src="./works/food-booklet/food-booklet-cover.png" alt="食录 The Food Booklet">
     </div>
   </a>
+
 </section>
 
 <!-- PRACTICE PROJECTS -->
@@ -1797,6 +1836,25 @@ footer {
       <img loading="lazy" src="./works/bain-case/slides/slide1_img0.jpg" alt="Bain Case Competition">
     </div>
   </a>
+
+  <a class="simple-row fade-in" href="./works/bain-cup-2026/index.html">
+    <div class="simple-row-info">
+      <div class="simple-row-num">06</div>
+      <div class="simple-row-text">
+        <div class="simple-row-name">2026 Bain Cup / Cold Brew Club</div>
+        <div class="simple-row-desc">面向 JD Now 即时零售增长命题的策略与设计提案。</div>
+        <div class="simple-row-chips">
+          <span>Case Deck</span>
+          <span>· JD Now</span>
+          <span>· Growth Strategy</span>
+        </div>
+      </div>
+      <div class="simple-row-arrow">View</div>
+    </div>
+    <div class="simple-row-visual">
+      <img loading="lazy" src="./works/bain-cup-2026/cover.png" alt="2026 Bain Cup Cold Brew Club">
+    </div>
+  </a>
 </section>
 
 
@@ -1807,23 +1865,45 @@ footer {
     <span class="section-more" style="color:var(--gray);cursor:default;">Experience</span>
   </div>
   <div class="exp-grid">
+    <!-- 京东科技 -->
+    <div class="exp-card featured fade-in">
+      <div class="exp-org">京东科技</div>
+      <div class="exp-org-en">JD Technology · Artificial Intelligence Business Unit</div>
+      <div class="exp-role">技术产品经理实习生</div>
+      <div class="exp-period">JoyPM</div>
+      <div class="exp-location">AI PM Workspace</div>
+      <ul class="exp-highlights">
+        <li><strong>PRD Agent 系统</strong> — 面向资料查找慢、历史知识难复用、评审返工高的问题，设计知识库驱动的 PRD 生成与评审工作台，构建“知识召回 - 文档生成 - 自动评测 - 知识回流”的协作闭环</li>
+        <li><strong>四域知识库</strong> — 拆解 PM 从需求输入到评审通过的核心链路，设计产品标准、系统能力、架构全景、Roadmap 知识库，使 AI 生成内容基于项目上下文而非通用模板</li>
+        <li><strong>自动评测机制</strong> — 设计完整性、一致性、规范性、可行性、业务价值 5 维评测，并建立生成耗时、一次评审通过率、返工次数、AI 内容采纳率、知识复用率等效果指标</li>
+      </ul>
+      <div class="exp-tags">
+        <span>AI Agent</span>
+        <span>Knowledge Base</span>
+        <span>PRD Generation</span>
+        <span>Evaluation</span>
+      </div>
+    </div>
     <!-- 腾讯 -->
     <div class="exp-card fade-in">
       <div class="exp-org">腾讯金融科技</div>
       <div class="exp-org-en">Tencent FiT</div>
       <div class="exp-role">AI 产品实习生</div>
-      <div class="exp-period">2025.09 — 2026.03</div>
+      <div class="exp-period">Sia</div>
       <div class="exp-location">Shenzhen</div>
       <ul class="exp-highlights">
-        <li><strong>虚拟主持人</strong> — 主导 AI Native 用研产品，搭建"动态访谈大纲"引擎，调研周期 7天→8小时，人效提升 50%</li>
-        <li><strong>社媒监测中台</strong> — 独立搭建自供给式数据中台，数据获取 T+2→10min，月处理 3w+ 数据</li>
-        <li><strong>热点追踪</strong> — AIGC 自动化素材生成，完播率提升 35%，覆盖日均 50 万量级投放</li>
+        <li><strong>AI 访谈系统</strong> — 负责 AI 访谈主持人的产品设计与研发落地，重构“大纲定制 - 访谈策略 - AI 主持追问 - 洞察生成 - 证据溯源”的开放式访谈流程</li>
+        <li><strong>访谈智能体机制</strong> — 设计访谈路径控制、动态追问、回答澄清、偏题拉回、访谈自进化与原文证据绑定，使静态问卷升级为开放式 AI 调研工具</li>
+        <li><strong>业务落地</strong> — 推动系统在 3 个业务部门落地，完成 10+ 场访谈、覆盖 500+ 样本，将单个调研项目周期由约 7 天缩短至 8 小时，人力成本下降约 50%</li>
+        <li><strong>Eminds 社媒洞察</strong> — 基于外部数据接口 API 搭建组内社媒数据中台，覆盖声量、互动量、NSR、口碑榜单等指标，月均处理 3w+ 帖子、8000+ 评论，BI 数据周期由 T+2 天缩短至约 10 分钟</li>
+        <li><strong>热点素材生成</strong> — 衔接社媒热点识别与广告创意生产，每日赋能 1-2 条热点广告素材；黄金 3 秒完播率提升 35%，素材产出效率较人工提升约 2 倍</li>
       </ul>
       <div class="exp-tags">
         <span>AI Product</span>
-        <span>LLM</span>
-        <span>Prompt Engineering</span>
-        <span>Data Pipeline</span>
+        <span>User Research</span>
+        <span>Interview Agent</span>
+        <span>Social Listening</span>
+        <span>AIGC</span>
       </div>
     </div>
     <!-- BCG -->
@@ -1831,16 +1911,17 @@ footer {
       <div class="exp-org">波士顿咨询</div>
       <div class="exp-org-en">Boston Consulting Group</div>
       <div class="exp-role">Part-Time Assistant</div>
-      <div class="exp-period">2025.06 — 2026.03</div>
+      <div class="exp-period">AI Transformation & Strategy</div>
       <div class="exp-location">Shanghai</div>
       <ul class="exp-highlights">
-        <li><strong>制造业 AI 转型</strong> — 协助开发 3 套 AI 算法 + 3 个 RPA 脚本，降低 80% 重复开发成本，覆盖 3 个核心业务环节</li>
-        <li><strong>行业龙头项目</strong> — 参与快消、TMT、工控等领域咨询，负责竞品财务与市场数据调研</li>
+        <li><strong>AI 转型方案</strong> — 在制造业龙头企业 AI 转型项目中，围绕工业设计场景识别 AI 能力切入点、转型机会与落地优先级</li>
+        <li><strong>VLM-CAD 工作流</strong> — 协助开发 2 套 VLM-CAD 工作流并沉淀为可复用模块，降低约 80% 重复操作成本，提升工程师执行效率</li>
+        <li><strong>研究与建模</strong> — 在快消、TMT、工控等项目中开展桌面研究、竞品对标、市场空间分析、商业模式拆解与财务数据整理，支撑战略假设验证与客户汇报</li>
       </ul>
       <div class="exp-tags">
         <span>Strategy</span>
         <span>AI Transformation</span>
-        <span>RPA</span>
+        <span>VLM-CAD</span>
         <span>Industry Research</span>
       </div>
     </div>
@@ -1848,18 +1929,18 @@ footer {
     <div class="exp-card fade-in">
       <div class="exp-org">上海人工智能实验室</div>
       <div class="exp-org-en">Shanghai AI Laboratory</div>
-      <div class="exp-role">战略 & AI 应用开发实习生</div>
-      <div class="exp-period">2025.06 — 2026.03</div>
+      <div class="exp-role">战略 & AI 应用实习生</div>
+      <div class="exp-period">Migo AI</div>
       <div class="exp-location">Shanghai</div>
       <ul class="exp-highlights">
-        <li><strong>Migo AI</strong> — 参与学研助手功能定义与技术选型，推动功能上线，提升学术信息检索效率</li>
-        <li><strong>战略研究</strong> — 产业语料深度挖掘与结构化建模，输出 10+ 篇调研报告，支撑国家级科学情报监测</li>
+        <li><strong>学研助手</strong> — 参与 Migo AI 学研助手功能设计，围绕科研/学习场景中的资料检索、文献理解与问答交互，负责核心交互原型设计并推动功能上线</li>
+        <li><strong>产业研究</strong> — 开展 AI 产业语料挖掘与重点国家产业信息结构化整理，输出 10+ 篇调研报告，支撑战略研究与产业判断</li>
       </ul>
       <div class="exp-tags">
         <span>AI Application</span>
         <span>Strategy Research</span>
-        <span>NLP</span>
-        <span>Data Modeling</span>
+        <span>Research Assistant</span>
+        <span>Interaction Design</span>
       </div>
     </div>
   </div>
@@ -1917,7 +1998,7 @@ footer {
       <span class="board-row-name">实践</span>
       <span class="board-row-label">Practice</span>
     </div>
-    <span class="board-row-status">2 Projects Live</span>
+    <span class="board-row-status">3 Projects Live</span>
   </div>
   <div class="board-row fade-in">
     <div class="board-row-left">
@@ -1933,7 +2014,7 @@ footer {
       <span class="board-row-name">写作</span>
       <span class="board-row-label">Writing</span>
     </div>
-    <span class="board-row-status">1 Article Live</span>
+    <span class="board-row-status">2 Articles Live</span>
   </div>
   <div class="writing-article" id="writingArticle">
     <div class="writing-article-inner">
@@ -1983,18 +2064,14 @@ footer {
         <span>产品设计随笔</span>
         <a href="./works/food-booklet/index.html">查看食录项目 →</a>
       </div>
+
+      <a class="writing-link-card" href="./works/lol-clock-theory/index.html">
+        <div class="writing-article-tag">Writing · 02 · 系统分析</div>
+        <div class="writing-link-card-title">时钟理论：LOL 排位中的节奏架构与平衡机制</div>
+        <div class="writing-link-card-desc">把原本独立的“时钟理论”收进写作板块，作为一篇关于游戏节奏、策略窗口与系统平衡的深度分析。</div>
+      </a>
     </div>
   </div>
-
-  <!-- LOL 时钟理论写作条目 -->
-  <a class="board-row fade-in" href="./works/lol-clock-theory/index.html" style="cursor: pointer;">
-    <div class="board-row-left">
-      <span class="board-row-num">05</span>
-      <span class="board-row-name">时钟理论</span>
-      <span class="board-row-label">Clock Theory · LOL</span>
-    </div>
-    <span class="board-row-status" style="color: var(--accent);">Deep Analysis →</span>
-  </a>
 </section>
 
 <!-- ABOUT -->
@@ -2011,15 +2088,15 @@ footer {
   <div class="about-right">
     <div class="stat-grid">
       <div class="stat">
-        <div class="stat-num">05</div>
+        <div class="stat-num">06</div>
         <div class="stat-label">Projects</div>
       </div>
       <div class="stat">
-        <div class="stat-num">05</div>
+        <div class="stat-num">04</div>
         <div class="stat-label">Boards</div>
       </div>
       <div class="stat">
-        <div class="stat-num">02</div>
+        <div class="stat-num">06</div>
         <div class="stat-label">Live</div>
       </div>
       <div class="stat">

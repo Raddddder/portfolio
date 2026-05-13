@@ -17,6 +17,9 @@
   --gray: #8a8a8a;
   --light: #e8e6df;
   --accent: #d4000f;
+  --brutal-bg: #dedbd2;
+  --brutal-ink: #11110f;
+  --brutal-muted: rgba(17,17,15,0.58);
   --serif: 'Noto Serif SC', serif;
   --sans: 'Noto Sans SC', sans-serif;
   --mono: 'DM Mono', monospace;
@@ -102,29 +105,35 @@ nav a:hover { color: var(--accent); }
   margin-top: 56px;
   min-height: calc(100vh - 56px);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: minmax(520px, 68vh) minmax(220px, 32vh);
+  background: var(--brutal-bg);
 }
 
 .hero-left {
-  border-right: 1px solid var(--black);
+  border-right: none;
+  border-bottom: 1px solid var(--black);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 60px;
+  padding: 56px 40px 48px;
   position: relative;
   overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255,255,255,0.28), transparent 28%),
+    radial-gradient(circle at 82% 68%, rgba(112,108,98,0.13), transparent 32%),
+    var(--brutal-bg);
 }
 
 .hero-particles {
   position: absolute;
   inset: 0;
-  z-index: 0;
-  pointer-events: none;
+  z-index: 1;
+  pointer-events: auto;
 }
 
 .hero-left > *:not(.hero-particles) {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 
@@ -133,31 +142,33 @@ nav a:hover { color: var(--accent); }
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.25em;
-  color: var(--gray);
+  color: var(--brutal-muted);
   margin-bottom: 28px;
 }
 
 .hero-title {
-  font-family: var(--serif);
-  font-size: clamp(32px, 4.5vw, 60px);
-  font-weight: 300;
-  line-height: 1.15;
-  letter-spacing: 0.02em;
+  font-family: var(--mono);
+  font-size: 132px;
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: 0;
   margin-bottom: 20px;
+  max-width: 1180px;
+  text-transform: uppercase;
 }
 
 .hero-title em {
   font-style: normal;
-  color: var(--accent);
+  color: var(--brutal-ink);
 }
 
 .hero-sub {
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.2em;
-  color: var(--gray);
+  color: var(--brutal-muted);
   text-transform: uppercase;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
   line-height: 2;
 }
 
@@ -187,10 +198,12 @@ nav a:hover { color: var(--accent); }
 
 .hero-right {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  min-height: 220px;
 }
 
 .hero-feature {
+  border-right: 1px solid var(--black);
   border-bottom: 1px solid var(--black);
   padding: 40px;
   display: flex;
@@ -257,7 +270,7 @@ nav a:hover { color: var(--accent); }
 .hero-feature .feature-title { color: #fff; }
 .hero-feature .feature-desc { color: rgba(255,255,255,0.7); }
 
-.hero-feature:last-child { border-bottom: none; }
+.hero-feature:last-child { border-right: none; }
 
 .feature-tag {
   font-family: var(--mono);
@@ -1473,14 +1486,14 @@ footer {
 @media (max-width: 1024px) {
   header { padding: 0 24px; }
 
-  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero { grid-template-rows: minmax(460px, 62vh) auto; min-height: auto; }
   .hero-left {
     border-right: none;
     border-bottom: 1px solid var(--black);
     padding: 48px 24px;
-    min-height: 50vh;
   }
-  .hero-right { grid-template-rows: auto auto; }
+  .hero-title { font-size: 84px; }
+  .hero-right { grid-template-columns: 1fr 1fr; }
   .hero-feature { padding: 28px 24px; min-height: 200px; }
 
   .about-strip { grid-template-columns: 1fr; gap: 40px; padding: 48px 24px; }
@@ -1520,9 +1533,11 @@ footer {
   .menu-toggle { display: flex; }
   .mobile-nav { display: flex; }
 
-  .hero-left { min-height: 44vh; padding: 36px 20px; }
-  .hero-title { margin-bottom: 16px; }
+  .hero { grid-template-rows: minmax(420px, 62vh) auto; }
+  .hero-left { padding: 36px 20px; }
+  .hero-title { font-size: 56px; margin-bottom: 16px; }
   .hero-sub { margin-bottom: 28px; }
+  .hero-right { grid-template-columns: 1fr; }
   .hero-feature { min-height: 180px; padding: 24px 20px; }
   .feature-title { font-size: 16px; }
   .feature-desc { font-size: 9px; margin-top: 8px; }
@@ -1668,9 +1683,9 @@ footer {
 <section class="hero">
   <div class="hero-left">
     <canvas class="hero-particles" id="heroParticles"></canvas>
-    <div class="hero-year fade-up">Design · Strategy · Code — 2026</div>
+    <div class="hero-year fade-up">Zhenkai Folio · Design · Strategy · Code — 2026</div>
     <h1 class="hero-title fade-up delay-1">
-      振凯的<br><em>作品集</em>
+      Product<br><em>Design</em>
     </h1>
     <p class="hero-sub fade-up delay-2">
       6 Projects · 4 Boards<br>
@@ -2170,155 +2185,304 @@ function toggleWriting() {
   });
 })();
 
-/* ── Hero 几何粒子动画 ── */
+/* ── Hero 交互线场 ── */
 ;(function() {
   const canvas = document.getElementById('heroParticles');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let W, H, particles = [], mouse = { x: -999, y: -999 };
-  const OPTS = {
-    count: window.innerWidth <= 768 ? 20 : 45,
-    lineAlpha: 0.06,
-    dotAlpha: 0.12,
-    linkDist: window.innerWidth <= 768 ? 120 : 150,
-    speed: 0.3,
-    dotSize: 1.5,
-    mouseRadius: 200,
-    accentDots: window.innerWidth <= 768 ? 2 : 4          // 带红色的点数量
+  let W = 0, H = 0, dpr = 1, time = 0;
+  let lastRender = 0;
+  const FIELD_W = 1440;
+  const FIELD_H = 720;
+  let fieldScale = 1;
+  let fieldOffsetX = 0;
+  let fieldOffsetY = 0;
+  const pointer = {
+    x: 0, y: 0, tx: 0, ty: 0,
+    vx: 0, vy: 0, ax: 0, ay: 0, accel: 0,
+    active: false, visible: false, energy: 0
   };
+  const theme = getComputedStyle(document.documentElement);
+  const fieldBg = theme.getPropertyValue('--brutal-bg').trim() || '#dedbd2';
+  const ink = 'rgba(17,17,15,0.78)';
+  const PAN_SPEED = 0.34;
+  const flowBands = [
+    { base: -0.08, width: 0.052, amp: 34, bend: 0.08, freq: 0.006, phase: 0.2, slant: -0.1, pan: 0.11 },
+    { base: 0.08, width: 0.06, amp: 42, bend: 0.1, freq: 0.0052, phase: 1.4, slant: 0.06, pan: 0.08 },
+    { base: 0.22, width: 0.046, amp: 46, bend: 0.075, freq: 0.0068, phase: 2.9, slant: -0.04, pan: 0.12 },
+    { base: 0.36, width: 0.072, amp: 32, bend: 0.09, freq: 0.0058, phase: 4.1, slant: 0.08, pan: 0.07 },
+    { base: 0.52, width: 0.052, amp: 48, bend: 0.105, freq: 0.0055, phase: 5.2, slant: -0.07, pan: 0.1 },
+    { base: 0.68, width: 0.064, amp: 38, bend: 0.08, freq: 0.0063, phase: 0.9, slant: 0.05, pan: 0.085 },
+    { base: 0.82, width: 0.048, amp: 44, bend: 0.095, freq: 0.005, phase: 2.2, slant: -0.09, pan: 0.115 },
+    { base: 1.02, width: 0.058, amp: 36, bend: 0.085, freq: 0.006, phase: 3.5, slant: 0.1, pan: 0.095 }
+  ];
 
   function resize() {
     const rect = canvas.parentElement.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = rect.width; H = rect.height;
     canvas.width = W * dpr;
     canvas.height = H * dpr;
     canvas.style.width = W + 'px';
     canvas.style.height = H + 'px';
+    fieldScale = Math.max(W / FIELD_W, H / FIELD_H);
+    fieldOffsetX = (W - FIELD_W * fieldScale) * 0.5;
+    fieldOffsetY = (H - FIELD_H * fieldScale) * 0.5;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-  function createParticle(i) {
-    const isAccent = i < OPTS.accentDots;
-    return {
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - 0.5) * OPTS.speed,
-      vy: (Math.random() - 0.5) * OPTS.speed,
-      r: isAccent ? OPTS.dotSize * 1.8 : OPTS.dotSize + Math.random() * 0.8,
-      accent: isAccent,
-      // 少量十字/菱形标记
-      shape: (i < 3) ? ['cross', 'diamond', 'ring'][i] : 'dot'
-    };
+  function softField(x, y, cx, cy, rx, ry) {
+    const dx = (x - cx) / rx;
+    const dy = (y - cy) / ry;
+    return Math.exp(-(dx * dx + dy * dy));
   }
 
-  function init() {
-    resize();
-    particles = [];
-    for (let i = 0; i < OPTS.count; i++) particles.push(createParticle(i));
+  function curveField(x, y, phase, amp, base, scale) {
+    const cx = FIELD_W * base + Math.sin(y * 0.008 + phase) * amp;
+    return Math.exp(-Math.pow((x - cx) / scale, 2));
   }
 
-  function drawShape(p) {
-    const a = p.accent ? 0.35 : OPTS.dotAlpha;
-    const color = p.accent ? `rgba(212,0,15,${a})` : `rgba(10,10,10,${a})`;
-    ctx.fillStyle = color;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 0.8;
-
-    if (p.shape === 'cross') {
-      const s = p.r * 2.5;
-      ctx.beginPath();
-      ctx.moveTo(p.x - s, p.y); ctx.lineTo(p.x + s, p.y);
-      ctx.moveTo(p.x, p.y - s); ctx.lineTo(p.x, p.y + s);
-      ctx.stroke();
-    } else if (p.shape === 'diamond') {
-      const s = p.r * 2.2;
-      ctx.beginPath();
-      ctx.moveTo(p.x, p.y - s);
-      ctx.lineTo(p.x + s * 0.6, p.y);
-      ctx.lineTo(p.x, p.y + s);
-      ctx.lineTo(p.x - s * 0.6, p.y);
-      ctx.closePath();
-      ctx.stroke();
-    } else if (p.shape === 'ring') {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r * 2, 0, Math.PI * 2);
-      ctx.stroke();
-    } else {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
+  function densityAt(u) {
+    return (
+      0.62 * Math.exp(-Math.pow((u - 0.16) / 0.035, 2)) +
+      0.54 * Math.exp(-Math.pow((u - 0.38) / 0.045, 2)) +
+      0.58 * Math.exp(-Math.pow((u - 0.68) / 0.04, 2)) +
+      0.48 * Math.exp(-Math.pow((u - 0.86) / 0.03, 2))
+    );
   }
 
-  function frame() {
-    ctx.clearRect(0, 0, W, H);
+  function wrapPixel(value, span) {
+    return ((value % span) + span) % span;
+  }
 
-    // 更新位置
-    for (const p of particles) {
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < -20) p.x = W + 20;
-      if (p.x > W + 20) p.x = -20;
-      if (p.y < -20) p.y = H + 20;
-      if (p.y > H + 20) p.y = -20;
+  function bandCenter(band, y) {
+    const v = y / FIELD_H;
+    const pan = time * PAN_SPEED;
+    const base = wrapPixel(FIELD_W * band.base + pan + FIELD_W * 0.28, FIELD_W * 1.42) - FIELD_W * 0.28;
+    const primary = Math.sin(y * band.freq + band.phase) * FIELD_W * band.bend;
+    const secondary = Math.sin(y * band.freq * 0.42 + band.phase * 1.7) * FIELD_W * band.bend * 0.46;
+    return base + (v - 0.5) * FIELD_W * band.slant + primary + secondary;
+  }
 
-      // 鼠标排斥（轻微）
-      const dx = p.x - mouse.x, dy = p.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < OPTS.mouseRadius && dist > 0) {
-        const force = (OPTS.mouseRadius - dist) / OPTS.mouseRadius * 0.008;
-        p.vx += dx / dist * force;
-        p.vy += dy / dist * force;
-      }
+  function flowField(x, y, lineIndex) {
+    let offset = 0;
 
-      // 限速
-      const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-      if (spd > OPTS.speed * 1.5) {
-        p.vx *= 0.98;
-        p.vy *= 0.98;
-      }
+    for (const band of flowBands) {
+      const center = bandCenter(band, y);
+      const dx = x - center;
+      const width = Math.max(32, FIELD_W * band.width);
+      const n = dx / width;
+      const core = Math.exp(-n * n * 0.85);
+      const shoulder = Math.exp(-Math.pow((Math.abs(n) - 1.18) / 0.78, 2));
+      const broadPull = -n * core * band.amp;
+      const compression = Math.sign(dx || 1) * shoulder * band.amp * 0.16;
+      const texture = Math.sin(y * 0.052 + band.phase + lineIndex * 0.09) * core * band.amp * 0.025;
+      offset += broadPull + compression + texture;
     }
 
-    // 连线
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const a = particles[i], b = particles[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < OPTS.linkDist) {
-          const alpha = (1 - dist / OPTS.linkDist) * OPTS.lineAlpha;
-          const isAccentLine = a.accent || b.accent;
-          ctx.strokeStyle = isAccentLine
-            ? `rgba(212,0,15,${alpha * 0.8})`
-            : `rgba(10,10,10,${alpha})`;
-          ctx.lineWidth = 0.5;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
+    return offset;
+  }
+
+  function pointerField(x, y) {
+    if (!pointer.visible && pointer.energy < 0.02) return 0;
+    if (pointer.accel < 0.02) return 0;
+    const dx = x - pointer.x;
+    const dy = y - pointer.y;
+    const ax = pointer.ax / pointer.accel;
+    const ay = pointer.ay / pointer.accel;
+    const forward = (dx * ax + dy * ay);
+    if (forward < 0) return 0;
+    const radius = FIELD_H * (0.2 + Math.min(0.18, pointer.accel / 34));
+    const dist2 = dx * dx + dy * dy;
+    const falloff = Math.exp(-dist2 / (radius * radius));
+    const side = (-ay * dx + ax * dy) / Math.max(radius, 1);
+    const semicircle = Math.min(1, forward / Math.max(radius * 0.2, 1));
+    const push = ax * pointer.accel * 2.35;
+    const shear = Math.sin(side * Math.PI) * pointer.accel * 1.15;
+    return (push + shear) * falloff * semicircle * pointer.energy;
+  }
+
+  function distort(x, y, lineIndex) {
+    let offset =
+      Math.sin(y * 0.014 + lineIndex * 0.12) * 1.7 +
+      Math.sin(y * 0.033 + lineIndex * 0.23) * 0.8 +
+      Math.sin((x + y) * 0.021 + lineIndex * 0.4) * 0.55;
+
+    const circularA = softField(x, y, FIELD_W * 0.18, FIELD_H * 0.22, FIELD_W * 0.18, FIELD_H * 0.25);
+    const circularB = softField(x, y, FIELD_W * 0.64, FIELD_H * 0.28, FIELD_W * 0.2, FIELD_H * 0.3);
+    const circularC = softField(x, y, FIELD_W * 0.88, FIELD_H * 0.66, FIELD_W * 0.16, FIELD_H * 0.22);
+    offset += Math.sin((y - FIELD_H * 0.18) * 0.018) * circularA * 6;
+    offset -= Math.cos((y - FIELD_H * 0.32) * 0.017) * circularB * 6;
+    offset += Math.sin((y + x) * 0.012) * circularC * 5;
+
+    const ribbonA = curveField(x, y, 1.2, FIELD_W * 0.038, 0.31, FIELD_W * 0.052);
+    const ribbonB = curveField(x, y, 4.6, FIELD_W * 0.046, 0.72, FIELD_W * 0.058);
+    offset += ribbonA * 4;
+    offset -= ribbonB * 3;
+    offset += flowField(x, y, lineIndex);
+    offset += pointerField(x, y);
+    return offset;
+  }
+
+  function drawLineField() {
+    ctx.fillStyle = fieldBg;
+    ctx.fillRect(0, 0, W, H);
+    ctx.save();
+    ctx.translate(fieldOffsetX, fieldOffsetY);
+    ctx.scale(fieldScale, fieldScale);
+    drawConcreteGrain();
+    updatePointer();
+
+    const baseSpacing = window.innerWidth <= 768 ? 18 : 11.8;
+    const step = window.innerWidth <= 768 ? 12 : 11;
+    const lines = Math.ceil(FIELD_W / baseSpacing) + 32;
+
+    ctx.strokeStyle = ink;
+    ctx.lineWidth = window.innerWidth <= 768 ? 0.78 : 0.82;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    const globalPan = time * PAN_SPEED;
+    let cursor = -baseSpacing * 14 - (globalPan % baseSpacing);
+    for (let i = -14; i < lines; i++) {
+      const u = Math.max(0, Math.min(1, cursor / FIELD_W));
+      const density = densityAt(u);
+      const spacing = baseSpacing * (1 - Math.min(density, 0.8) * 0.58);
+      cursor += spacing;
+      const baseX = cursor;
+      drawSmoothLine(baseX, i, step);
+    }
+
+    ctx.fillStyle = 'rgba(8,0,0,0.88)';
+    ctx.fillRect(0, FIELD_H - 36, FIELD_W, 1);
+    ctx.fillRect(0, FIELD_H - 5, FIELD_W, 1);
+
+    const binary = '01010011 01110100 01110010 01100001 01110100 01100101 01100111 01111001';
+    ctx.font = '8px DM Mono, monospace';
+    ctx.fillText(binary.repeat(Math.ceil(FIELD_W / 360)), 12, FIELD_H - 17);
+    drawPointerDot();
+    ctx.restore();
+
+    time += 1;
+  }
+
+  function linePoint(baseX, y, lineIndex) {
+    const drift = distort(baseX, y, lineIndex);
+    const localU = Math.max(0, Math.min(1, baseX / FIELD_W));
+    const grain =
+      Math.sin(y * 0.19 + lineIndex * 1.7) * 0.26 +
+      Math.sin(y * 0.47 + lineIndex * 0.8) * 0.13;
+    const valley = Math.sin(localU * Math.PI * 4.5) * 1.4;
+    return { x: baseX + drift + valley + grain, y };
+  }
+
+  function drawSmoothLine(baseX, lineIndex, step) {
+    let prev = linePoint(baseX, -30, lineIndex);
+    let current = linePoint(baseX, -30 + step, lineIndex);
+    ctx.beginPath();
+    ctx.moveTo(prev.x, prev.y);
+    for (let y = -30 + step * 2; y <= FIELD_H + 30; y += step) {
+      const next = linePoint(baseX, y, lineIndex);
+      const midX = (current.x + next.x) * 0.5;
+      const midY = (current.y + next.y) * 0.5;
+      ctx.quadraticCurveTo(current.x, current.y, midX, midY);
+      current = next;
+    }
+    ctx.lineTo(current.x, current.y);
+    ctx.stroke();
+  }
+
+  function updatePointer() {
+    if (!pointer.visible) {
+      pointer.energy *= 0.86;
+      pointer.vx *= 0.78;
+      pointer.vy *= 0.78;
+      pointer.ax *= 0.72;
+      pointer.ay *= 0.72;
+      pointer.accel *= 0.72;
+      return;
+    }
+    const prevVx = pointer.vx;
+    const prevVy = pointer.vy;
+    const dx = pointer.tx - pointer.x;
+    const dy = pointer.ty - pointer.y;
+    pointer.vx = dx * 0.12;
+    pointer.vy = dy * 0.12;
+    pointer.x += pointer.vx;
+    pointer.y += pointer.vy;
+    pointer.ax = pointer.vx - prevVx;
+    pointer.ay = pointer.vy - prevVy;
+    pointer.accel = Math.sqrt(pointer.ax * pointer.ax + pointer.ay * pointer.ay);
+    const targetEnergy = Math.min(1, pointer.accel / 6);
+    pointer.energy += (targetEnergy - pointer.energy) * 0.34;
+  }
+
+  function drawPointerDot() {
+    if (!pointer.visible && pointer.energy < 0.04) return;
+    ctx.save();
+    ctx.globalAlpha = Math.min(1, 0.34 + pointer.energy * 0.66);
+    ctx.fillStyle = '#050505';
+    ctx.beginPath();
+    ctx.arc(pointer.x, pointer.y, 4.2 + pointer.energy * 2.1, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawConcreteGrain() {
+    ctx.fillStyle = 'rgba(17,17,15,0.045)';
+    for (let y = 8; y < FIELD_H; y += 24) {
+      for (let x = 6; x < FIELD_W; x += 30) {
+        const n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+        const f = n - Math.floor(n);
+        if (f > 0.84) {
+          ctx.globalAlpha = (f - 0.84) * 0.16;
+          ctx.fillRect(x + (f - 0.5) * 4, y, 1, 1);
         }
       }
     }
+    ctx.globalAlpha = 1;
+  }
 
-    // 画点
-    for (const p of particles) drawShape(p);
-
+  function frame(now = 0) {
+    if (!lastRender || now - lastRender > 33) {
+      drawLineField();
+      lastRender = now;
+    }
     requestAnimationFrame(frame);
   }
 
-  // 鼠标追踪（相对 hero-left）
-  canvas.parentElement.addEventListener('mousemove', (e) => {
+  function setPointer(clientX, clientY) {
     const rect = canvas.parentElement.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
+    const x = (clientX - rect.left - fieldOffsetX) / fieldScale;
+    const y = (clientY - rect.top - fieldOffsetY) / fieldScale;
+    if (x < -20 || x > FIELD_W + 20 || y < -20 || y > FIELD_H + 20) {
+      pointer.visible = false;
+      return;
+    }
+    if (!pointer.visible) {
+      pointer.x = x;
+      pointer.y = y;
+      pointer.vx = 0;
+      pointer.vy = 0;
+      pointer.ax = 0;
+      pointer.ay = 0;
+      pointer.accel = 0;
+      pointer.energy = 0;
+    }
+    pointer.tx = x;
+    pointer.ty = y;
+    pointer.visible = true;
+  }
+
+  window.addEventListener('pointermove', (e) => {
+    setPointer(e.clientX, e.clientY);
   });
-  canvas.parentElement.addEventListener('mouseleave', () => {
-    mouse.x = -999; mouse.y = -999;
+  canvas.parentElement.addEventListener('pointerleave', () => {
+    pointer.visible = false;
   });
 
   window.addEventListener('resize', () => { resize(); });
-  init();
+  resize();
   frame();
 })();
 </script>

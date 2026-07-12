@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>H · Folio</title>
-<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<title>Strawberry Field</title>
+<link rel="icon" type="image/png" href="./assets/strawberry-mark.png?v=5">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Sans+SC:wght@200;300;400;500&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
@@ -39,6 +39,65 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+body.intro-lock { overflow: hidden; }
+
+/* ── INTRO ── */
+.site-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--brutal-bg);
+  color: var(--black);
+  transform: translateY(0);
+  transition: transform 1.15s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
+}
+
+.site-intro::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--black);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-intro.is-ready::after { transform: scaleX(1); }
+.site-intro.is-lifting { transform: translateY(-100%); }
+
+.intro-logo {
+  width: 76px;
+  height: 76px;
+  opacity: 0;
+  transform: scale(0.82);
+  transition:
+    opacity 0.45s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-intro.is-visible .intro-logo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+body.intro-pending header {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+header {
+  transition: opacity 0.55s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body.intro-pending .fade-up { animation-play-state: paused; }
+
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
 
@@ -69,17 +128,12 @@ header {
 }
 
 .logo-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   width: 32px;
   height: 28px;
-  background: var(--black);
-  color: var(--white);
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0.02em;
+  padding: 1px 3px;
+  box-sizing: border-box;
+  object-fit: contain;
 }
 
 nav {
@@ -129,6 +183,7 @@ nav a:hover { color: var(--accent); }
   inset: 0;
   z-index: 1;
   pointer-events: auto;
+  contain: strict;
 }
 
 .hero-left > *:not(.hero-particles) {
@@ -347,6 +402,133 @@ nav a:hover { color: var(--accent); }
 @keyframes ticker {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+/* ── FIELD NOTE / NAME ORIGIN ── */
+.field-note {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.48fr) minmax(420px, 1.42fr) minmax(300px, 0.9fr);
+  border-bottom: 1px solid var(--black);
+  background: var(--white);
+}
+
+.field-note-label {
+  padding: 38px 30px;
+  border-right: 1px solid var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 64px;
+}
+
+.field-note-index,
+.field-note-kicker,
+.field-note-meta dt,
+.field-note-archive {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.field-note-index {
+  font-size: 10px;
+  color: var(--gray);
+}
+
+.field-note-emblem {
+  width: 78px;
+  height: 78px;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.08);
+}
+
+.field-note-meta {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+}
+
+.field-note-meta div {
+  border-top: 1px solid var(--light);
+  padding-top: 10px;
+}
+
+.field-note-meta dt {
+  font-size: 8px;
+  color: var(--gray);
+  margin-bottom: 5px;
+}
+
+.field-note-meta dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.field-note-statement {
+  padding: 70px clamp(36px, 5vw, 84px) 64px;
+  border-right: 1px solid var(--black);
+  display: flex;
+  flex-direction: column;
+}
+
+.field-note-kicker {
+  font-size: 9px;
+  color: var(--gray);
+  margin-bottom: 70px;
+}
+
+.field-note-title {
+  margin: 0;
+  max-width: 780px;
+  font-family: var(--serif);
+  font-size: clamp(42px, 5.1vw, 78px);
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.field-note-title em {
+  font-weight: 300;
+  color: var(--gray);
+}
+
+.field-note-lead {
+  max-width: 580px;
+  margin: auto 0 0;
+  padding-top: 72px;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.85;
+}
+
+.field-note-copy {
+  padding: 70px 38px 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.field-note-copy p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 2;
+  color: #3f3f3b;
+}
+
+.field-note-copy strong {
+  color: var(--black);
+  font-weight: 500;
+}
+
+.field-note-archive {
+  margin-top: auto;
+  padding-top: 22px;
+  border-top: 1px solid var(--black);
+  font-size: 8px;
+  line-height: 1.8;
+  color: var(--gray);
 }
 
 /* ── SECTION HEADER ── */
@@ -1045,11 +1227,11 @@ nav a:hover { color: var(--accent); }
 /* ── EXPERIENCE ── */
 .exp-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .exp-card {
-  border-right: 1px solid var(--black);
+  border-right: none;
   border-bottom: 1px solid var(--black);
   padding: 40px 32px;
   display: flex;
@@ -1059,9 +1241,7 @@ nav a:hover { color: var(--accent); }
   transition: background 0.3s;
 }
 
-.exp-card:nth-child(2n+3) { border-right: none; }
-.exp-card:nth-last-child(-n+2) { border-bottom: none; }
-.exp-card:last-child { border-right: none; }
+.exp-card:last-child { border-bottom: none; }
 .exp-card:hover { background: rgba(0,0,0,0.015); }
 
 .exp-card.featured {
@@ -1385,6 +1565,12 @@ footer {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .site-intro { display: none; }
+  body.intro-pending header { opacity: 1; transform: none; }
+  body.intro-pending .fade-up { animation-play-state: running; }
+}
+
 .fade-up {
   animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -1496,6 +1682,12 @@ footer {
   .hero-right { grid-template-columns: 1fr 1fr; }
   .hero-feature { padding: 28px 24px; min-height: 200px; }
 
+  .field-note { grid-template-columns: 180px 1fr; }
+  .field-note-statement { border-right: none; padding: 56px 40px; }
+  .field-note-copy { grid-column: 2; border-top: 1px solid var(--black); padding: 38px 40px; }
+  .field-note-kicker { margin-bottom: 48px; }
+  .field-note-lead { padding-top: 56px; }
+
   .about-strip { grid-template-columns: 1fr; gap: 40px; padding: 48px 24px; }
 
   .section-header { padding-left: 24px; padding-right: 24px; }
@@ -1541,6 +1733,23 @@ footer {
   .hero-feature { min-height: 180px; padding: 24px 20px; }
   .feature-title { font-size: 16px; }
   .feature-desc { font-size: 9px; margin-top: 8px; }
+
+  .field-note { grid-template-columns: 1fr; }
+  .field-note-label {
+    border-right: none;
+    border-bottom: 1px solid var(--black);
+    padding: 24px 20px;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+  }
+  .field-note-emblem { width: 54px; height: 54px; margin-left: auto; }
+  .field-note-meta { display: none; }
+  .field-note-statement { padding: 44px 20px 40px; }
+  .field-note-kicker { margin-bottom: 36px; }
+  .field-note-title { font-size: clamp(36px, 11vw, 58px); }
+  .field-note-lead { padding-top: 44px; font-size: 16px; }
+  .field-note-copy { grid-column: 1; padding: 32px 20px; }
 
   .section-header {
     flex-direction: column;
@@ -1606,7 +1815,7 @@ footer {
 @media (max-width: 480px) {
   header { height: 50px; padding: 0 16px; }
   .logo { font-size: 13px; gap: 8px; }
-  .logo-mark { width: 28px; height: 24px; font-size: 11px; }
+  .logo-mark { width: 28px; height: 24px; padding: 1px 3px; }
 
   .hero { margin-top: 50px; }
   .hero-left { min-height: 38vh; padding: 28px 16px; }
@@ -1652,12 +1861,16 @@ footer {
 }
 </style>
 </head>
-<body>
+<body class="intro-pending intro-lock">
+
+<div class="site-intro" id="siteIntro" aria-hidden="true">
+  <img class="intro-logo" src="./assets/strawberry-mark.png?v=5" alt="Strawberry Field">
+</div>
 
 <!-- HEADER -->
 <header>
   <a class="logo" href="#">
-    <span class="logo-mark">Fo</span>lio
+    <img class="logo-mark" src="./assets/strawberry-mark.png?v=5" alt="">Strawberry Field
   </a>
   <nav>
     <a href="#design">Design</a>
@@ -1683,7 +1896,7 @@ footer {
 <section class="hero">
   <div class="hero-left">
     <canvas class="hero-particles" id="heroParticles"></canvas>
-    <div class="hero-year fade-up">Zhenkai Folio · Design · Strategy · Code — 2026</div>
+    <div class="hero-year fade-up">Strawberry Field · Design · Strategy · Code — 2026</div>
     <h1 class="hero-title fade-up delay-1">
       Product<br><em>Design</em>
     </h1>
@@ -1737,6 +1950,55 @@ footer {
     <span class="ticker-item"><strong>Writing</strong>食录随笔 · 时钟理论 · 设计思考</span>
   </div>
 </div>
+
+<!-- FIELD NOTE / NAME ORIGIN -->
+<section class="field-note" id="field-note" aria-labelledby="field-note-title">
+  <aside class="field-note-label fade-in" aria-label="Exhibition label">
+    <span class="field-note-index">00 · Origin</span>
+    <img class="field-note-emblem" src="./assets/strawberry-mark.png?v=5" alt="">
+    <dl class="field-note-meta">
+      <div>
+        <dt>Title</dt>
+        <dd>Strawberry Field</dd>
+      </div>
+      <div>
+        <dt>Source</dt>
+        <dd>The Beatles<br>1967</dd>
+      </div>
+      <div>
+        <dt>Collection</dt>
+        <dd>Design · Strategy<br>Code · Ongoing</dd>
+      </div>
+    </dl>
+  </aside>
+
+  <div class="field-note-statement fade-in">
+    <div class="field-note-kicker">Curatorial note / 关于名字</div>
+    <h2 class="field-note-title" id="field-note-title">
+      把尚未存在的生活，<br>先做出<em>一点点。</em>
+    </h2>
+    <p class="field-note-lead">
+      “草莓地”不是一个已经抵达的地方，而是一片允许想象、试验与生长的场域。
+    </p>
+  </div>
+
+  <div class="field-note-copy fade-in">
+    <p>
+      名字来自披头士的 <strong>《Strawberry Fields Forever》</strong>。在我的理解里，它并不只关于某个真实地点，更像一次回到内心景观的漫游——对自由、诚实而理想的生活，保持近乎热恋般的执着。
+    </p>
+    <p>
+      这也是我理解产品与设计的方式：理想不能只停留在描述里，它需要被研究、被画出来、被写成策略，也需要被代码真正运行。
+    </p>
+    <p>
+      因此，这份作品集不是完成品的陈列柜，而是一份<strong>持续生长的证据档案</strong>。每个项目都是一次把模糊愿望变成具体体验的尝试，也共同构成了我的 Strawberry Field。
+    </p>
+    <div class="field-note-archive">
+      Archive note SF–00<br>
+      Personal portfolio · 2026<br>
+      A field in progress
+    </div>
+  </div>
+</section>
 
 <!-- DESIGN PROJECTS -->
 <section class="section" id="design">
@@ -1814,59 +2076,62 @@ footer {
     <span class="section-more" style="color:var(--gray);cursor:default;">完整落地的产品项目</span>
   </div>
 
-  <a class="simple-row fade-in" href="./works/virtual-interview/index.html">
-    <div class="simple-row-info">
-      <div class="simple-row-num">04</div>
-      <div class="simple-row-text">
-        <div class="simple-row-name">Virtual Interview / AI 访谈系统</div>
-        <div class="simple-row-desc">AI 驱动的企业级用户研究平台，访谈效率提升 10 倍。</div>
-        <div class="simple-row-chips">
-          <span>AI / DeepSeek</span>
-          <span>· Full-Stack</span>
-          <span>· Vue + TDesign</span>
-        </div>
+  <a class="project-row fade-in" href="./works/virtual-interview/index.html">
+    <div class="project-row-info">
+      <div class="project-row-meta">
+        <span class="project-row-num">04</span>
+        <span class="project-row-cat product">AI Product</span>
       </div>
-      <div class="simple-row-arrow">View</div>
+      <div class="project-row-name">Virtual Interview / AI 访谈系统</div>
+      <div class="project-row-desc">AI 驱动的企业级用户研究平台，访谈效率提升 10 倍。</div>
+      <div class="project-row-chips">
+        <span>AI / DeepSeek</span>
+        <span>Full-Stack</span>
+        <span>Vue + TDesign</span>
+      </div>
+      <div class="project-row-arrow">View Project</div>
     </div>
-    <div class="simple-row-visual">
+    <div class="project-row-visual">
       <img loading="lazy" src="./works/virtual-interview/screenshots/11-manual-2026-03-03T09-51-29.png" alt="Virtual Interview Dashboard" style="object-position: center top;">
     </div>
   </a>
 
-  <a class="simple-row fade-in" href="./works/bain-case/index.html">
-    <div class="simple-row-info">
-      <div class="simple-row-num">05</div>
-      <div class="simple-row-text">
-        <div class="simple-row-name">Bain Case / AI+ESG 增长战略</div>
-        <div class="simple-row-desc">贝恩杯商赛 · 新能源五年战略方案。</div>
-        <div class="simple-row-chips">
-          <span>Case Competition</span>
-          <span>· AI + ESG</span>
-          <span>· Strategy</span>
-        </div>
+  <a class="project-row fade-in" href="./works/bain-case/index.html">
+    <div class="project-row-info">
+      <div class="project-row-meta">
+        <span class="project-row-num">05</span>
+        <span class="project-row-cat product">Strategy</span>
       </div>
-      <div class="simple-row-arrow">View</div>
+      <div class="project-row-name">Bain Case / AI+ESG 增长战略</div>
+      <div class="project-row-desc">贝恩杯商赛 · 新能源五年战略方案。</div>
+      <div class="project-row-chips">
+        <span>Case Competition</span>
+        <span>AI + ESG</span>
+        <span>Strategy</span>
+      </div>
+      <div class="project-row-arrow">View Project</div>
     </div>
-    <div class="simple-row-visual">
+    <div class="project-row-visual">
       <img loading="lazy" src="./works/bain-case/slides/slide1_img0.jpg" alt="Bain Case Competition">
     </div>
   </a>
 
-  <a class="simple-row fade-in" href="./works/bain-cup-2026/index.html">
-    <div class="simple-row-info">
-      <div class="simple-row-num">06</div>
-      <div class="simple-row-text">
-        <div class="simple-row-name">2026 Bain Cup / Cold Brew Club</div>
-        <div class="simple-row-desc">面向 JD Now 即时零售增长命题的策略与设计提案。</div>
-        <div class="simple-row-chips">
-          <span>Case Deck</span>
-          <span>· JD Now</span>
-          <span>· Growth Strategy</span>
-        </div>
+  <a class="project-row fade-in" href="./works/bain-cup-2026/index.html">
+    <div class="project-row-info">
+      <div class="project-row-meta">
+        <span class="project-row-num">06</span>
+        <span class="project-row-cat product">Case Deck</span>
       </div>
-      <div class="simple-row-arrow">View</div>
+      <div class="project-row-name">2026 Bain Cup / Cold Brew Club</div>
+      <div class="project-row-desc">面向 JD Now 即时零售增长命题的策略与设计提案。</div>
+      <div class="project-row-chips">
+        <span>Case Deck</span>
+        <span>JD Now</span>
+        <span>Growth Strategy</span>
+      </div>
+      <div class="project-row-arrow">View Project</div>
     </div>
-    <div class="simple-row-visual">
+    <div class="project-row-visual">
       <img loading="lazy" src="./works/bain-cup-2026/cover.png" alt="2026 Bain Cup Cold Brew Club">
     </div>
   </a>
@@ -2131,7 +2396,7 @@ footer {
 <footer>
   <div class="footer-top">
     <div>
-      <div class="footer-brand">H · Folio</div>
+      <div class="footer-brand">Strawberry Field</div>
       <div class="footer-tagline">Design · Strategy · Code</div>
     </div>
     <div class="footer-nav">
@@ -2143,12 +2408,53 @@ footer {
     </div>
   </div>
   <div class="footer-copy">
-    <span>© 2026 Folio. All rights reserved.</span>
+    <span>© 2026 Strawberry Field. All rights reserved.</span>
     <span>Design · Strategy · Code</span>
   </div>
 </footer>
 
 <script>
+/* ── Intro sequence ── */
+;(function() {
+  const intro = document.getElementById('siteIntro');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+  function resetInitialScroll() {
+    const previousBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    requestAnimationFrame(() => {
+      document.documentElement.style.scrollBehavior = previousBehavior;
+    });
+  }
+
+  resetInitialScroll();
+  window.addEventListener('load', resetInitialScroll, { once: true });
+
+  function finishIntro() {
+    document.body.classList.remove('intro-pending', 'intro-lock');
+    document.body.classList.add('intro-complete');
+    resetInitialScroll();
+  }
+
+  if (!intro || reducedMotion) {
+    finishIntro();
+    intro?.remove();
+    return;
+  }
+
+  requestAnimationFrame(() => requestAnimationFrame(() => intro.classList.add('is-visible')));
+  window.setTimeout(() => intro.classList.add('is-ready'), 620);
+  window.setTimeout(() => {
+    intro.classList.add('is-lifting');
+    window.dispatchEvent(new CustomEvent('hero:reveal'));
+  }, 980);
+  window.setTimeout(finishIntro, 2250);
+  window.setTimeout(() => intro.remove(), 2450);
+})();
+
 /* ── 滚动渐入 ── */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
@@ -2191,7 +2497,13 @@ function toggleWriting() {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let W = 0, H = 0, dpr = 1, time = 0;
-  let lastRender = 0;
+  let lastFrame = 0;
+  let isVisible = true;
+  let resizeFrame = 0;
+  let revealProgress = document.body.classList.contains('intro-complete') ? 1 : 0;
+  let revealStartedAt = 0;
+  let dynamicsFrame = 0;
+  let dynamicsStep = 12;
   const FIELD_W = 1440;
   const FIELD_H = 720;
   let fieldScale = 1;
@@ -2199,13 +2511,15 @@ function toggleWriting() {
   let fieldOffsetY = 0;
   const pointer = {
     x: 0, y: 0, tx: 0, ty: 0,
-    vx: 0, vy: 0, ax: 0, ay: 0, accel: 0,
+    vx: 0, vy: 0, speed: 0,
+    inputSpeed: 0, smoothInputSpeed: 0, angle: 0,
     active: false, visible: false, energy: 0
   };
-  const theme = getComputedStyle(document.documentElement);
-  const fieldBg = theme.getPropertyValue('--brutal-bg').trim() || '#dedbd2';
-  const ink = 'rgba(17,17,15,0.78)';
-  const PAN_SPEED = 0.34;
+  const ink = 'rgba(17,17,15,0.66)';
+  const LINE_DRIFT_SPEED = 3.2;
+  const FOLD_DRIFT_SPEED = 6.8;
+  const bandCenterCache = new Map();
+  const pointDynamics = [];
   const flowBands = [
     { base: -0.08, width: 0.052, amp: 34, bend: 0.08, freq: 0.006, phase: 0.2, slant: -0.1, pan: 0.11 },
     { base: 0.08, width: 0.06, amp: 42, bend: 0.1, freq: 0.0052, phase: 1.4, slant: 0.06, pan: 0.08 },
@@ -2219,7 +2533,7 @@ function toggleWriting() {
 
   function resize() {
     const rect = canvas.parentElement.getBoundingClientRect();
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth <= 768 ? 1.25 : 1.5);
     W = rect.width; H = rect.height;
     canvas.width = W * dpr;
     canvas.height = H * dpr;
@@ -2229,17 +2543,7 @@ function toggleWriting() {
     fieldOffsetX = (W - FIELD_W * fieldScale) * 0.5;
     fieldOffsetY = (H - FIELD_H * fieldScale) * 0.5;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  function softField(x, y, cx, cy, rx, ry) {
-    const dx = (x - cx) / rx;
-    const dy = (y - cy) / ry;
-    return Math.exp(-(dx * dx + dy * dy));
-  }
-
-  function curveField(x, y, phase, amp, base, scale) {
-    const cx = FIELD_W * base + Math.sin(y * 0.008 + phase) * amp;
-    return Math.exp(-Math.pow((x - cx) / scale, 2));
+    pointDynamics.length = 0;
   }
 
   function densityAt(u) {
@@ -2257,49 +2561,46 @@ function toggleWriting() {
 
   function bandCenter(band, y) {
     const v = y / FIELD_H;
-    const pan = time * PAN_SPEED;
-    const base = wrapPixel(FIELD_W * band.base + pan + FIELD_W * 0.28, FIELD_W * 1.42) - FIELD_W * 0.28;
-    const primary = Math.sin(y * band.freq + band.phase) * FIELD_W * band.bend;
-    const secondary = Math.sin(y * band.freq * 0.42 + band.phase * 1.7) * FIELD_W * band.bend * 0.46;
+    const driftRate = 0.58 + band.pan * 3.6;
+    const glide = time * FOLD_DRIFT_SPEED * driftRate;
+    const sway = Math.sin(time * (0.11 + band.pan * 0.34) + band.phase) * 11;
+    const breathe = 1 + Math.sin(time * 0.18 + band.phase * 1.3) * 0.035;
+    const phaseDrift = time * (0.045 + band.pan * 0.12);
+    const base = wrapPixel(
+      FIELD_W * band.base + glide + sway + FIELD_W * 0.28,
+      FIELD_W * 1.42
+    ) - FIELD_W * 0.28;
+    const primary = Math.sin(y * band.freq + band.phase + phaseDrift) * FIELD_W * band.bend * breathe;
+    const secondary = Math.sin(y * band.freq * 0.42 + band.phase * 1.7 - phaseDrift * 0.62) * FIELD_W * band.bend * 0.46;
     return base + (v - 0.5) * FIELD_W * band.slant + primary + secondary;
   }
 
   function flowField(x, y, lineIndex) {
     let offset = 0;
+    const fiberA = Math.sin(y * 0.052 + lineIndex * 0.09 + time * 0.13);
+    const fiberB = Math.sin(y * 0.021 + lineIndex * 0.035 - time * 0.08);
 
-    for (const band of flowBands) {
-      const center = bandCenter(band, y);
+    let centers = bandCenterCache.get(y);
+    if (!centers) {
+      centers = flowBands.map((band) => bandCenter(band, y));
+      bandCenterCache.set(y, centers);
+    }
+
+    for (let i = 0; i < flowBands.length; i++) {
+      const band = flowBands[i];
+      const center = centers[i];
       const dx = x - center;
       const width = Math.max(32, FIELD_W * band.width);
       const n = dx / width;
       const core = Math.exp(-n * n * 0.85);
-      const shoulder = Math.exp(-Math.pow((Math.abs(n) - 1.18) / 0.78, 2));
+      const shoulder = core * (1 - core) * 4;
       const broadPull = -n * core * band.amp;
       const compression = Math.sign(dx || 1) * shoulder * band.amp * 0.16;
-      const texture = Math.sin(y * 0.052 + band.phase + lineIndex * 0.09) * core * band.amp * 0.025;
+      const texture = (fiberA * 0.06 + fiberB * 0.035) * core * band.amp;
       offset += broadPull + compression + texture;
     }
 
     return offset;
-  }
-
-  function pointerField(x, y) {
-    if (!pointer.visible && pointer.energy < 0.02) return 0;
-    if (pointer.accel < 0.02) return 0;
-    const dx = x - pointer.x;
-    const dy = y - pointer.y;
-    const ax = pointer.ax / pointer.accel;
-    const ay = pointer.ay / pointer.accel;
-    const forward = (dx * ax + dy * ay);
-    if (forward < 0) return 0;
-    const radius = FIELD_H * (0.2 + Math.min(0.18, pointer.accel / 34));
-    const dist2 = dx * dx + dy * dy;
-    const falloff = Math.exp(-dist2 / (radius * radius));
-    const side = (-ay * dx + ax * dy) / Math.max(radius, 1);
-    const semicircle = Math.min(1, forward / Math.max(radius * 0.2, 1));
-    const push = ax * pointer.accel * 2.35;
-    const shear = Math.sin(side * Math.PI) * pointer.accel * 1.15;
-    return (push + shear) * falloff * semicircle * pointer.energy;
   }
 
   function distort(x, y, lineIndex) {
@@ -2308,41 +2609,30 @@ function toggleWriting() {
       Math.sin(y * 0.033 + lineIndex * 0.23) * 0.8 +
       Math.sin((x + y) * 0.021 + lineIndex * 0.4) * 0.55;
 
-    const circularA = softField(x, y, FIELD_W * 0.18, FIELD_H * 0.22, FIELD_W * 0.18, FIELD_H * 0.25);
-    const circularB = softField(x, y, FIELD_W * 0.64, FIELD_H * 0.28, FIELD_W * 0.2, FIELD_H * 0.3);
-    const circularC = softField(x, y, FIELD_W * 0.88, FIELD_H * 0.66, FIELD_W * 0.16, FIELD_H * 0.22);
-    offset += Math.sin((y - FIELD_H * 0.18) * 0.018) * circularA * 6;
-    offset -= Math.cos((y - FIELD_H * 0.32) * 0.017) * circularB * 6;
-    offset += Math.sin((y + x) * 0.012) * circularC * 5;
-
-    const ribbonA = curveField(x, y, 1.2, FIELD_W * 0.038, 0.31, FIELD_W * 0.052);
-    const ribbonB = curveField(x, y, 4.6, FIELD_W * 0.046, 0.72, FIELD_W * 0.058);
-    offset += ribbonA * 4;
-    offset -= ribbonB * 3;
     offset += flowField(x, y, lineIndex);
-    offset += pointerField(x, y);
     return offset;
   }
 
-  function drawLineField() {
-    ctx.fillStyle = fieldBg;
-    ctx.fillRect(0, 0, W, H);
+  function drawLineField(delta) {
+    ctx.clearRect(0, 0, W, H);
     ctx.save();
     ctx.translate(fieldOffsetX, fieldOffsetY);
     ctx.scale(fieldScale, fieldScale);
-    drawConcreteGrain();
-    updatePointer();
+    updatePointer(delta);
+    dynamicsFrame += 1;
+    bandCenterCache.clear();
 
-    const baseSpacing = window.innerWidth <= 768 ? 18 : 11.8;
-    const step = window.innerWidth <= 768 ? 12 : 11;
+    const baseSpacing = window.innerWidth <= 768 ? 16.5 : 10.4;
+    const step = window.innerWidth <= 768 ? 20 : 18;
+    dynamicsStep = step;
     const lines = Math.ceil(FIELD_W / baseSpacing) + 32;
 
     ctx.strokeStyle = ink;
-    ctx.lineWidth = window.innerWidth <= 768 ? 0.78 : 0.82;
+    ctx.lineWidth = window.innerWidth <= 768 ? 0.64 : 0.58;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
 
-    const globalPan = time * PAN_SPEED;
+    const globalPan = time * LINE_DRIFT_SPEED;
     let cursor = -baseSpacing * 14 - (globalPan % baseSpacing);
     for (let i = -14; i < lines; i++) {
       const u = Math.max(0, Math.min(1, cursor / FIELD_W));
@@ -2363,25 +2653,76 @@ function toggleWriting() {
     drawPointerDot();
     ctx.restore();
 
-    time += 1;
   }
 
   function linePoint(baseX, y, lineIndex) {
     const drift = distort(baseX, y, lineIndex);
     const localU = Math.max(0, Math.min(1, baseX / FIELD_W));
-    const grain =
-      Math.sin(y * 0.19 + lineIndex * 1.7) * 0.26 +
-      Math.sin(y * 0.47 + lineIndex * 0.8) * 0.13;
+    const domain = Math.sin(baseX * 0.0027 + y * 0.0031 + time * 0.05) * 1.6;
+    const materialX =
+      Math.sin(y * 0.008 + time * 0.16 + domain) * 7.5 +
+      Math.sin(baseX * 0.0048 + y * 0.012 - time * 0.11 + lineIndex * 0.015) * 3.6;
+    const materialY = Math.sin(baseX * 0.0064 + y * 0.0023 + time * 0.12) * 4.2;
     const valley = Math.sin(localU * Math.PI * 4.5) * 1.4;
-    return { x: baseX + drift + valley + grain, y };
+    const staticX = baseX + drift + valley + materialX;
+    const staticY = y + materialY;
+    const force = forcePoint(staticX, staticY, lineIndex, y);
+    return { x: staticX + force.x, y: staticY + force.y };
+  }
+
+  function forcePoint(x, y, lineIndex, sourceY) {
+    if (revealProgress < 0.999) return { x: 0, y: 0 };
+    const lineSlot = lineIndex + 20;
+    const pointSlot = Math.max(0, Math.round((sourceY + 30) / dynamicsStep));
+    let line = pointDynamics[lineSlot];
+    if (!line) line = pointDynamics[lineSlot] = [];
+    let point = line[pointSlot];
+    if (!point) {
+      point = { x: 0, y: 0, vx: 0, vy: 0, frame: -1 };
+      line[pointSlot] = point;
+    }
+    if (point.frame === dynamicsFrame) return point;
+    point.frame = dynamicsFrame;
+
+    if (pointer.visible && pointer.smoothInputSpeed > 0.15) {
+      const dx = x - pointer.x;
+      const dy = y - pointer.y;
+      const distance = Math.hypot(dx, dy);
+      const radius = Math.max(180, Math.min(330, 150 + pointer.smoothInputSpeed * 4.2));
+      if (distance < radius) {
+        const proximity = 1 - distance / radius;
+        const force = Math.cos(distance * 0.001) * proximity * radius * pointer.smoothInputSpeed * 0.00043;
+        point.vx += Math.cos(pointer.angle) * force;
+        point.vy += Math.sin(pointer.angle) * force;
+      }
+    }
+
+    point.vx += -point.x * 0.006;
+    point.vy += -point.y * 0.006;
+    point.vx *= 0.92;
+    point.vy *= 0.92;
+    point.x += point.vx * 1.85;
+    point.y += point.vy * 1.85;
+    point.x = Math.max(-72, Math.min(72, point.x));
+    point.y = Math.max(-72, Math.min(72, point.y));
+    return point;
   }
 
   function drawSmoothLine(baseX, lineIndex, step) {
-    let prev = linePoint(baseX, -30, lineIndex);
-    let current = linePoint(baseX, -30 + step, lineIndex);
+    const growth = Math.sin(Math.PI * revealProgress);
+    const frontNoise = growth * (
+      Math.sin(lineIndex * 0.37) * 13 +
+      Math.sin(lineIndex * 0.11 + 1.8) * 7
+    );
+    const revealTop = Math.max(-30, Math.min(
+      FIELD_H + 30,
+      -30 + (1 - revealProgress) * (FIELD_H + 60) + frontNoise
+    ));
+    let prev = linePoint(baseX, revealTop, lineIndex);
+    let current = linePoint(baseX, revealTop + step, lineIndex);
     ctx.beginPath();
     ctx.moveTo(prev.x, prev.y);
-    for (let y = -30 + step * 2; y <= FIELD_H + 30; y += step) {
+    for (let y = revealTop + step * 2; y <= FIELD_H + 30; y += step) {
       const next = linePoint(baseX, y, lineIndex);
       const midX = (current.x + next.x) * 0.5;
       const midY = (current.y + next.y) * 0.5;
@@ -2392,29 +2733,33 @@ function toggleWriting() {
     ctx.stroke();
   }
 
-  function updatePointer() {
+  function updatePointer(delta) {
+    const frameScale = Math.min(delta, 34) / 16.667;
     if (!pointer.visible) {
-      pointer.energy *= 0.86;
-      pointer.vx *= 0.78;
-      pointer.vy *= 0.78;
-      pointer.ax *= 0.72;
-      pointer.ay *= 0.72;
-      pointer.accel *= 0.72;
+      const fade = Math.pow(0.88, frameScale);
+      pointer.energy *= fade;
+      pointer.vx *= Math.pow(0.82, frameScale);
+      pointer.vy *= Math.pow(0.82, frameScale);
+      pointer.speed = Math.hypot(pointer.vx, pointer.vy);
+      pointer.inputSpeed *= Math.pow(0.72, frameScale);
+      pointer.smoothInputSpeed += (pointer.inputSpeed - pointer.smoothInputSpeed) * 0.1;
       return;
     }
-    const prevVx = pointer.vx;
-    const prevVy = pointer.vy;
-    const dx = pointer.tx - pointer.x;
-    const dy = pointer.ty - pointer.y;
-    pointer.vx = dx * 0.12;
-    pointer.vy = dy * 0.12;
-    pointer.x += pointer.vx;
-    pointer.y += pointer.vy;
-    pointer.ax = pointer.vx - prevVx;
-    pointer.ay = pointer.vy - prevVy;
-    pointer.accel = Math.sqrt(pointer.ax * pointer.ax + pointer.ay * pointer.ay);
-    const targetEnergy = Math.min(1, pointer.accel / 6);
-    pointer.energy += (targetEnergy - pointer.energy) * 0.34;
+    const prevX = pointer.x;
+    const prevY = pointer.y;
+    const follow = 1 - Math.exp(-delta * 0.0065);
+    pointer.x += (pointer.tx - pointer.x) * follow;
+    pointer.y += (pointer.ty - pointer.y) * follow;
+    const instantVx = (pointer.x - prevX) / Math.max(frameScale, 0.2);
+    const instantVy = (pointer.y - prevY) / Math.max(frameScale, 0.2);
+    const velocityFollow = 1 - Math.exp(-delta * 0.02);
+    pointer.vx += (instantVx - pointer.vx) * velocityFollow;
+    pointer.vy += (instantVy - pointer.vy) * velocityFollow;
+    pointer.speed = Math.hypot(pointer.vx, pointer.vy);
+    pointer.smoothInputSpeed += (pointer.inputSpeed - pointer.smoothInputSpeed) * 0.1;
+    pointer.inputSpeed *= Math.pow(0.76, frameScale);
+    const targetEnergy = Math.min(1, pointer.smoothInputSpeed / 8);
+    pointer.energy += (targetEnergy - pointer.energy) * (1 - Math.exp(-delta * 0.018));
   }
 
   function drawPointerDot() {
@@ -2428,25 +2773,16 @@ function toggleWriting() {
     ctx.restore();
   }
 
-  function drawConcreteGrain() {
-    ctx.fillStyle = 'rgba(17,17,15,0.045)';
-    for (let y = 8; y < FIELD_H; y += 24) {
-      for (let x = 6; x < FIELD_W; x += 30) {
-        const n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
-        const f = n - Math.floor(n);
-        if (f > 0.84) {
-          ctx.globalAlpha = (f - 0.84) * 0.16;
-          ctx.fillRect(x + (f - 0.5) * 4, y, 1, 1);
-        }
-      }
-    }
-    ctx.globalAlpha = 1;
-  }
-
   function frame(now = 0) {
-    if (!lastRender || now - lastRender > 33) {
-      drawLineField();
-      lastRender = now;
+    const delta = lastFrame ? Math.min(now - lastFrame, 34) : 16.667;
+    lastFrame = now;
+    if (isVisible) {
+      time += delta / 1000;
+      if (revealStartedAt && revealProgress < 1) {
+        const raw = Math.min(1, (now - revealStartedAt) / 1280);
+        revealProgress = 1 - Math.pow(1 - raw, 3);
+      }
+      drawLineField(delta);
     }
     requestAnimationFrame(frame);
   }
@@ -2464,24 +2800,45 @@ function toggleWriting() {
       pointer.y = y;
       pointer.vx = 0;
       pointer.vy = 0;
-      pointer.ax = 0;
-      pointer.ay = 0;
-      pointer.accel = 0;
+      pointer.speed = 0;
+      pointer.inputSpeed = 0;
+      pointer.smoothInputSpeed = 0;
       pointer.energy = 0;
+    } else {
+      const inputX = x - pointer.tx;
+      const inputY = y - pointer.ty;
+      const inputSpeed = Math.hypot(inputX, inputY);
+      if (inputSpeed > 0.01) {
+        pointer.angle = Math.atan2(inputY, inputX);
+        pointer.inputSpeed = Math.min(100, Math.max(pointer.inputSpeed, inputSpeed));
+      }
     }
     pointer.tx = x;
     pointer.ty = y;
     pointer.visible = true;
   }
 
-  window.addEventListener('pointermove', (e) => {
+  canvas.parentElement.addEventListener('pointermove', (e) => {
     setPointer(e.clientX, e.clientY);
-  });
+  }, { passive: true });
   canvas.parentElement.addEventListener('pointerleave', () => {
     pointer.visible = false;
   });
 
-  window.addEventListener('resize', () => { resize(); });
+  const observer = new IntersectionObserver(([entry]) => {
+    isVisible = entry.isIntersecting;
+    if (isVisible) lastFrame = performance.now();
+  }, { threshold: 0.01 });
+  observer.observe(canvas.parentElement);
+
+  window.addEventListener('hero:reveal', () => {
+    revealStartedAt = performance.now();
+  }, { once: true });
+
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(resize);
+  }, { passive: true });
   resize();
   frame();
 })();

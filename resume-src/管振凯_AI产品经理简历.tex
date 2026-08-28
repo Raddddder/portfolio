@@ -1,7 +1,7 @@
 % !TEX program = tectonic
-\documentclass[10pt,a4paper]{article}
+\documentclass[9pt,a4paper]{article}
 
-\usepackage[left=1.25cm,right=1.25cm,top=1.10cm,bottom=1.10cm]{geometry}
+\usepackage[left=1.08cm,right=1.08cm,top=0.78cm,bottom=0.74cm]{geometry}
 \usepackage{fontspec}
 \usepackage{xeCJK}
 \usepackage{graphicx}
@@ -11,87 +11,82 @@
 \usepackage{titlesec}
 \usepackage[hidelinks]{hyperref}
 \usepackage{xcolor}
-\usepackage{ragged2e}
-\usepackage{microtype}
 
-\setmainfont{Helvetica Neue}
-\setCJKmainfont[
-  Path=/Users/guanzhenkai/Library/Fonts/,
-  BoldFont={WenQuanWeiMiHei-1.ttf},
-  BoldFeatures={FakeBold=1.7}
-]{WenQuanWeiMiHei-1.ttf}
+\IfFontExistsTF{Arial}{\setmainfont{Arial}}{\setmainfont{TeX Gyre Heros}}
+\IfFontExistsTF{Microsoft YaHei}
+  {\setCJKmainfont[BoldFont=Microsoft YaHei Bold]{Microsoft YaHei}}
+  {\setCJKmainfont[BoldFont=SimHei]{SimSun}}
+
 \setlength{\parindent}{0pt}
 \setlength{\tabcolsep}{0pt}
 \XeTeXlinebreaklocale "zh"
-\XeTeXlinebreakskip = 0pt plus 0.8pt
-\setlength{\emergencystretch}{1.5em}
+\XeTeXlinebreakskip = 0pt plus 0.55pt
+\setlength{\emergencystretch}{1.2em}
 \pagenumbering{gobble}
 \raggedbottom
 \urlstyle{same}
+
 \definecolor{textgray}{HTML}{555555}
-\definecolor{rulegray}{HTML}{B8B8B8}
+\definecolor{rulegray}{HTML}{AEB4BC}
 
 \titleformat{\section}
-  {\fontsize{13.5}{16.5}\selectfont\bfseries}
+  {\fontsize{13.0}{15.0}\selectfont\bfseries}
   {}{0pt}{}
-  [\vspace{0.16em}{\color{rulegray}\titlerule[0.45pt]}]
-\titlespacing*{\section}{0pt}{0.68em}{0.46em}
+  [\vspace{0.08em}{\color{rulegray}\titlerule[0.45pt]}]
+\titlespacing*{\section}{0pt}{0.46em}{0.30em}
 
 \setlist[itemize]{
-  leftmargin=1.40em,
-  itemsep=0.28em,
-  topsep=0.30em,
+  leftmargin=1.50em,
+  labelsep=0.42em,
+  itemsep=0.14em,
+  topsep=0.12em,
   parsep=0pt,
   partopsep=0pt,
-  after=\vspace{0.48em},
-  label=\raisebox{0.2ex}{\tiny$\bullet$}
+  after=\vspace{0.18em},
+  label=\raisebox{0.18ex}{\tiny$\bullet$}
 }
 
-\newcommand{\entryheading}[4]{%
+\newcommand{\entryheading}[3]{%
   \begin{tabularx}{\textwidth}{@{}X r@{}}
-    {\fontsize{10.7}{13}\selectfont\textbf{#1}}\hspace{0.6em}{\fontsize{9.25}{11.5}\selectfont\color{textgray}#2} &
-    {\fontsize{9.1}{11.3}\selectfont\color{textgray}#3} \\[0.10em]
-    {\hspace{0.72em}\fontsize{9.8}{12.1}\selectfont\bfseries #4} & \\
-  \end{tabularx}\vspace{0.14em}
+    {\fontsize{10.5}{12.5}\selectfont\textbf{#1}}\hspace{0.48em}{\fontsize{9.65}{11.7}\selectfont\color{textgray}#2} &
+    {\fontsize{9.5}{11.5}\selectfont\color{textgray}#3} \\
+  \end{tabularx}\vspace{0.06em}
 }
 
-\newcommand{\entryheadingplain}[3]{%
-  \begin{tabularx}{\textwidth}{@{}X r@{}}
-    {\fontsize{10.7}{13}\selectfont\textbf{#1}}\hspace{0.6em}{\fontsize{9.25}{11.5}\selectfont\color{textgray}#2} &
-    {\fontsize{9.1}{11.3}\selectfont\color{textgray}#3} \\
-  \end{tabularx}\vspace{0.04em}
+\newcommand{\projectline}[2]{%
+  {\fontsize{9.9}{12.0}\selectfont\textbf{#1：}}{\fontsize{9.7}{11.9}\selectfont\color{textgray}#2}\par\vspace{0.03em}
 }
 
 \newcommand{\eduheading}[4]{%
   \begin{tabularx}{\textwidth}{@{}X r@{}}
-    {\fontsize{10.5}{12.8}\selectfont\textbf{#1}}\hspace{0.55em}{\fontsize{9.35}{11.6}\selectfont\color{textgray}#2} &
-    {\fontsize{9.1}{11.3}\selectfont\color{textgray}#3} \\[0.12em]
-    {\fontsize{9.25}{11.8}\selectfont #4} & \\
-  \end{tabularx}\vspace{0.20em}
+    {\fontsize{10.2}{12.2}\selectfont\textbf{#1}}\hspace{0.45em}{\fontsize{9.55}{11.6}\selectfont\color{textgray}#2} &
+    {\fontsize{9.4}{11.4}\selectfont\color{textgray}#3} \\[0.05em]
+    {\fontsize{9.4}{11.5}\selectfont #4} & \\
+  \end{tabularx}\vspace{0.11em}
 }
 
-\begin{document}
-\fontsize{9.55}{13.1}\selectfont
+\newcommand{\tagitem}[2]{\item \textbf{#1：}#2}
 
-% Header
-\begin{tabularx}{\textwidth}{@{}X >{\raggedleft\arraybackslash}p{2.45cm}@{}}
+\begin{document}
+\fontsize{9.7}{12.35}\selectfont
+
+\begin{tabularx}{\textwidth}{@{}X >{\raggedleft\arraybackslash}p{2.06cm}@{}}
   \begin{minipage}[t]{\linewidth}
-    {\fontsize{25}{28}\selectfont\bfseries 管振凯}\\[0.62em]
-    {\normalsize 男 · 24岁 \enspace|\enspace 意向岗位：AI 产品经理}\\[0.48em]
-    {\small
+    {\fontsize{23.5}{25.5}\selectfont\bfseries 管振凯}\\[0.34em]
+    {\fontsize{10.3}{12.2}\selectfont 男 · 24岁 \enspace|\enspace 意向岗位：AI 产品经理}\\[0.30em]
+    {\fontsize{9.5}{11.5}\selectfont
       TEL / WeChat：177\,6812\,0084 \enspace|\enspace
       E-mail：\href{mailto:522024140056@smail.nju.edu.cn}{522024140056@smail.nju.edu.cn}
-    }\\[0.22em]
-    {\small
+    }\\[0.12em]
+    {\fontsize{9.5}{11.5}\selectfont
       作品集：\href{https://raddddder.github.io/portfolio/}{\underline{raddddder.github.io/portfolio}}
     }
   \end{minipage}
   &
-  \raisebox{-0.85\height}{\includegraphics[width=2.25cm,height=2.82cm]{resume-photo.jpg}}
+  \raisebox{-0.82\height}{\includegraphics[width=1.86cm,height=2.33cm]{resume-photo.jpg}}
 \end{tabularx}
 
-\vspace{-0.26em}
-
+\vspace{-0.28em}
 \section{教育背景}
 
 \eduheading
@@ -106,63 +101,61 @@
   {2020.09 -- 2024.06}
   {国家级大学生创新创业训练项目；国家发明专利已授权（第一发明人，\href{https://patents.google.com/patent/CN116453224B/zh}{\underline{CN116453224B}}）；CET-6}
 
-\vspace{-0.20em}
+\vspace{-0.12em}
 \section{实习经历}
 
-\entryheading
-  {腾讯互动娱乐 IEG · K6 合作部}
-  {产品策划}
-  {2026.06 -- 2026.08}
-  {负责方向：英雄联盟玩家攻略服务｜掌盟一站式 AI 助手}
-\begin{itemize}[leftmargin=1.90em,labelsep=0.55em]
-  \item \textbf{攻略产品体系规划：}面向国服 \textbf{4200 万+ 月活玩家}，基于 WeGame 备战日均 \textbf{620 万 PV}、用户反馈与对战数据，梳理峡谷/海斗等模式下从一键配置到进阶分析的分层需求；针对数据口径不一致、内容更新慢和入口分散，规划覆盖掌盟、WeGame、移动/PC 数据站及 API 的多端攻略服务。
-  \item \textbf{国服数据服务重构：}负责掌上英雄联盟移动端与英雄联盟数据站 PC 端同步建设，推进异常对局清洗、榜单算法迭代和场景化数据聚合，重构英雄/版本榜单、出装/符文与对线查询，为各端提供统一、可信的国服数据。
-  \item \textbf{AI 攻略生产与分发：}设计“大数据挖掘 -- AI 解读 -- 多端分发”内容链路，持续提炼版本环境、英雄强度与对局规律，降低对 KOL 人工生产的依赖和版本更新后的内容延迟；产出用于数据站、WeGame 一键应用、掌盟 AI 场景及 API。
-  \item \textbf{掌盟 AI 助手产品设计：}面向 \textbf{400 万级 DAU} 的掌盟，推进以数字人为统一入口的一站式 AI 助手；负责将倾听、思考、分析、记忆等 AI 状态映射为角色动作，并设计数字人装扮资产体系；同步规划玩家画像、长期记忆及战绩、攻略、赛事、资产、社交能力接入，形成局前、局中、局后的连续服务。
-\end{itemize}
-
-\entryheading
-  {京东科技 · 人工智能业务部}
-  {AI 产品经理}
-  {2026.04 -- 2026.06}
-  {负责产品：JoyPM｜产品经理数字员工}
-\begin{itemize}[leftmargin=1.90em,labelsep=0.55em]
-  \item \textbf{产品建设：}0--1 负责 JoyPM 产品经理数字员工，搭建“知识召回 -- 方案生成 -- 自动评测 -- 优质内容回流”闭环，解决历史方案难复用与评审返工问题。
-  \item \textbf{机制与结果：}设计角色知识库、Agent 工作流与 Human-in-the-loop 评审机制，将需求想法到可评审初稿的周期由 \textbf{4--6 小时缩短至 45 分钟以内}，评测耗时降低 \textbf{30\%}。
-\end{itemize}
-
-\entryheading
-  {腾讯金融科技 FIT}
-  {AI 产品经理}
-  {2025.09 -- 2026.03}
-  {负责产品：Sia｜AI 访谈与调研系统}
-\begin{itemize}[leftmargin=1.90em,labelsep=0.55em]
-  \item \textbf{产品与机制：}负责 Sia 的产品设计与研发落地，搭建“大纲配置 -- AI 主持追问 -- 洞察生成 -- 原文溯源”流程，设计路径控制、动态追问、回答澄清、偏题拉回与证据绑定机制。
-  \item \textbf{业务结果：}累计覆盖 \textbf{500+ 用户样本}、服务 \textbf{3 个业务部门}；单项目周期由约 \textbf{7 天缩短至 8 小时}，人力成本降低约 \textbf{50\%}，项目获 \textbf{FIT AI 创新奖}。
-\end{itemize}
-
-\entryheadingplain
-  {波士顿咨询公司 BCG}
-  {项目助理}
-  {2025.06 -- 2026.03}
-\begin{itemize}[leftmargin=1.90em,labelsep=0.55em]
-  \item \textbf{AI 转型与商业分析：}参与制造、快消与 TMT 项目，基于访谈、竞品、季度报告与财务数据拆解业务流程并搭建分析模型；设计 \textbf{2 套多模态 Agent 工作流}，将工业设计场景中的重复操作成本降低约 \textbf{80\%}。
-\end{itemize}
-
-\entryheading
-  {上海人工智能实验室}
-  {战略与 AI 应用实习生}
-  {2025.01 -- 2025.07}
-  {参与项目：Migo AI｜学研助手}
-\begin{itemize}[leftmargin=1.90em,labelsep=0.55em]
-  \item \textbf{AI for Science 与产业研究：}参与 QuestPaper 文献阅读助手，主导“思维导图提炼核心论点 + 基于问题框架持续追问”的交互原型并协同上线；开展政策监测、信源核验与影响分析，完成 \textbf{10+ 篇专题报告}。
-\end{itemize}
-
-\vspace{-0.48em}
-\section{个人亮点}
-
+\entryheading{腾讯互动娱乐 IEG · K6 合作部}{产品策划}{2026.06 -- 2026.08}
+\projectline{英雄联盟多端攻略服务}{面向国服玩家在局前备战、进阶分析与局后复盘中的不同需求，建设统一、日更的攻略与数据服务。}
 \begin{itemize}
-  \item \textbf{AI 原著阅读器｜个人项目：}面向非母语读者阅读外文原著时频繁切换翻译工具、语法理解割裂的问题，设计“划词/划句即读”交互，由 AI 结合上下文返回母语释义、语法结构与文化背景，并支持连续追问；独立完成需求定义、交互设计与可用原型，在不打断阅读流的前提下帮助用户读懂原著。
+  \tagitem{需求}{基于用户反馈与任务，拆分一键配置、进阶查询、局后分析等需求；定位数据口径不一、更新慢、入口分散。}
+  \tagitem{解法}{以玩家场景为主线推进异常对局清洗、榜单算法与数据聚合，搭建日更链路；落地 PC 101 攻略站、WeGame 一键应用、\mbox{掌盟国服榜}与英雄资料，并通过 AI 解读与 API 分发。}
+  \tagitem{结果}{多端攻略服务覆盖国服\textbf{百万级日活用户}；核心数据实现日更，资料维度丰富度提升 \textbf{2--3 倍}。}
+\end{itemize}
+\projectline{掌盟 AI 对战助手}{面向玩家跨入口查询战绩、攻略与赛事信息的场景，以数字人承载连续 AI 服务。}
+\begin{itemize}
+  \tagitem{需求}{传统功能入口分散，AI 的倾听、思考、分析与记忆缺少可感知反馈，画像与长期记忆也未形成统一服务。}
+  \tagitem{解法}{设计 AI 状态与角色动作映射、数字人装扮体系；接入画像、长期记忆、战绩、攻略、赛事、资产与社交能力。}
+  \tagitem{结果}{完成核心交互、角色状态与能力编排方案，形成覆盖局前问攻略、局后看战绩及长期陪伴的 AI 对战助手产品框架。}
+\end{itemize}
+
+\entryheading{京东科技 · 人工智能业务部}{AI 产品经理}{2026.04 -- 2026.06}
+\projectline{JoyPM｜产品经理数字员工}{面向产品经理从需求想法到 PRD 评审的协作场景，0--1 建设知识驱动的 AI 工作台。}
+\begin{itemize}
+  \tagitem{需求}{历史方案分散、项目知识难复用，通用模型缺少业务上下文，导致资料查找慢、初稿质量不稳和评审反复返工。}
+  \tagitem{解法}{搭建“知识召回 -- 方案生成 -- 自动评测 -- 内容回流”闭环，设计知识库、Agent 工作流与五维评测，引入人工复核。}
+  \tagitem{结果}{将需求想法到可评审初稿的周期由 \textbf{4--6 小时缩短至 45 分钟以内}，评测耗时降低 \textbf{30\%}。}
+\end{itemize}
+
+\entryheading{腾讯金融科技 FIT}{AI 产品经理}{2025.09 -- 2026.03}
+\projectline{Sia｜AI 访谈与调研系统}{面向业务部门开展开放式用户研究的场景，将依赖人工的访谈流程产品化、自动化。}
+\begin{itemize}
+  \tagitem{需求}{传统调研依赖人工主持与整理，周期长、扩样成本高；静态问卷无法动态追问，洞察也难回溯原文。}
+  \tagitem{解法}{重构“大纲配置 -- AI 主持追问 -- 洞察生成 -- 原文溯源”流程，设计路径控制、动态追问、澄清、偏题拉回与证据绑定。}
+  \tagitem{结果}{覆盖 \textbf{3 个部门、500+ 样本}，完成 \textbf{10+ 场访谈}；周期从 \textbf{7 天降至 8 小时}，人力降 \textbf{50\%}，获 FIT AI 创新奖。}
+\end{itemize}
+
+\entryheading{波士顿咨询公司 BCG}{项目助理}{2025.06 -- 2026.03}
+\projectline{VLM-CAD Agent 工作流}{面向工业设计人员在 CAD 软件中的高频重复操作，探索 Agent 自动执行方案。}
+\begin{itemize}
+  \tagitem{需求}{CAD 操作链路长且依赖人工，需要识别可标准化环节，并让 Agent 稳定理解界面、规划步骤并执行。}
+  \tagitem{解法}{参与设计 \textbf{2 套} VLM-CAD 工作流，以视觉理解识别界面状态，编排任务拆解、动作规划与工具执行。}
+  \tagitem{结果}{实现 CAD 软件内重复操作的 Agent 自动执行，将工业设计场景的重复操作成本降低约 \textbf{80\%}。}
+\end{itemize}
+
+\entryheading{上海人工智能实验室}{战略与 AI 应用实习生}{2025.01 -- 2025.07}
+\projectline{QuestPaper｜文献阅读助手}{面向科研与学习中的长文献阅读场景，降低核心论点提炼和连续追问的认知负担。}
+\begin{itemize}
+  \tagitem{需求}{用户需要在检索、阅读、总结与问答之间频繁切换，长文核心脉络难定位，后续追问也容易与原文论证结构割裂。}
+  \tagitem{解法}{主导“思维导图提炼核心论点 + 基于问题框架持续追问”的核心交互原型，并协同产品与研发推进功能落地。}
+  \tagitem{结果}{完成核心原型并推动功能上线；同步开展政策监测、信源核验与影响分析，完成 \textbf{10+ 篇}专题报告。}
+\end{itemize}
+
+\section{个人项目}
+\projectline{AI 原著阅读器}{面向非母语读者阅读外文原著时频繁切换翻译工具、语法理解割裂的场景。}
+\begin{itemize}
+  \tagitem{需求}{即时翻译只能提供孤立释义，难以结合上下文解释句法与文化背景，打断阅读流且不支持围绕原文连续追问。}
+  \tagitem{解法}{设计“划词/划句即读”交互，由 AI 返回上下文释义、语法结构与文化背景，并支持基于当前段落持续追问。}
+  \tagitem{结果}{独立完成需求定义、交互设计与可用原型，形成从选中文本到理解、追问的一体化阅读闭环。}
 \end{itemize}
 
 \end{document}
